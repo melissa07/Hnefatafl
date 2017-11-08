@@ -13,16 +13,27 @@ public class Board {
 //    private final int PION_ROI = 4;
 //    private final int CASE_COIN = 5;
 //    private final int CASE_THRONE = 6;
-//    private final int BOARD_SIZE = 13;
+    private final int BOARD_SIZE = 13;
 
 
-    public Board() {
-        initBoard();
+    public Board(int[] chaineBoeard) {
+
+        initBoard(chaineBoeard);
         createAssociativeMap();
     }
 
-    private void initBoard() {
+    private void initBoard(int[] chaineBoard) {
         // board recu du serveur
+        int j = 0;
+        int k = 0;
+        for(int i = 0; i < BOARD_SIZE;i++){
+            plateauJeu[i][j] = chaineBoard[k];
+            k++;
+            if(i == 12 && j != 12){
+                i = 0;
+                j++;
+            }
+        }
     }
 
     private void createAssociativeMap() {
@@ -31,5 +42,6 @@ public class Board {
             map.put(i, (char)(i+'A'));
         }
     }
+
 
 }
