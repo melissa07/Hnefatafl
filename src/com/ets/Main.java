@@ -1,8 +1,11 @@
 package com.ets;
 
+import Modele.Board;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	    Board plateau = new Board();
+
     }
 }

@@ -5,7 +5,6 @@ import java.net.*;
 
 class Client {
     public static void main(String[] args) {
-
         Socket MyClient;
         BufferedInputStream input;
         BufferedOutputStream output;
@@ -15,7 +14,7 @@ class Client {
             input    = new BufferedInputStream(MyClient.getInputStream());
             output   = new BufferedOutputStream(MyClient.getOutputStream());
             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-            while(1 == 1){
+            while(1 == 1) {
                 char cmd = 0;
 
                 cmd = (char)input.read();
