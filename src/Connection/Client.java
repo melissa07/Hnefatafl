@@ -67,7 +67,8 @@ class Client {
                     input.read(aBuffer,0,size);
 
                     String s = new String(aBuffer);
-                    System.out.println("Dernier coup : "+ s);
+//                    System.out.println("Dernier coup : "+ s);
+                    nouveauBoard.modifyBoard(s);
                     System.out.println("Entrez votre coup : ");
                     String move = null;
                     move = console.readLine();
