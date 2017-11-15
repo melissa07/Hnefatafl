@@ -6,17 +6,10 @@ import java.util.Map;
 public class Board {
     private Map<Integer, Character> map = new HashMap<Integer, Character>();
     private int[][] board = null;
-
-//    private final int CASE_VIDE = 0;
-//    private final int PION_ROUGE = 1;
-//    private final int PION_NOIR = 2;
-//    private final int PION_ROI = 4;
-//    private final int CASE_COIN = 5;
-//    private final int CASE_THRONE = 6;
     private final int BOARD_SIZE = 13;
 
 
-    public Board(int[] chaineBoard) {
+    public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
         createAssociativeMap();
     }
@@ -27,16 +20,30 @@ public class Board {
      * dimensions
      * @param chaineBoard Board recu du serveur
      */
-    private void initBoard(int[] chaineBoard) {
-        int j = 0;
-        int k = 0;
-        for(int i = 0; i < BOARD_SIZE;i++){
-            board[i][j] = chaineBoard[k];
-            k++;
-            if(i == 12 && j != 12){
-                i = 0;
-                j++;
+    private void initBoard(String[] chaineBoard) {
+        board = new int[BOARD_SIZE][BOARD_SIZE];
+        int x=0,y=0;
+        for(int i=0; i< chaineBoard.length;i++){
+            board[x][y] = Integer.parseInt(chaineBoard[i]);
+            x++;
+            if(x == 13){
+                x = 0;
+                y++;
             }
+        }
+        printBoard();
+
+    }
+
+    /**
+     * Dessine le board en console
+     */
+    private void printBoard() {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int s = 0; s < BOARD_SIZE; s++) {
+                System.out.print(board[i][s]);
+            }
+            System.out.println();
         }
     }
 

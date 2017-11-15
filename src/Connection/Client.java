@@ -1,4 +1,6 @@
 package Connection;
+import Modele.Board;
+
 import java.io.*;
 import java.net.*;
 
@@ -8,7 +10,8 @@ class Client {
         Socket MyClient;
         BufferedInputStream input;
         BufferedOutputStream output;
-        int[][] board = new int[8][8];
+        int[][] board = new int[13][13];
+        Board nouveauBoard = null;
         try {
             MyClient = new Socket("localhost", 8888);
             input    = new BufferedInputStream(MyClient.getInputStream());
@@ -30,15 +33,7 @@ class Client {
                     System.out.println(s);
                     String[] boardValues;
                     boardValues = s.split(" ");
-                    int x=0,y=0;
-                    for(int i=0; i<boardValues.length;i++){
-                        board[x][y] = Integer.parseInt(boardValues[i]);
-                        x++;
-                        if(x == 8){
-                            x = 0;
-                            y++;
-                        }
-                    }
+                    nouveauBoard = new Board(boardValues);
 
                     System.out.println("Nouvelle partie! Vous jouer blanc, entrez votre premier coup : ");
                     String move = null;
@@ -58,15 +53,7 @@ class Client {
                     System.out.println(s);
                     String[] boardValues;
                     boardValues = s.split(" ");
-                    int x=0,y=0;
-                    for(int i=0; i<boardValues.length;i++){
-                        board[x][y] = Integer.parseInt(boardValues[i]);
-                        x++;
-                        if(x == 8){
-                            x = 0;
-                            y++;
-                        }
-                    }
+                    nouveauBoard = new Board(boardValues);
                 }
 
 

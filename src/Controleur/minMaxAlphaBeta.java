@@ -1,4 +1,4 @@
-package Modele;
+package Controleur;
 
 public class minMaxAlphaBeta {
 
