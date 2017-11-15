@@ -5,7 +5,7 @@ import Modele.Board;
 public class Main {
 
     public static void main(String[] args) {
-	    Board plateau = new Board();
+	    Board plateau = new Board(null);
 
     }
 }
