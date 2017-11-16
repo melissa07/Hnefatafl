@@ -24,7 +24,7 @@ public class minMaxAlphaBeta {
             Board bestBoard = actualBoard;
             ArrayList<Board> boards = generateMoves(actualBoard, rouge/*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MaxMove(executeMove(actualBoard));
+                board = MinMove(executeMove(actualBoard));
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                 }
@@ -42,7 +42,7 @@ public class minMaxAlphaBeta {
 
             ArrayList<Board> boards = generateMoves(actualBoard, noire /*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MinMove(executeMove(actualBoard));
+                board = MaxMove(executeMove(actualBoard));
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                 }
@@ -110,8 +110,46 @@ public class minMaxAlphaBeta {
 
         return boardArray;
     }
-
+/*
+verifie que le mouvement est valide
+en verifiant qu'il n'y est pas de jeton entre le positionnement initial et le positionnement apres mouvement.
+ */
     private boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
+        if(rowInit == rowMove && columnInit == columnMove){ return  false; }
+        //si le mouvement est a la vertical, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
+        // et le positionnement apres mouvement.
+        if(columnInit == columnMove && rowInit != rowMove){
+            if(rowMove > rowInit){
+                for(int i = rowInit + 1; i < rowMove; i++){
+                    if(board[columnInit][i] != 0 || board[columnInit][i] != 5){
+                        return false;
+                    }
+                }
+            }else{
+                for(int i = rowMove + 1; i < rowInit; i++){
+                    if(board[columnInit][i] != 0){
+                        return false;
+                    }
+                }
+            }
+        }
+        //si le mouvement est a la horizontal, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
+        // et le positionnement apres mouvement.
+        if(rowInit == rowMove && columnInit != columnMove){
+            if(columnMove > columnInit){
+                for(int i = columnInit + 1; i < columnMove; i++){
+                    if(board[i][rowInit] != 0 || board[i][rowInit] != 5){
+                        return false;
+                    }
+                }
+            }else{
+                for(int i = columnMove + 1; i < columnInit; i++){
+                    if(board[i][rowInit] != 0){
+                        return false;
+                    }
+                }
+            }
+        }
 
         return true;
     }
