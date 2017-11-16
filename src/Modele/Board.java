@@ -14,7 +14,6 @@ public class Board {
 
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
-        createAssociativeMap();
     }
 
     public void setBoard(int[][] board) {
@@ -60,15 +59,30 @@ public class Board {
         }
     }
 
-    /**
-     * Cree un hashmap de correspondance entre les indices
-     * du tableau et les lettres du board
-     */
-    private void createAssociativeMap() {
-        int valueA = Character.valueOf('A');
-        for (int i = 0; i <= 12; i++) {
-            map.put(i, (char)(i+'A'));
-        }
+    public void modifyBoard(String move) {
+        System.out.println("Nouveau move:" +move);
+        int[][] moveDepart = null;
+        int[][] moveFinal = null;
+
+        move = move.trim();
+        String strMoveDepart = "";
+        String strMoveArivee = "";
+        // todo fix this
+        int rangeeDepart = Integer.parseInt(move.substring(0,move.indexOf('-')).substring(0,1));
+        int colonneDepart = Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2));
+
+        int rangeeArrive = Integer.parseInt( move.substring(move.indexOf('-')+1, move.length()).substring(0,1));
+        int colonneFin = Integer.parseInt( move.substring(move.indexOf('-')+1, move.length()).substring(1,2));
+
+        int[][] depart = new int[rangeeDepart][colonneDepart];
+        int[][] arrivee = new int[rangeeArrive][colonneFin];
+
+
+        strMoveDepart = move.substring(0, move.indexOf('-'));
+
+        strMoveArivee = move.substring(move.indexOf('-')+1, move.length());
+
+
     }
 
     /*
