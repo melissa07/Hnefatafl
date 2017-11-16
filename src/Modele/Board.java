@@ -2,17 +2,30 @@ package Modele;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Board {
     private Map<Integer, Character> map = new HashMap<Integer, Character>();
     private int[][] board = null;
     private final int BOARD_SIZE = 13;
+    private Random rn = new Random();
 
+    public Board(){}
 
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
         createAssociativeMap();
     }
+
+    public void setBoard(int[][] board) {
+        this.board = board;
+    }
+
+    public int getBOARD_SIZE() {
+        return BOARD_SIZE;
+    }
+
+    public int[][] getBoard() { return board; }
 
     /**
      * Fonction qui recoit en parametre un tableau correspondant
@@ -58,15 +71,14 @@ public class Board {
         }
     }
 
-    public int[][] getBoard() {
-        return board;
+    /*
+    calcule et retourne le score du board.
+     */
+    public int getScore(){
+
+        int score = rn.nextInt(10) + 1;
+
+        return  score;
     }
 
-    public void setBoard(int[][] board) {
-        this.board = board;
-    }
-
-    public int getBOARD_SIZE() {
-        return BOARD_SIZE;
-    }
 }
