@@ -51,6 +51,11 @@ public class MinMaxAlphaBeta {
                     beta = board.getScore();
                 }
             }
+            
+            	// Ignore remaining moves
+	            if (beta < alpha)
+	            return bestBoard;
+	            }
             return bestBoard;
         }
     }
