@@ -92,8 +92,6 @@ public class Board {
         strMoveDepart = move.substring(0, move.indexOf('-'));
 
         strMoveArivee = move.substring(move.indexOf('-')+1, move.length());
-
-
     }
 
     public void initMap(){
@@ -125,9 +123,6 @@ public class Board {
         this.map2.put(3,10);
         this.map2.put(2,11);
         this.map2.put(1,12);
-
-
-
     }
 
     /*

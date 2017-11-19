@@ -12,28 +12,30 @@ public class MinMaxAlphaBeta {
  // player may be "computer" or "opponent"
     public static Board doMinMax(Board actualBoard){
 
-        Board maxBoard = MaxMove(actualBoard, 1);
+        Board maxBoard = MaxMove(actualBoard, 1, 0 ,0);
 
         return  maxBoard;
     }
 
-    private static Board MaxMove (Board actualBoard, int profondeur){
-        if (IsGameOver(actualBoard)) {
+    private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
+        if (IsGameOver(actualBoard) /* || Atteint notre limite de recherche*/) {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
             ArrayList<Board> boards = generateMoves(actualBoard, rouge/*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MinMove(executeMove(actualBoard),profondeur + 1);
+                board = MinMove(executeMove(actualBoard),profondeur + 1, alpha, beta);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
+                    alpha = board.getScore();
                 }
             }
             return bestBoard;
         }
     }
-    private static Board MinMove(Board actualBoard, int profondeur) {
+    
+    private static Board MinMove(Board actualBoard, int profondeur, int alpha, int beta) {
         if (IsGameOver(actualBoard)) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -43,18 +45,15 @@ public class MinMaxAlphaBeta {
 
             ArrayList<Board> boards = generateMoves(actualBoard, noire /*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MaxMove(executeMove(actualBoard), profondeur + 1);
+                board = MaxMove(executeMove(actualBoard), profondeur + 1, alpha, beta);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
+                    beta = board.getScore();
                 }
             }
             return bestBoard;
         }
     }
-
-
-
-
 
     private static boolean IsGameOver(Board board) {
         return false;
