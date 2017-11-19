@@ -44,6 +44,7 @@ public class Board {
                 y++;
             }
         }
+        initMap();
         printBoard();
 
     }
@@ -77,9 +78,7 @@ public class Board {
         int colonneFin = Integer.parseInt( move.substring(move.indexOf('-')+1, move.length()).substring(1,2));
 */
 
-        initMap();
-       strMoveDepart = move.substring(move.indexOf('-')+2, move.length()).substring(0,1);
-        strMoveDepart = move.substring(move.indexOf('-')+2, move.length()).substring(1,2);
+
 
         int rangeeDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
         int colonneDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
@@ -89,7 +88,6 @@ public class Board {
 
         int[][] depart = new int[rangeeDepart][colonneDepart];
         int[][] arrivee = new int[rangeeArrive][colonneFin];
-
 
         strMoveDepart = move.substring(0, move.indexOf('-'));
 

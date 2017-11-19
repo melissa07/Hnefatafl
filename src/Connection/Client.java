@@ -1,4 +1,5 @@
 package Connection;
+import Controleur.MinMaxAlphaBeta;
 import Modele.Board;
 
 import java.io.*;
@@ -71,6 +72,7 @@ class Client {
                     nouveauBoard.modifyBoard(s);
                     System.out.println("Entrez votre coup : ");
                     String move = null;
+                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard);
                     move = console.readLine();
                     output.write(move.getBytes(),0,move.length());
                     output.flush();

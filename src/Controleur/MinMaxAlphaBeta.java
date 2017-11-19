@@ -3,20 +3,21 @@ package Controleur;
 import Modele.Board;
 import java.util.ArrayList;
 
-public class minMaxAlphaBeta {
-    private final int rouge = 1;
-    private final int noire = 2;
-    private int score = 0;
+public class MinMaxAlphaBeta {
+    private static final int rouge = 1;
+    private static final int noire = 2;
+    private static int score = 0;
+    private static final int profondeur = 3;
 
  // player may be "computer" or "opponent"
-    public Board doMinMax(Board actualBoard){
+    public static Board doMinMax(Board actualBoard){
 
-        Board maxBoard = MaxMove(actualBoard);
+        Board maxBoard = MaxMove(actualBoard, 1);
 
         return  maxBoard;
     }
 
-    private Board MaxMove (Board actualBoard){
+    private static Board MaxMove (Board actualBoard, int profondeur){
         if (IsGameOver(actualBoard)) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -24,7 +25,7 @@ public class minMaxAlphaBeta {
             Board bestBoard = actualBoard;
             ArrayList<Board> boards = generateMoves(actualBoard, rouge/*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MinMove(executeMove(actualBoard));
+                board = MinMove(executeMove(actualBoard),profondeur + 1);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                 }
@@ -32,7 +33,7 @@ public class minMaxAlphaBeta {
             return bestBoard;
         }
     }
-    private Board MinMove(Board actualBoard) {
+    private static Board MinMove(Board actualBoard, int profondeur) {
         if (IsGameOver(actualBoard)) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -42,7 +43,7 @@ public class minMaxAlphaBeta {
 
             ArrayList<Board> boards = generateMoves(actualBoard, noire /*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MaxMove(executeMove(actualBoard));
+                board = MaxMove(executeMove(actualBoard), profondeur + 1);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                 }
@@ -55,11 +56,11 @@ public class minMaxAlphaBeta {
 
 
 
-    private boolean IsGameOver(Board board) {
+    private static boolean IsGameOver(Board board) {
         return false;
     }
 
-    private Board executeMove(Board board) {
+    private static Board executeMove(Board board) {
 
         return board;
     }
@@ -85,7 +86,7 @@ public class minMaxAlphaBeta {
        return beta
 }*/
 
-    private ArrayList<Board> generateMoves(Board board, int player){
+    private static ArrayList<Board> generateMoves(Board board, int player){
         ArrayList<Board> boardArray = new ArrayList<Board>();
         int[][] actualBoard = board.getBoard();
 
@@ -114,7 +115,7 @@ public class minMaxAlphaBeta {
 verifie que le mouvement est valide
 en verifiant qu'il n'y est pas de jeton entre le positionnement initial et le positionnement apres mouvement.
  */
-    private boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
+    private static boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
         if(rowInit == rowMove && columnInit == columnMove){ return  false; }
         //si le mouvement est a la vertical, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
         // et le positionnement apres mouvement.
