@@ -4,10 +4,11 @@ import Modele.Board;
 import java.util.ArrayList;
 
 public class MinMaxAlphaBeta {
-    private static final int rouge = 1;
+    private static final int rouge = 4;
     private static final int noire = 2;
+    private static final int king = 5;
     private static int score = 0;
-    private static final int profondeur = 3;
+    private static final int maxProfondeur = 3;
 
  // player may be "computer" or "opponent"
     public static Board doMinMax(Board actualBoard){
@@ -18,44 +19,45 @@ public class MinMaxAlphaBeta {
     }
 
     private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
-        if (IsGameOver(actualBoard) /* || Atteint notre limite de recherche*/) {
+        if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
-            ArrayList<Board> boards = generateMoves(actualBoard, rouge/*TODO changer selon le player*/);
+            ArrayList<Board> boards = generateMoves(actualBoard, noire/*TODO changer selon le player*/);
             for (Board board : boards) {
                 board = MinMove(executeMove(actualBoard),profondeur + 1, alpha, beta);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                     alpha = board.getScore();
                 }
+                // Ignore remaining moves
+                if (beta > alpha)
+                    return bestBoard;
             }
             return bestBoard;
         }
     }
     
     private static Board MinMove(Board actualBoard, int profondeur, int alpha, int beta) {
-        if (IsGameOver(actualBoard)) {
+        if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = new Board();
             bestBoard = actualBoard;
 
-            ArrayList<Board> boards = generateMoves(actualBoard, noire /*TODO changer selon le player*/);
+            ArrayList<Board> boards = generateMoves(actualBoard, rouge /*TODO changer selon le player*/);
             for (Board board : boards) {
                 board = MaxMove(executeMove(actualBoard), profondeur + 1, alpha, beta);
                 if (board.getScore() > bestBoard.getScore()) {
                     bestBoard = board;
                     beta = board.getScore();
                 }
+                // Ignore remaining moves
+                if (beta < alpha)
+                    return bestBoard;
             }
-            
-            	// Ignore remaining moves
-	            if (beta < alpha)
-	            return bestBoard;
-	            }
             return bestBoard;
         }
     }
@@ -93,19 +95,58 @@ public class MinMaxAlphaBeta {
     private static ArrayList<Board> generateMoves(Board board, int player){
         ArrayList<Board> boardArray = new ArrayList<Board>();
         int[][] actualBoard = board.getBoard();
+        int[][] tmpBoard = board.getBoard();
 
         if(player == rouge){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
+                    tmpBoard = actualBoard;
                     if (actualBoard[i][j] == rouge){
-                        for(int k = 0; k < 26; k++){
+                        for(int k = 0; k < 13; k++){
                             if (k != i){
-                                isMoveValid(actualBoard, i, j, k, j);
+                                if(isMoveValid(actualBoard, i, j, k, j)){
+                                    tmpBoard = actualBoard;
+                                    tmpBoard[i][j] = 0;
+                                    tmpBoard[k][j] = rouge;
+                                    boardArray.add(new Board(tmpBoard));
+                                }
                             }
                         }
-                        for(int l = 0; l < 26; l++){
+                        for(int l = 0; l < 13; l++){
                             if (l != j){
-                                isMoveValid(actualBoard, i, j, i, l);
+                                if(isMoveValid(actualBoard, i, j, i, l)){
+                                    tmpBoard = actualBoard;
+                                    tmpBoard[i][j] = 0;
+                                    tmpBoard[i][l] = rouge;
+                                    boardArray.add(new Board(tmpBoard));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }else if(player == noire){
+            for(int i = 0; i < actualBoard.length;i++){
+                for (int j = 0; j < actualBoard[i].length;j++){
+                    if (actualBoard[i][j] == noire){
+                        for(int k = 0; k < 13; k++){
+                            if (k != i){
+                                if(isMoveValid(actualBoard, i, j, k, j)){
+                                    tmpBoard = actualBoard;
+                                    tmpBoard[i][j] = 0;
+                                    tmpBoard[k][j] = noire;
+                                    boardArray.add(new Board(tmpBoard));
+                                }
+                            }
+                        }
+                        for(int l = 0; l < 13; l++){
+                            if (l != j){
+                                if(isMoveValid(actualBoard, i, j, i, l)){
+                                    tmpBoard = actualBoard;
+                                    tmpBoard[i][j] = 0;
+                                    tmpBoard[i][l] = noire;
+                                    boardArray.add(new Board(tmpBoard));
+                                }
                             }
                         }
                     }

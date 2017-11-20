@@ -16,6 +16,9 @@ public class Board {
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
     }
+    public Board(int[][] board) {
+        this.board = board;
+    }
 
     public void setBoard(int[][] board) {
         this.board = board;
