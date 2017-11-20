@@ -13,7 +13,9 @@ public class MinMaxAlphaBeta {
  // player may be "computer" or "opponent"
     public static Board doMinMax(Board actualBoard){
 
-        Board maxBoard = MaxMove(actualBoard, 1, 0 ,0);
+        Board maxBoard = MaxMove(actualBoard, 0, 0 ,0);
+        System.out.println("***************************");
+        maxBoard.printBoard();
 
         return  maxBoard;
     }
@@ -100,24 +102,23 @@ public class MinMaxAlphaBeta {
         if(player == rouge){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
-                    tmpBoard = actualBoard;
-                    if (actualBoard[i][j] == rouge){
+                    if (actualBoard[j][i] == rouge){
                         for(int k = 0; k < 13; k++){
-                            if (k != i){
-                                if(isMoveValid(actualBoard, i, j, k, j)){
-                                    tmpBoard = actualBoard;
-                                    tmpBoard[i][j] = 0;
-                                    tmpBoard[k][j] = rouge;
+                            if (k != j){
+                                if(isMoveValid(actualBoard, j, i, k, i)){
+                                    tmpBoard = board.copyBoard(board);
+                                    tmpBoard[j][i] = 0;
+                                    tmpBoard[k][i] = rouge;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
                         }
                         for(int l = 0; l < 13; l++){
-                            if (l != j){
-                                if(isMoveValid(actualBoard, i, j, i, l)){
-                                    tmpBoard = actualBoard;
-                                    tmpBoard[i][j] = 0;
-                                    tmpBoard[i][l] = rouge;
+                            if (l != i){
+                                if(isMoveValid(actualBoard, j, i, j, l)){
+                                    tmpBoard = board.copyBoard(board);
+                                    tmpBoard[j][i] = 0;
+                                    tmpBoard[j][l] = rouge;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -128,23 +129,23 @@ public class MinMaxAlphaBeta {
         }else if(player == noire){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
-                    if (actualBoard[i][j] == noire){
+                    if (actualBoard[j][i] == noire){
                         for(int k = 0; k < 13; k++){
-                            if (k != i){
-                                if(isMoveValid(actualBoard, i, j, k, j)){
-                                    tmpBoard = actualBoard;
-                                    tmpBoard[i][j] = 0;
-                                    tmpBoard[k][j] = noire;
+                            if (k != j){
+                                if(isMoveValid(actualBoard, j, i, k, i)){
+                                    tmpBoard = board.copyBoard(board);
+                                    tmpBoard[j][i] = 0;
+                                    tmpBoard[j][k] = noire;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
                         }
                         for(int l = 0; l < 13; l++){
-                            if (l != j){
-                                if(isMoveValid(actualBoard, i, j, i, l)){
-                                    tmpBoard = actualBoard;
-                                    tmpBoard[i][j] = 0;
-                                    tmpBoard[i][l] = noire;
+                            if (l != i){
+                                if(isMoveValid(actualBoard, j, i, j, l)){
+                                    tmpBoard = board.copyBoard(board);
+                                    tmpBoard[j][i] = 0;
+                                    tmpBoard[j][l] = noire;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }

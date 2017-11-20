@@ -47,6 +47,12 @@ public class Board {
                 y++;
             }
         }
+        //les coin
+        board[0][0] = 1;
+        board[0][12] = 1;
+        board[12][0] = 1;
+        board[12][12] = 1;
+
         initMap();
         printBoard();
 
@@ -55,7 +61,7 @@ public class Board {
     /**
      * Dessine le board en console
      */
-    private void printBoard() {
+    public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int s = 0; s < BOARD_SIZE; s++) {
                 System.out.print(board[i][s]);
@@ -138,4 +144,12 @@ public class Board {
         return  score;
     }
 
+    public int[][] copyBoard(Board board) {
+        int[][] tmpBoard = board.getBoard();
+        int[][] myInt = new int[tmpBoard.length][];
+        for (int i = 0; i < tmpBoard.length; i++){
+            myInt[i] = tmpBoard[i].clone();
+        }
+        return  myInt;
+    }
 }
