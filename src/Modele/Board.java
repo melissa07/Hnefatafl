@@ -16,6 +16,7 @@ public class Board {
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
     }
+
     public Board(int[][] board) {
         this.board = board;
     }
@@ -62,12 +63,18 @@ public class Board {
      * Dessine le board en console
      */
     public void printBoard() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int s = 0; s < BOARD_SIZE; s++) {
-                System.out.print(board[i][s]);
+//        char letter = 'A';
+//        System.out.println("Letter is: " +letter);
+        for (int i = BOARD_SIZE-1; i >= 0; i--) {
+            System.out.print(String.format("%3d", 13-i)+" |");
+            for (int s = BOARD_SIZE-1; s >= 0; s--) {
+                System.out.print("  "+ board[i][s]);
             }
             System.out.println();
         }
+        System.out.println("_____________________________________________");
+        System.out.println("       A  B  C  D  E  F  G  H  I  J  K  L  M");
+
     }
 
     public void modifyBoard(String move) {
@@ -78,15 +85,6 @@ public class Board {
         move = move.trim();
         String strMoveDepart = "";
         String strMoveArivee = "";
-        // todo fix this
-        /*
-        int rangeeDepart = Integer.parseInt(move.substring(0,move.indexOf('-')).substring(0,1));
-        int colonneDepart = Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2));
-
-        int rangeeArrive = Integer.parseInt( move.substring(move.indexOf('-')+1, move.length()).substring(0,1));
-        int colonneFin = Integer.parseInt( move.substring(move.indexOf('-')+1, move.length()).substring(1,2));
-*/
-
 
 
         int rangeeDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));

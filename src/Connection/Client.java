@@ -18,6 +18,7 @@ class Client {
             input    = new BufferedInputStream(MyClient.getInputStream());
             output   = new BufferedOutputStream(MyClient.getOutputStream());
             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+
             while(1 == 1) {
                 char cmd = 0;
 
@@ -73,7 +74,8 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
                     nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard);
-                    move = console.readLine();
+                    move = console.readLine(); // todo change this for automatic play
+                    System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
 
