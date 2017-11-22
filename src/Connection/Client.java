@@ -13,6 +13,9 @@ class Client {
         BufferedOutputStream output;
         int[][] board = new int[13][13];
         Board nouveauBoard = null;
+        int joueurRouge = 4;
+        int joueurNoir = 2;
+        int couleurJoueur =0;
 
         try {
             MyClient = new Socket("localhost", 8888);
@@ -40,9 +43,11 @@ class Client {
 
                     System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
                     String move = null;
-                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
+                    couleurJoueur = joueurRouge;
+                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur); // todo devrait etre string nouveauMove quon enverrais au socket
                     //move = console.readLine();
                     System.out.println("Move: " +move);
+                    nouveauBoard.modifyBoard(move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
                 }
@@ -53,6 +58,7 @@ class Client {
 
                     int size = input.available();
                     //System.out.println("size " + size);
+                    couleurJoueur = joueurNoir;
                     input.read(aBuffer,0,size);
                     String s = new String(aBuffer).trim();
                     System.out.println(s);
@@ -75,7 +81,7 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
+                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur); // todo devrait etre string nouveauMove quon enverrais au socket
 //                    move = console.readLine(); // todo change this for automatic play
                     nouveauBoard.modifyBoard(move);
                     System.out.println("Move: " +move);

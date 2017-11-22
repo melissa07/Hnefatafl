@@ -19,8 +19,8 @@ public class MinMaxAlphaBeta {
     private static FileWriter fw = null;
 
  // player may be "computer" or "opponent"
-    public static String doMinMax(Board actualBoard){
-        Board maxBoard = MaxMove(actualBoard, 0, 0, 0);
+    public static String doMinMax(Board actualBoard, int player){
+        Board maxBoard = MaxMove(actualBoard, player, 0, 0, 0);
         System.out.println("***************************");
         //maxBoard.printBoard();
 
@@ -50,7 +50,7 @@ public class MinMaxAlphaBeta {
         return  move;
     }
 
-    private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
+    private static Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -59,10 +59,16 @@ public class MinMaxAlphaBeta {
             Board bestSavedBoard = actualBoard;
             int bestScore = 0;
 
-            ArrayList<Board> boards = generateMoves(actualBoard, NOIR/*TODO changer selon le player*/);
+            ArrayList<Board> boards = new ArrayList<Board>();
+            if(couleurJoueur == NOIR) {
+                boards = generateMoves(actualBoard, NOIR);
+            }else if(couleurJoueur == ROUGE){
+                boards = generateMoves(actualBoard, ROUGE);
+            }
+
             for (Board board : boards) {
                 Board savedBoard = board;
-                board = MinMove(executeMove(board),profondeur + 1, alpha, beta);
+                board = MinMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
                 int boardScore = board.getScore();
                 //if (board.getScore() > bestBoard.getScore()) {
@@ -91,17 +97,21 @@ public class MinMaxAlphaBeta {
         }
     }
     
-    private static Board MinMove(Board actualBoard, int profondeur, int alpha, int beta) {
+    private static Board MinMove(Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta) {
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
             int bestScore = 0;
-
-            ArrayList<Board> boards = generateMoves(actualBoard, ROUGE /*TODO changer selon le player*/);
+            ArrayList<Board> boards = new ArrayList<Board>();
+            if(couleurJoueur == NOIR){
+                boards = generateMoves(actualBoard, ROUGE /*TODO changer selon le player*/);
+            }else if(couleurJoueur == ROUGE){
+                boards = generateMoves(actualBoard, NOIR /*TODO changer selon le player*/);
+            }
             for (Board board : boards) {
-                board = MaxMove(executeMove(board), profondeur + 1, alpha, beta);
+                board = MaxMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
                 int boardScore = board.getScore();
                 //if (board.getScore() > bestBoard.getScore()) {

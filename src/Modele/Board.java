@@ -69,8 +69,8 @@ public class Board {
             }
             System.out.println();
         }
-        System.out.println("_____________________________________________");
         System.out.println("       A  B  C  D  E  F  G  H  I  J  K  L  M");
+        System.out.println("_____________________________________________");
 
     }
 
