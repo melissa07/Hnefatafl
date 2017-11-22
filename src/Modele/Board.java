@@ -81,9 +81,14 @@ public class Board {
         int[][] moveFinal = null;
 
         move = move.trim();
-
+        int rangeeDepart = 0;
         int colonneDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
-        int rangeeDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
+        String moveTmp = move.substring(0,move.indexOf('-'));
+        if(moveTmp.length() == 3){
+            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1,2)));
+        }else if(moveTmp.length() == 4){
+            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1,3)));
+        }
         System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
 
 

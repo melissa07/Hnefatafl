@@ -226,7 +226,7 @@ public class MinMaxAlphaBeta {
                     }
                 }
             }else{
-                for(int i = rowMove + 1; i <= rowInit; i++){
+                for(int i = rowMove; i < rowInit; i++){
                     if(board[columnInit][i] != 0){
                         return false;
                     }
@@ -243,7 +243,7 @@ public class MinMaxAlphaBeta {
                     }
                 }
             }else{
-                for(int i = columnMove + 1; i <= columnInit; i++){
+                for(int i = columnMove; i < columnInit; i++){
                     if(board[i][rowInit] != 0){
                         return false;
                     }
