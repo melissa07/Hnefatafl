@@ -34,15 +34,20 @@ public class MinMaxAlphaBeta {
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
+            Board bestSavedBoard = actualBoard;
             int bestScore = 0;
 
             ArrayList<Board> boards = generateMoves(actualBoard, noire/*TODO changer selon le player*/);
             for (Board board : boards) {
-                Board boardProfond = MinMove(executeMove(board),profondeur + 1, alpha, beta);
+                Board savedBoard = board;
+                board = MinMove(executeMove(board),profondeur + 1, alpha, beta);
 
-                int boardScore = boardProfond.getScore();
+                int boardScore = board.getScore();
                 //if (board.getScore() > bestBoard.getScore()) {
                 if (boardScore > bestScore) {
+                    if(profondeur == 0){
+                        bestSavedBoard = savedBoard;
+                    }
                     //bestScore = board.getScore();
                     bestScore = boardScore;
                     bestBoard = board;
@@ -50,8 +55,15 @@ public class MinMaxAlphaBeta {
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta > alpha)
+                if (beta > alpha) {
+                    if (profondeur == 0) {
+                        return bestSavedBoard;
+                    }
                     return bestBoard;
+                }
+            }
+            if(profondeur == 0){
+                return bestSavedBoard;
             }
             return bestBoard;
         }
@@ -201,13 +213,13 @@ public class MinMaxAlphaBeta {
         // et le positionnement apres mouvement.
         if(columnInit == columnMove && rowInit != rowMove){
             if(rowMove > rowInit){
-                for(int i = rowInit + 1; i < rowMove; i++){
-                    if(board[columnInit][i] != 0 || board[columnInit][i] != 5){
+                for(int i = rowInit + 1; i <= rowMove; i++){
+                    if(board[columnInit][i] != 0){
                         return false;
                     }
                 }
             }else{
-                for(int i = rowMove + 1; i < rowInit; i++){
+                for(int i = rowMove + 1; i <= rowInit; i++){
                     if(board[columnInit][i] != 0){
                         return false;
                     }
@@ -218,13 +230,13 @@ public class MinMaxAlphaBeta {
         // et le positionnement apres mouvement.
         if(rowInit == rowMove && columnInit != columnMove){
             if(columnMove > columnInit){
-                for(int i = columnInit + 1; i < columnMove; i++){
-                    if(board[i][rowInit] != 0 || board[i][rowInit] != 5){
+                for(int i = columnInit + 1; i <= columnMove; i++){
+                    if(board[i][rowInit] != 0){
                         return false;
                     }
                 }
             }else{
-                for(int i = columnMove + 1; i < columnInit; i++){
+                for(int i = columnMove + 1; i <= columnInit; i++){
                     if(board[i][rowInit] != 0){
                         return false;
                     }

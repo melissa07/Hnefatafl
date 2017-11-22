@@ -74,13 +74,6 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-                    int[][] tmpboard = new int[2][2];
-                    tmpboard[0][0] = 4;
-                    tmpboard[0][1] = 0;
-                    tmpboard[1][0] = 0;
-                    tmpboard[1][1] = 2;
-                    Board tmpBoard2 = new Board(tmpboard);
-                    //nouveauBoard = MinMaxAlphaBeta.doMinMax(tmpBoard2);
 
                     nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard);
                     move = console.readLine(); // todo change this for automatic play
