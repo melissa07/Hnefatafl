@@ -63,11 +63,9 @@ public class Board {
      * Dessine le board en console
      */
     public void printBoard() {
-//        char letter = 'A';
-//        System.out.println("Letter is: " +letter);
-        for (int i = BOARD_SIZE-1; i >= 0; i--) {
-            System.out.print(String.format("%3d", 13-i)+" |");
-            for (int s = BOARD_SIZE-1; s >= 0; s--) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            System.out.print(String.format("%3d", BOARD_SIZE-i)+" |");
+            for (int s = 0; s < BOARD_SIZE; s++) {
                 System.out.print("  "+ board[i][s]);
             }
             System.out.println();
@@ -83,22 +81,22 @@ public class Board {
         int[][] moveFinal = null;
 
         move = move.trim();
-        String strMoveDepart = "";
-        String strMoveArivee = "";
-
 
         int rangeeDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
         int colonneDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
+        System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
+//        int valeurRangeeDepart = map.get(rangeeDepart); // Doit retourner le nombre correspondant a la lettre dans le board
 
         int rangeeArrive = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
         int colonneFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,2)));
+        System.out.println("Rangee d'arrivee: " +rangeeArrive+ " et colonne d'arrivee: " +colonneFin);
 
-        int[][] depart = new int[rangeeDepart][colonneDepart];
-        int[][] arrivee = new int[rangeeArrive][colonneFin];
+        int valeurCaseDepart = board[colonneDepart][rangeeDepart];
+        board[colonneDepart][rangeeDepart] = 0;
+        board[colonneFin][rangeeArrive] = valeurCaseDepart;
 
-        strMoveDepart = move.substring(0, move.indexOf('-'));
+        printBoard();
 
-        strMoveArivee = move.substring(move.indexOf('-')+1, move.length());
     }
 
     public void initMap(){

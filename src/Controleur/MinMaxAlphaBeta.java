@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MinMaxAlphaBeta {
-    private static final int rouge = 4;
-    private static final int noire = 2;
-    private static final int king = 5;
+    private static final int ROUGE = 4;
+    private static final int NOIR = 2;
+    private static final int KING = 5;
     private static int score = 0;
     private static final int maxProfondeur = 2;
 
@@ -25,7 +25,29 @@ public class MinMaxAlphaBeta {
         System.out.println("***************************");
         maxBoard.printBoard();
 
+        fetchLastMadeMove(actualBoard, maxBoard);
+
         return  maxBoard;
+    }
+
+    private static void fetchLastMadeMove(Board actualBoard, Board maxBoard) {
+        String moveDepart = null;
+        String moveArrivee = null;
+
+        for (int i = 0; i < actualBoard.getBOARD_SIZE(); i++) {
+            for (int j = 0; j < actualBoard.getBOARD_SIZE(); j++) {
+                if(actualBoard.getBoard()[i][j] != maxBoard.getBoard()[i][j]) {
+                    if(maxBoard.getBoard()[i][j] == 0) {
+                        moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                    }
+                    else {
+                        moveArrivee = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                    }
+                }
+            }
+        }
+        String move = "3 "+ moveDepart+" - "+moveArrivee; // 3 pour dire qu'un move est effectue
+        System.out.println("Le move est: " +move);
     }
 
     private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
@@ -37,7 +59,7 @@ public class MinMaxAlphaBeta {
             Board bestSavedBoard = actualBoard;
             int bestScore = 0;
 
-            ArrayList<Board> boards = generateMoves(actualBoard, noire/*TODO changer selon le player*/);
+            ArrayList<Board> boards = generateMoves(actualBoard, NOIR/*TODO changer selon le player*/);
             for (Board board : boards) {
                 Board savedBoard = board;
                 board = MinMove(executeMove(board),profondeur + 1, alpha, beta);
@@ -77,7 +99,7 @@ public class MinMaxAlphaBeta {
             Board bestBoard = actualBoard;
             int bestScore = 0;
 
-            ArrayList<Board> boards = generateMoves(actualBoard, rouge /*TODO changer selon le player*/);
+            ArrayList<Board> boards = generateMoves(actualBoard, ROUGE /*TODO changer selon le player*/);
             for (Board board : boards) {
                 board = MaxMove(executeMove(board), profondeur + 1, alpha, beta);
 
@@ -103,7 +125,6 @@ public class MinMaxAlphaBeta {
     }
 
     private static Board executeMove(Board board) {
-
         return board;
     }
 
@@ -112,43 +133,27 @@ public class MinMaxAlphaBeta {
         try {
             fw = new FileWriter(FILENAME);
             bw = new BufferedWriter(fw);
-
-            //System.out.println("Done");
         }
         catch(IOException ex) {
 
         }
-//        finally {
-//            try {
-//                if(bw != null)
-//                    bw.close();
-//                if(fw != null)
-//                    fw.close();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
 
 
         ArrayList<Board> boardArray = new ArrayList<Board>();
         int[][] actualBoard = board.getBoard();
         int[][] tmpBoard = board.getBoard();
 
-        if(player == rouge){
+        if(player == ROUGE){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
-                    if (actualBoard[j][i] == rouge){
+                    if (actualBoard[j][i] == ROUGE){
                         for(int k = 0; k < 13; k++){
                             if (k != j){
                                 if(isMoveValid(actualBoard, j, i, k, i)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[k][i] = rouge;
-//                                    Board tmpBoard = new Board();
+                                    tmpBoard[k][i] = ROUGE;
                                     boardArray.add(new Board(tmpBoard)); // todo this reset the board?
-//                                    writeBoardToFile(bw, board);
                                 }
                             }
                         }
@@ -157,7 +162,7 @@ public class MinMaxAlphaBeta {
                                 if(isMoveValid(actualBoard, j, i, j, l)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[j][l] = rouge;
+                                    tmpBoard[j][l] = ROUGE;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -165,16 +170,16 @@ public class MinMaxAlphaBeta {
                     }
                 }
             }
-        }else if(player == noire){
+        } else if(player == NOIR){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
-                    if (actualBoard[j][i] == noire){
+                    if (actualBoard[j][i] == NOIR){
                         for(int k = 0; k < 13; k++){
                             if (k != j){
                                 if(isMoveValid(actualBoard, j, i, k, i)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[j][k] = noire;
+                                    tmpBoard[j][k] = NOIR;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -184,7 +189,7 @@ public class MinMaxAlphaBeta {
                                 if(isMoveValid(actualBoard, j, i, j, l)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[j][l] = noire;
+                                    tmpBoard[j][l] = NOIR;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -247,7 +252,12 @@ public class MinMaxAlphaBeta {
         return true;
     }
 
-
+    /**
+     * This is for debugging purpose only
+     * @param bw
+     * @param board
+     * @throws IOException
+     */
     private static void writeBoardToFile(BufferedWriter bw, Board board) throws IOException {
         for (int i = board.getBOARD_SIZE()-1 ; i >= 0; i--) {
             bw.write(String.format("%3d", 13-i)+" |");

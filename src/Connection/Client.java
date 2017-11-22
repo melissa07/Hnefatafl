@@ -24,7 +24,7 @@ class Client {
 
                 cmd = (char)input.read();
 
-                // Début de la partie en joueur blanc
+                // Début de la partie en joueur rouge
                 if(cmd == '1'){
                     byte[] aBuffer = new byte[1024];
 
@@ -37,7 +37,8 @@ class Client {
                     boardValues = s.split(" ");
                     nouveauBoard = new Board(boardValues);
 
-                    System.out.println("Nouvelle partie! Vous jouer blanc, entrez votre premier coup : ");
+                    System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
+                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
                     String move = null;
                     move = console.readLine();
                     output.write(move.getBytes(),0,move.length());
@@ -65,17 +66,14 @@ class Client {
                     byte[] aBuffer = new byte[16];
 
                     int size = input.available();
-                    //System.out.println("size " + size);
                     input.read(aBuffer,0,size);
 
                     String s = new String(aBuffer);
-//                    System.out.println("Dernier coup : "+ s);
                     nouveauBoard.modifyBoard(s);
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-
-                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard);
+                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
                     move = console.readLine(); // todo change this for automatic play
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
