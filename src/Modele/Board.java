@@ -54,7 +54,6 @@ public class Board {
         board[12][0] = 1;
         board[12][12] = 1;
 
-        initMap();
         printBoard();
 
     }
@@ -76,6 +75,7 @@ public class Board {
     }
 
     public void modifyBoard(String move) {
+        initMap();
         System.out.println("Nouveau move:" +move);
         int[][] moveDepart = null;
         int[][] moveFinal = null;
@@ -86,8 +86,10 @@ public class Board {
         int colonneDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
         System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
 
+
+        int remainingLength = move.replaceAll("\\s+","").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+","").length()+1);
         int rangeeArrive = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
-        int colonneFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,2)));
+        int colonneFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
         System.out.println("Rangee d'arrivee: " +rangeeArrive+ " et colonne d'arrivee: " +colonneFin);
 
         int valeurCaseDepart = board[colonneDepart][rangeeDepart];

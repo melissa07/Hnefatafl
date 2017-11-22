@@ -13,6 +13,7 @@ class Client {
         BufferedOutputStream output;
         int[][] board = new int[13][13];
         Board nouveauBoard = null;
+
         try {
             MyClient = new Socket("localhost", 8888);
             input    = new BufferedInputStream(MyClient.getInputStream());
@@ -74,7 +75,8 @@ class Client {
                     String move = null;
 
                     nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
-                    move = console.readLine(); // todo change this for automatic play
+//                    move = console.readLine(); // todo change this for automatic play
+                    move = "J7 - J11";
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
