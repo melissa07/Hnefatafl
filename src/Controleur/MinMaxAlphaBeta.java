@@ -25,7 +25,29 @@ public class MinMaxAlphaBeta {
         System.out.println("***************************");
         maxBoard.printBoard();
 
+        fetchLastMadeMove(actualBoard, maxBoard);
+
         return  maxBoard;
+    }
+
+    private static void fetchLastMadeMove(Board actualBoard, Board maxBoard) {
+        String moveDepart = null;
+        String moveArrivee = null;
+
+        for (int i = 0; i < actualBoard.getBOARD_SIZE(); i++) {
+            for (int j = 0; j < actualBoard.getBOARD_SIZE(); j++) {
+                if(actualBoard.getBoard()[i][j] != maxBoard.getBoard()[i][j]) {
+                    if(maxBoard.getBoard()[i][j] == 0) {
+                        moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                    }
+                    else {
+                        moveArrivee = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                    }
+                }
+            }
+        }
+        String move = "3 "+ moveDepart+" - "+moveArrivee; // 3 pour dire qu'un move est effectue
+        System.out.println("Le move est: " +move);
     }
 
     private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
