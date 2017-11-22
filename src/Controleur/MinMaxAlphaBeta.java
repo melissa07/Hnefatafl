@@ -20,13 +20,14 @@ public class MinMaxAlphaBeta {
 
  // player may be "computer" or "opponent"
     public static Board doMinMax(Board actualBoard){
+        Board maxBoard = MaxMove(actualBoard, 0, 0, 0);
+        for(int i = 0; i < KING; i++) {
+            maxBoard = MaxMove(maxBoard, 0, 0, 0);
+            System.out.println("***************************");
+            maxBoard.printBoard();
 
-        Board maxBoard = MaxMove(actualBoard, 0, 0 ,0);
-        System.out.println("***************************");
-        maxBoard.printBoard();
-
-        fetchLastMadeMove(actualBoard, maxBoard);
-
+            fetchLastMadeMove(actualBoard, maxBoard);
+        }
         return  maxBoard;
     }
 
@@ -172,16 +173,18 @@ public class MinMaxAlphaBeta {
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
                     if (actualBoard[j][i] == NOIR){
+                        //tout les move horizontal
                         for(int k = 0; k < 13; k++){
                             if (k != j){
                                 if(isMoveValid(actualBoard, j, i, k, i)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[j][k] = NOIR;
+                                    tmpBoard[k][i] = NOIR;
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
                         }
+                        //tout les move vertical
                         for(int l = 0; l < 13; l++){
                             if (l != i){
                                 if(isMoveValid(actualBoard, j, i, j, l)){
