@@ -82,14 +82,14 @@ public class Board {
 
         move = move.trim();
 
-        int rangeeDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
-        int colonneDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
+        int colonneDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
+        int rangeeDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
         System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
 
 
         int remainingLength = move.replaceAll("\\s+","").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+","").length()+1);
-        int rangeeArrive = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
-        int colonneFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
+        int colonneFin = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
+        int rangeeArrive = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
         System.out.println("Rangee d'arrivee: " +rangeeArrive+ " et colonne d'arrivee: " +colonneFin);
 
         int valeurCaseDepart = board[colonneDepart][rangeeDepart];
