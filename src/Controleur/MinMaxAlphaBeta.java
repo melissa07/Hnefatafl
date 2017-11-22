@@ -137,23 +137,21 @@ public class MinMaxAlphaBeta {
         catch(IOException ex) {
 
         }
-
-
         ArrayList<Board> boardArray = new ArrayList<Board>();
         int[][] actualBoard = board.getBoard();
         int[][] tmpBoard = board.getBoard();
 
         if(player == ROUGE){
-            for(int i = 0; i < actualBoard.length;i++){
+            for(int i = 0; i < actualBoard.length;i++){ // todo techniquement tu veux pas commencer a 0 ? vu que la case 0 contient un 1
                 for (int j = 0; j < actualBoard[i].length;j++){
                     if (actualBoard[j][i] == ROUGE){
                         for(int k = 0; k < 13; k++){
                             if (k != j){
-                                if(isMoveValid(actualBoard, j, i, k, i)){
+                                if(isMoveValid(actualBoard, j, i, k, i)){ //colonneinitiale, rangeeinitiale, colonne arrivee, rangeeArrive
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[k][i] = ROUGE;
-                                    boardArray.add(new Board(tmpBoard)); // todo this reset the board?
+                                    boardArray.add(new Board(tmpBoard));
                                 }
                             }
                         }
@@ -200,7 +198,7 @@ public class MinMaxAlphaBeta {
         }
         for (int i = 0 ; i < boardArray.size(); i++) {
             try {
-                writeBoardToFile(bw, boardArray.get(i));
+                writeBoardToFile(bw, board, boardArray.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -219,7 +217,7 @@ public class MinMaxAlphaBeta {
         if(columnInit == columnMove && rowInit != rowMove){
             if(rowMove > rowInit){
                 for(int i = rowInit + 1; i <= rowMove; i++){
-                    if(board[columnInit][i] != 0){
+                    if(board[columnInit][i] != 0 ) {
                         return false;
                     }
                 }
@@ -258,10 +256,19 @@ public class MinMaxAlphaBeta {
      * @param board
      * @throws IOException
      */
-    private static void writeBoardToFile(BufferedWriter bw, Board board) throws IOException {
-        for (int i = board.getBOARD_SIZE()-1 ; i >= 0; i--) {
-            bw.write(String.format("%3d", 13-i)+" |");
-            for (int j = board.getBOARD_SIZE()-1 ; j >= 0; j--) {
+    private static void writeBoardToFile(BufferedWriter bw, Board originalBoard, Board board) throws IOException {
+        bw.write("Original board: \n");
+        for (int i = 0; i < originalBoard.getBOARD_SIZE(); i++) {
+            bw.write(String.format("%3d", i+1)+" |");
+            for (int j = 0; j < originalBoard.getBOARD_SIZE(); j++) {
+                bw.write(originalBoard.getBoard()[i][j]+"   ");
+            }
+            bw.write("\n");
+        }
+        bw.write("Possible boards: \n");
+        for (int i = 0; i < board.getBOARD_SIZE(); i++) {
+            bw.write(String.format("%3d", i+1)+" |");
+            for (int j = 0; j < board.getBOARD_SIZE(); j++) {
                 bw.write(board.getBoard()[i][j]+"   ");
             }
             bw.write("\n");

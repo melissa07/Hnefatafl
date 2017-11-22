@@ -64,7 +64,7 @@ public class Board {
      */
     public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            System.out.print(String.format("%3d", BOARD_SIZE-i)+" |");
+            System.out.print(String.format("%3d", i+1)+" |");
             for (int s = 0; s < BOARD_SIZE; s++) {
                 System.out.print("  "+ board[i][s]);
             }
@@ -85,7 +85,6 @@ public class Board {
         int rangeeDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
         int colonneDepart = map2.get(Integer.parseInt(move.substring(0,move.indexOf('-')).substring(1,2)));
         System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
-//        int valeurRangeeDepart = map.get(rangeeDepart); // Doit retourner le nombre correspondant a la lettre dans le board
 
         int rangeeArrive = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
         int colonneFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,2)));
@@ -142,7 +141,7 @@ public class Board {
 
     public int[][] copyBoard(Board board) {
         int[][] tmpBoard = board.getBoard();
-        int[][] myInt = new int[tmpBoard.length][];
+        int[][] myInt = new int[tmpBoard.length][]; // todo myInt ? - Christelle
         for (int i = 0; i < tmpBoard.length; i++){
             myInt[i] = tmpBoard[i].clone();
         }
