@@ -39,9 +39,10 @@ class Client {
                     nouveauBoard = new Board(boardValues);
 
                     System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
-                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
                     String move = null;
-                    move = console.readLine();
+                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
+                    //move = console.readLine();
+                    System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
                 }
@@ -74,9 +75,9 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-                    nouveauBoard = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
+                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard); // todo devrait etre string nouveauMove quon enverrais au socket
 //                    move = console.readLine(); // todo change this for automatic play
-                    move = "J7 - J11";
+                    nouveauBoard.modifyBoard(move);
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();

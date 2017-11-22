@@ -19,19 +19,15 @@ public class MinMaxAlphaBeta {
     private static FileWriter fw = null;
 
  // player may be "computer" or "opponent"
-    public static Board doMinMax(Board actualBoard){
+    public static String doMinMax(Board actualBoard){
         Board maxBoard = MaxMove(actualBoard, 0, 0, 0);
-        for(int i = 0; i < KING; i++) {
-            maxBoard = MaxMove(maxBoard, 0, 0, 0);
-            System.out.println("***************************");
-            maxBoard.printBoard();
+        System.out.println("***************************");
+        //maxBoard.printBoard();
 
-            fetchLastMadeMove(actualBoard, maxBoard);
-        }
-        return  maxBoard;
+        return fetchLastMadeMove(actualBoard, maxBoard);
     }
 
-    private static void fetchLastMadeMove(Board actualBoard, Board maxBoard) {
+    private static String fetchLastMadeMove(Board actualBoard, Board maxBoard) {
         String moveDepart = null;
         String moveArrivee = null;
 
@@ -39,16 +35,19 @@ public class MinMaxAlphaBeta {
             for (int j = 0; j < actualBoard.getBOARD_SIZE(); j++) {
                 if(actualBoard.getBoard()[i][j] != maxBoard.getBoard()[i][j]) {
                     if(maxBoard.getBoard()[i][j] == 0) {
-                        moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                        moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(13-j);
                     }
                     else {
-                        moveArrivee = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(j);
+                        moveArrivee = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(13-j);
                     }
                 }
             }
         }
-        String move = "3 "+ moveDepart+" - "+moveArrivee; // 3 pour dire qu'un move est effectue
+        //String move = "3 "+ moveDepart+" - "+moveArrivee; // 3 pour dire qu'un move est effectue
+        String move = moveDepart+" - "+moveArrivee;
         System.out.println("Le move est: " +move);
+
+        return  move;
     }
 
     private static Board MaxMove (Board actualBoard, int profondeur, int alpha, int beta){
@@ -180,6 +179,8 @@ public class MinMaxAlphaBeta {
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[k][i] = NOIR;
+                                    //Board tmp = new Board(tmpBoard);
+                                    //tmp.printBoard();
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }

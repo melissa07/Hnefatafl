@@ -63,9 +63,9 @@ public class Board {
      */
     public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            System.out.print(String.format("%3d", i+1)+" |");
+            System.out.print(String.format("%3d", BOARD_SIZE-i)+" |");
             for (int s = 0; s < BOARD_SIZE; s++) {
-                System.out.print("  "+ board[i][s]);
+                System.out.print("  "+ board[s][i]);
             }
             System.out.println();
         }
@@ -76,7 +76,7 @@ public class Board {
 
     public void modifyBoard(String move) {
         initMap();
-        System.out.println("Nouveau move:" +move);
+        //System.out.println("Nouveau move:" +move);
         int[][] moveDepart = null;
         int[][] moveFinal = null;
 
@@ -96,7 +96,7 @@ public class Board {
         board[colonneDepart][rangeeDepart] = 0;
         board[colonneFin][rangeeArrive] = valeurCaseDepart;
 
-        printBoard();
+        //printBoard();
 
     }
 
