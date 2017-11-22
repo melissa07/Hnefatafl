@@ -47,7 +47,7 @@ class Client {
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur); // todo devrait etre string nouveauMove quon enverrais au socket
                     //move = console.readLine();
                     System.out.println("Move: " +move);
-                    nouveauBoard.modifyBoard(move);
+                    nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
                 }
@@ -77,13 +77,13 @@ class Client {
                     input.read(aBuffer,0,size);
 
                     String s = new String(aBuffer);
-                    nouveauBoard.modifyBoard(s);
+                    nouveauBoard.modifyBoard(s, couleurJoueur);
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur); // todo devrait etre string nouveauMove quon enverrais au socket
 //                    move = console.readLine(); // todo change this for automatic play
-                    nouveauBoard.modifyBoard(move);
+                    nouveauBoard.modifyBoard(move, couleurJoueur);
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();

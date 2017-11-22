@@ -74,11 +74,18 @@ public class Board {
 
     }
 
-    public void modifyBoard(String move) {
+    public void modifyBoard(String move ,int couleurJoueur) {
         initMap();
         //System.out.println("Nouveau move:" +move);
         int[][] moveDepart = null;
         int[][] moveFinal = null;
+        int couleurAdverse = 0;
+
+        if(couleurJoueur == 4){
+            couleurAdverse = 2;
+        }else{
+            couleurAdverse = 4;
+        }
 
         move = move.trim();
         int rangeeDepart = 0;
@@ -94,13 +101,40 @@ public class Board {
 
         int remainingLength = move.replaceAll("\\s+","").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+","").length()+1);
         int colonneFin = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
-        int rangeeArrive = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
-        System.out.println("Rangee d'arrivee: " +rangeeArrive+ " et colonne d'arrivee: " +colonneFin);
+        int rangeeFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
+        System.out.println("Rangee d'arrivee: " +rangeeFin+ " et colonne d'arrivee: " +colonneFin);
 
         int valeurCaseDepart = board[colonneDepart][rangeeDepart];
         board[colonneDepart][rangeeDepart] = 0;
-        board[colonneFin][rangeeArrive] = valeurCaseDepart;
-
+        board[colonneFin][rangeeFin] = valeurCaseDepart;
+        if(colonneFin < 11) {
+            if (board[colonneFin + 1][rangeeFin] == couleurJoueur) {
+                if (board[colonneFin + 2][rangeeFin] == couleurAdverse || board[colonneFin + 2][rangeeFin] == 1 || board[colonneFin + 2][rangeeFin] == 5) {
+                    board[colonneFin + 1][rangeeFin] = 0;
+                }
+            }
+        }
+        if(rangeeFin < 11) {
+            if (board[colonneFin][rangeeFin + 1] == couleurJoueur) {
+                if (board[colonneFin][rangeeFin + 2] == couleurAdverse || board[colonneFin][rangeeFin + 2] == 1 || board[colonneFin][rangeeFin + 2] == 5) {
+                    board[colonneFin][rangeeFin + 1] = 0;
+                }
+            }
+        }
+        if(colonneFin > 1) {
+            if (board[colonneFin - 1][rangeeFin] == couleurJoueur) {
+                if (board[colonneFin - 2][rangeeFin] == couleurAdverse || board[colonneFin - 2][rangeeFin] == 1 || board[colonneFin - 2][rangeeFin] == 5) {
+                    board[colonneFin - 1][rangeeFin] = 0;
+                }
+            }
+        }
+        if(rangeeFin > 1) {
+            if (board[colonneFin][rangeeFin - 1] == couleurJoueur) {
+                if (board[colonneFin][rangeeFin - 2] == couleurAdverse || board[colonneFin][rangeeFin - 2] == 1 || board[colonneFin][rangeeFin - 2] == 5) {
+                    board[colonneFin][rangeeFin - 1] = 0;
+                }
+            }
+        }
         //printBoard();
 
     }
