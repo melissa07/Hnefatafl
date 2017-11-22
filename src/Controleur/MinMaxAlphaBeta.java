@@ -12,7 +12,7 @@ public class MinMaxAlphaBeta {
     private static final int noire = 2;
     private static final int king = 5;
     private static int score = 0;
-    private static final int maxProfondeur = 3;
+    private static final int maxProfondeur = 2;
 
     private static final String FILENAME = "boards.txt";
     private static BufferedWriter bw = null;
@@ -34,12 +34,20 @@ public class MinMaxAlphaBeta {
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
+            int bestScore = 0;
+
             ArrayList<Board> boards = generateMoves(actualBoard, noire/*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MinMove(executeMove(actualBoard),profondeur + 1, alpha, beta);
-                if (board.getScore() > bestBoard.getScore()) {
+                Board boardProfond = MinMove(executeMove(board),profondeur + 1, alpha, beta);
+
+                int boardScore = boardProfond.getScore();
+                //if (board.getScore() > bestBoard.getScore()) {
+                if (boardScore > bestScore) {
+                    //bestScore = board.getScore();
+                    bestScore = boardScore;
                     bestBoard = board;
-                    alpha = board.getScore();
+                    //alpha = board.getScore();
+                    alpha = boardScore;
                 }
                 // Ignore remaining moves
                 if (beta > alpha)
@@ -54,15 +62,21 @@ public class MinMaxAlphaBeta {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
-            Board bestBoard = new Board();
-            bestBoard = actualBoard;
+            Board bestBoard = actualBoard;
+            int bestScore = 0;
 
             ArrayList<Board> boards = generateMoves(actualBoard, rouge /*TODO changer selon le player*/);
             for (Board board : boards) {
-                board = MaxMove(executeMove(actualBoard), profondeur + 1, alpha, beta);
-                if (board.getScore() > bestBoard.getScore()) {
+                board = MaxMove(executeMove(board), profondeur + 1, alpha, beta);
+
+                int boardScore = board.getScore();
+                //if (board.getScore() > bestBoard.getScore()) {
+                if (boardScore > bestScore) {
+                    //bestScore = board.getScore();
+                    bestScore = boardScore;
                     bestBoard = board;
-                    beta = board.getScore();
+                    //beta = board.getScore();
+                    beta = boardScore;
                 }
                 // Ignore remaining moves
                 if (beta < alpha)
@@ -82,32 +96,12 @@ public class MinMaxAlphaBeta {
     }
 
 
-
-/*        children = all valid moves for this "player"
-        if (player is computer, i.e., max's turn){
-        // Find max and store in alpha
-        for each child {
-            score = minimax(level - 1, opponent, alpha, beta)
-            if (score > alpha) alpha = score
-            if (alpha >= beta) break;  // beta cut-off
-        }
-        return alpha
-    } else (player is opponent, i.e., min's turn)
-            // Find min and store in beta
-            for each child {
-        score = minimax(level - 1, computer, alpha, beta)
-        if (score < beta) beta = score
-        if (alpha >= beta) break;  // alpha cut-off
-    }
-       return beta
-}*/
-
     private static ArrayList<Board> generateMoves(Board board, int player){
         try {
             fw = new FileWriter(FILENAME);
             bw = new BufferedWriter(fw);
 
-            System.out.println("Done");
+            //System.out.println("Done");
         }
         catch(IOException ex) {
 
@@ -197,19 +191,6 @@ public class MinMaxAlphaBeta {
         return boardArray;
     }
 
-    private static void writeBoardToFile(BufferedWriter bw, Board board) throws IOException {
-        for (int i = board.getBOARD_SIZE()-1 ; i >= 0; i--) {
-            bw.write(String.format("%3d", 13-i)+" |");
-            for (int j = board.getBOARD_SIZE()-1 ; j >= 0; j--) {
-                bw.write(board.getBoard()[i][j]+"   ");
-            }
-            bw.write("\n");
-        }
-        bw.write("_______________________________________________________ \n");
-        bw.write("     A   B   C   D   E   F   G   H   I   J   K   L   M");
-        bw.write("\n \n \n");
-    }
-
     /*
     verifie que le mouvement est valide
     en verifiant qu'il n'y est pas de jeton entre le positionnement initial et le positionnement apres mouvement.
@@ -252,6 +233,20 @@ public class MinMaxAlphaBeta {
         }
 
         return true;
+    }
+
+
+    private static void writeBoardToFile(BufferedWriter bw, Board board) throws IOException {
+        for (int i = board.getBOARD_SIZE()-1 ; i >= 0; i--) {
+            bw.write(String.format("%3d", 13-i)+" |");
+            for (int j = board.getBOARD_SIZE()-1 ; j >= 0; j--) {
+                bw.write(board.getBoard()[i][j]+"   ");
+            }
+            bw.write("\n");
+        }
+        bw.write("_______________________________________________________ \n");
+        bw.write("     A   B   C   D   E   F   G   H   I   J   K   L   M");
+        bw.write("\n \n \n");
     }
 
 }
