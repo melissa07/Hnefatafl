@@ -63,8 +63,6 @@ public class Board {
      * Dessine le board en console
      */
     public void printBoard() {
-//        char letter = 'A';
-//        System.out.println("Letter is: " +letter);
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.print(String.format("%3d", BOARD_SIZE-i)+" |");
             for (int s = 0; s < BOARD_SIZE; s++) {
