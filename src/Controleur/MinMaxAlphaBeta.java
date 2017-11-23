@@ -22,7 +22,7 @@ public class MinMaxAlphaBeta {
     public static String doMinMax(Board actualBoard, int player){
         Board maxBoard = MaxMove(actualBoard, player, 0, 0, 0);
         System.out.println("***************************");
-        //maxBoard.printBoard();
+        maxBoard.printBoard();
 
         return fetchLastMadeMove(actualBoard, maxBoard);
     }
@@ -34,7 +34,7 @@ public class MinMaxAlphaBeta {
         for (int i = 0; i < actualBoard.getBOARD_SIZE(); i++) {
             for (int j = 0; j < actualBoard.getBOARD_SIZE(); j++) {
                 if(actualBoard.getBoard()[i][j] != maxBoard.getBoard()[i][j]) {
-                    if(maxBoard.getBoard()[i][j] == 0) {
+                    if(maxBoard.getBoard()[i][j] == 0 || (i == 6 && j ==6)) {
                         moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(13-j);
                     }
                     else {
@@ -181,16 +181,18 @@ public class MinMaxAlphaBeta {
         } else if(player == NOIR){
             for(int i = 0; i < actualBoard.length;i++){
                 for (int j = 0; j < actualBoard[i].length;j++){
-                    if (actualBoard[j][i] == NOIR){
+                    if (actualBoard[j][i] == NOIR || actualBoard[j][i] == KING){
                         //tout les move horizontal
                         for(int k = 0; k < 13; k++){
                             if (k != j){
                                 if(isMoveValid(actualBoard, j, i, k, i)){
                                     tmpBoard = board.copyBoard(board);
+                                    tmpBoard[k][i] = actualBoard[j][i];
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[k][i] = NOIR;
-                                    //Board tmp = new Board(tmpBoard);
-                                    //tmp.printBoard();
+                                    //si centre de la map et le king a bouger
+                                    if(j == 6 && i == 6){
+                                        tmpBoard[j][i] = 1;
+                                    }
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -200,8 +202,12 @@ public class MinMaxAlphaBeta {
                             if (l != i){
                                 if(isMoveValid(actualBoard, j, i, j, l)){
                                     tmpBoard = board.copyBoard(board);
+                                    tmpBoard[j][l] = actualBoard[j][i];
                                     tmpBoard[j][i] = 0;
-                                    tmpBoard[j][l] = NOIR;
+                                    //si centre de la map et le king a bouger
+                                    if(j == 6 && i == 6){
+                                        tmpBoard[j][i] = 1;
+                                    }
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -226,18 +232,21 @@ public class MinMaxAlphaBeta {
      */
     private static boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
         if(rowInit == rowMove && columnInit == columnMove){ return  false; }
+        if(board[rowMove][columnMove] == 1 && board[rowInit][columnInit] != KING){
+            return false;
+    }
         //si le mouvement est a la vertical, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
         // et le positionnement apres mouvement.
-        if(columnInit == columnMove && rowInit != rowMove){
-            if(rowMove > rowInit){
-                for(int i = rowInit + 1; i <= rowMove; i++){
-                    if(board[columnInit][i] != 0 ) {
+        if (columnInit == columnMove && rowInit != rowMove) {
+            if (rowMove > rowInit) {
+                for (int i = rowInit + 1; i <= rowMove; i++) {
+                    if (board[columnInit][i] > 1) {
                         return false;
                     }
                 }
-            }else{
-                for(int i = rowMove; i < rowInit; i++){
-                    if(board[columnInit][i] != 0){
+            } else {
+                for (int i = rowMove; i < rowInit; i++) {
+                    if (board[columnInit][i] > 1) {
                         return false;
                     }
                 }
@@ -245,22 +254,21 @@ public class MinMaxAlphaBeta {
         }
         //si le mouvement est a la horizontal, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
         // et le positionnement apres mouvement.
-        if(rowInit == rowMove && columnInit != columnMove){
-            if(columnMove > columnInit){
-                for(int i = columnInit + 1; i <= columnMove; i++){
-                    if(board[i][rowInit] != 0){
+        if (rowInit == rowMove && columnInit != columnMove) {
+            if (columnMove > columnInit) {
+                for (int i = columnInit + 1; i <= columnMove; i++) {
+                    if (board[i][rowInit] > 1) {
                         return false;
                     }
                 }
-            }else{
-                for(int i = columnMove; i < columnInit; i++){
-                    if(board[i][rowInit] != 0){
+            } else {
+                for (int i = columnMove; i < columnInit; i++) {
+                    if (board[i][rowInit] > 1) {
                         return false;
                     }
                 }
             }
         }
-
         return true;
     }
 
