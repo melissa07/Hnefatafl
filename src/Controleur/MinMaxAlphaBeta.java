@@ -152,7 +152,7 @@ public class MinMaxAlphaBeta {
         int[][] tmpBoard = board.getBoard();
 
         if(player == ROUGE){
-            for(int i = 0; i < actualBoard.length;i++){ // todo techniquement tu veux pas commencer a 0 ? vu que la case 0 contient un 1
+            for(int i = 0; i < actualBoard.length;i++){ // todo techniquement tu veux pas commencer a 0 ? vu que la case 0 contient un 1 - Christelle
                 for (int j = 0; j < actualBoard[i].length;j++){
                     if (actualBoard[j][i] == ROUGE){
                         for(int k = 0; k < 13; k++){
