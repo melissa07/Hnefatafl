@@ -149,7 +149,7 @@ public class MinMaxAlphaBeta {
         }
         ArrayList<Board> boardArray = new ArrayList<Board>();
         int[][] actualBoard = board.getBoard();
-        int[][] tmpBoard = board.getBoard();
+        int[][] tmpBoard;
 
         if(player == ROUGE){
             for(int i = 0; i < actualBoard.length;i++){ // todo techniquement tu veux pas commencer a 0 ? vu que la case 0 contient un 1 - Christelle
@@ -161,6 +161,7 @@ public class MinMaxAlphaBeta {
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[k][i] = ROUGE;
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, k, i);
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -171,6 +172,7 @@ public class MinMaxAlphaBeta {
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[j][l] = ROUGE;
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, j, l);
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -193,6 +195,7 @@ public class MinMaxAlphaBeta {
                                     if(j == 6 && i == 6){
                                         tmpBoard[j][i] = 1;
                                     }
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, k, i);
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }
@@ -208,6 +211,7 @@ public class MinMaxAlphaBeta {
                                     if(j == 6 && i == 6){
                                         tmpBoard[j][i] = 1;
                                     }
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, j, l);
                                     boardArray.add(new Board(tmpBoard));
                                 }
                             }

@@ -76,12 +76,21 @@ class Client {
                     input.read(aBuffer,0,size);
 
                     String s = new String(aBuffer);
-                    nouveauBoard.modifyBoard(s, couleurJoueur);
+                    if(couleurJoueur == joueurRouge){
+                        nouveauBoard.modifyBoard(s, joueurNoir);
+                    }else if(couleurJoueur == joueurNoir){
+                        nouveauBoard.modifyBoard(s, joueurRouge);
+                    }
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
-                    nouveauBoard.modifyBoard(move, couleurJoueur);
+                    if(couleurJoueur == joueurRouge){
+                        nouveauBoard.modifyBoard(move, joueurRouge);
+                    }else if(couleurJoueur == joueurNoir){
+                        nouveauBoard.modifyBoard(move, joueurNoir);
+                    }
+                    nouveauBoard.printBoard();
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
