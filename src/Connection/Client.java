@@ -16,6 +16,7 @@ class Client {
         int joueurRouge = 4;
         int joueurNoir = 2;
         int couleurJoueur =0;
+        int movesCounter = 0;
 
         try {
             MyClient = new Socket("localhost", 8888);
@@ -46,9 +47,16 @@ class Client {
                     couleurJoueur = joueurRouge;
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
                     System.out.println("Move: " +move);
+                    // todo algo
+                    if(movesCounter == 0)
+                        move = "A9 - A11";
+                    else
+                        move = MinMaxAlphaBeta.buildStrategy(nouveauBoard, couleurJoueur);
+
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
+                    movesCounter++;
                 }
                 // Début de la partie en joueur Noir
                 if(cmd == '2'){
@@ -81,6 +89,9 @@ class Client {
                     String move = null;
 
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
+                    if(movesCounter == 0)
+                        move = "A9 - A11";
+                    
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
