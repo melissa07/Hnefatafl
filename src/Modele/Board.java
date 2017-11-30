@@ -11,7 +11,8 @@ public class Board {
     private final int BOARD_SIZE = 13;
     private Random rn = new Random();
 
-    public Board(){}
+    public Board() {
+    }
 
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
@@ -29,21 +30,24 @@ public class Board {
         return BOARD_SIZE;
     }
 
-    public int[][] getBoard() { return board; }
+    public int[][] getBoard() {
+        return board;
+    }
 
     /**
      * Fonction qui recoit en parametre un tableau correspondant
      * au board et qui cree le board a l'aide d'un tableau a 2
      * dimensions
+     *
      * @param chaineBoard Board recu du serveur
      */
     private void initBoard(String[] chaineBoard) {
         board = new int[BOARD_SIZE][BOARD_SIZE];
-        int x=0,y=0;
-        for(int i=0; i< chaineBoard.length;i++){
+        int x = 0, y = 0;
+        for (int i = 0; i < chaineBoard.length; i++) {
             board[x][y] = Integer.parseInt(chaineBoard[i]);
             x++;
-            if(x == 13){
+            if (x == 13) {
                 x = 0;
                 y++;
             }
@@ -63,9 +67,9 @@ public class Board {
      */
     public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            System.out.print(String.format("%3d", BOARD_SIZE-i)+" |");
+            System.out.print(String.format("%3d", BOARD_SIZE - i) + " |");
             for (int s = 0; s < BOARD_SIZE; s++) {
-                System.out.print("  "+ board[s][i]);
+                System.out.print("  " + board[s][i]);
             }
             System.out.println();
         }
@@ -74,70 +78,85 @@ public class Board {
 
     }
 
-    public void modifyBoard(String move ,int couleurJoueur) {
+    public void modifyBoard(String move, int couleurJoueur) {
         initMap();
         //System.out.println("Nouveau move:" +move);
         int[][] moveDepart = null;
         int[][] moveFinal = null;
         int couleurAdverse = 0;
 
-        if(couleurJoueur == 4){
+        if (couleurJoueur == 4) {
             couleurAdverse = 2;
-        }else{
+        } else {
             couleurAdverse = 4;
         }
 
         move = move.trim();
         int rangeeDepart = 0;
-        int colonneDepart = map.get(move.substring(0,move.indexOf('-')).substring(0,1));
-        String moveTmp = move.substring(0,move.indexOf('-'));
-        if(moveTmp.length() == 3){
-            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1,2)));
-        }else if(moveTmp.length() == 4){
-            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1,3)));
+        int colonneDepart = map.get(move.substring(0, move.indexOf('-')).substring(0, 1));
+        String moveTmp = move.substring(0, move.indexOf('-'));
+        if (moveTmp.length() == 3) {
+            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1, 2)));
+        } else if (moveTmp.length() == 4) {
+            rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1, 3)));
         }
-        System.out.println("Rangee depart: " +rangeeDepart+ " et colonne depart: " +colonneDepart);
+        System.out.println("Rangee depart: " + rangeeDepart + " et colonne depart: " + colonneDepart);
 
 
-        int remainingLength = move.replaceAll("\\s+","").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+","").length()+1);
-        int colonneFin = map.get(move.substring(move.indexOf('-')+2, move.length()).substring(0,1));
-        int rangeeFin = map2.get(Integer.parseInt( move.substring(move.indexOf('-')+2, move.length()).substring(1,remainingLength)));
-        System.out.println("Rangee d'arrivee: " +rangeeFin+ " et colonne d'arrivee: " +colonneFin);
+        int remainingLength = move.replaceAll("\\s+", "").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+", "").length() + 1);
+        int colonneFin = map.get(move.substring(move.indexOf('-') + 2, move.length()).substring(0, 1));
+        int rangeeFin = map2.get(Integer.parseInt(move.substring(move.indexOf('-') + 2, move.length()).substring(1, remainingLength)));
+        System.out.println("Rangee d'arrivee: " + rangeeFin + " et colonne d'arrivee: " + colonneFin);
 
         int valeurCaseDepart = board[colonneDepart][rangeeDepart];
-        board[colonneDepart][rangeeDepart] = 0;
-        board[colonneFin][rangeeFin] = valeurCaseDepart;
-        if(colonneFin < 11) {
-            if (board[colonneFin + 1][rangeeFin] == couleurJoueur) {
-                if (board[colonneFin + 2][rangeeFin] == couleurAdverse || board[colonneFin + 2][rangeeFin] == 1 || board[colonneFin + 2][rangeeFin] == 5) {
-                    board[colonneFin + 1][rangeeFin] = 0;
-                }
-            }
+        this.board[colonneDepart][rangeeDepart] = 0;
+        if(colonneDepart == 6 && rangeeDepart == 6){
+            this.board[colonneDepart][rangeeDepart] = 1;
         }
-        if(rangeeFin < 11) {
-            if (board[colonneFin][rangeeFin + 1] == couleurJoueur) {
-                if (board[colonneFin][rangeeFin + 2] == couleurAdverse || board[colonneFin][rangeeFin + 2] == 1 || board[colonneFin][rangeeFin + 2] == 5) {
-                    board[colonneFin][rangeeFin + 1] = 0;
-                }
-            }
-        }
-        if(colonneFin > 1) {
-            if (board[colonneFin - 1][rangeeFin] == couleurJoueur) {
-                if (board[colonneFin - 2][rangeeFin] == couleurAdverse || board[colonneFin - 2][rangeeFin] == 1 || board[colonneFin - 2][rangeeFin] == 5) {
-                    board[colonneFin - 1][rangeeFin] = 0;
-                }
-            }
-        }
-        if(rangeeFin > 1) {
-            if (board[colonneFin][rangeeFin - 1] == couleurJoueur) {
-                if (board[colonneFin][rangeeFin - 2] == couleurAdverse || board[colonneFin][rangeeFin - 2] == 1 || board[colonneFin][rangeeFin - 2] == 5) {
-                    board[colonneFin][rangeeFin - 1] = 0;
-                }
-            }
-        }
+        this.board[colonneFin][rangeeFin] = valeurCaseDepart;
+        board = mangerJeton(couleurJoueur, couleurAdverse, colonneFin, rangeeFin);
         //printBoard();
 
     }
+
+    public int[][] mangerJeton(int couleurJoueur, int couleurAdverse, int colonneFin, int rangeeFin) {
+        int king = 5;
+        //change la couleur du king pour rouge si c est le joueur rouge qui a fait un movement pour manger
+        // afin qu un joueur rouge ne puisse pas manger un noir a laide du king.
+        if(couleurJoueur == 4){
+            king = 4;
+        }
+        if (colonneFin < 11) {
+            if (this.board[colonneFin + 1][rangeeFin] == couleurAdverse) {
+                if (this.board[colonneFin + 2][rangeeFin] == couleurJoueur || this.board[colonneFin + 2][rangeeFin] == 1 || this.board[colonneFin + 2][rangeeFin] == king || (colonneFin + 2 == 6 && rangeeFin == 6)) {
+                    this.board[colonneFin + 1][rangeeFin] = 0;
+                }
+            }
+        }
+        if (rangeeFin < 11) {
+            if (this.board[colonneFin][rangeeFin + 1] == couleurAdverse) {
+                if (this.board[colonneFin][rangeeFin + 2] == couleurJoueur || this.board[colonneFin][rangeeFin + 2] == 1 || this.board[colonneFin][rangeeFin + 2] == king || (colonneFin == 6 && rangeeFin + 2 == 6)) {
+                    this.board[colonneFin][rangeeFin + 1] = 0;
+                }
+            }
+        }
+        if (colonneFin > 1) {
+            if (this.board[colonneFin - 1][rangeeFin] == couleurAdverse) {
+                if (this.board[colonneFin - 2][rangeeFin] == couleurJoueur || this.board[colonneFin - 2][rangeeFin] == 1 || this.board[colonneFin - 2][rangeeFin] == king || (colonneFin - 2 == 6 && rangeeFin == 6)) {
+                    this.board[colonneFin - 1][rangeeFin] = 0;
+                }
+            }
+        }
+        if (rangeeFin > 1) {
+            if (this.board[colonneFin][rangeeFin - 1] == couleurAdverse) {
+                if (this.board[colonneFin][rangeeFin - 2] == couleurJoueur || this.board[colonneFin][rangeeFin - 2] == 1 || this.board[colonneFin][rangeeFin - 2] == king || (colonneFin == 6 && rangeeFin - 2 == 6)) {
+                    this.board[colonneFin][rangeeFin - 1] = 0;
+                }
+            }
+        }
+        return this.board;
+    }
+
 
     public void initMap(){
         this.map.put("A",0);
