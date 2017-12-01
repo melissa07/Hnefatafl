@@ -50,56 +50,6 @@ public class MinMaxAlphaBeta {
         return  move;
     }
 
-    public static String buildStrategy(Board nouveauBoard, int player) {
-        int[][] board = nouveauBoard.getBoard();
-        int positionRoiX = -1;
-        int positionRoiY = -1;
-        for (int i=0; i< board.length; i++) {
-            for (int j=0; j< board.length; j++) {
-                if(board[j][i] == 5) {
-                    positionRoiX = i;
-                    positionRoiY = j;
-                }
-            }
-        }
-        boolean estEntoure = verifierSiRoiEntoure(board, positionRoiX, positionRoiY); // 1ere strategie de calcul de board
-        boolean priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
-
-        return null;
-    }
-
-    private static boolean verifierSiCasesPrioritairesOccupees(int[][] board) {
-        int counter = 0;
-        while(counter < 4) {
-            for (int i = 2 ; i<board.length; i--) {
-                for (int j = 0; j < 3; j++) {
-                    if(board[j][i] == 1)
-                        return false; // todo And also check if king could reach position in 2 moves or less
-                }
-            }
-        }
-        // todo compter le nombre de cases importantes non protegees afin d'y attribuer un score
-        return true;
-    }
-    private static boolean verifierSiRoiEntoure(int[][] board, int positionRoiX, int positionRoiY) {
-        boolean estEntoure = true;
-        if(positionRoiX+1 <= 12
-                && (board[positionRoiY][positionRoiX+1] != 2
-                || board[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
-
-        if(positionRoiX-1 >= 0
-                && (board[positionRoiY][positionRoiX-1] != 2
-                || board[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
-
-        if(positionRoiY+1 <= 12
-                && (board[positionRoiY+1][positionRoiX] != 2
-                || board[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
-
-        if(positionRoiY-1 >= 0
-                && (board[positionRoiY-1][positionRoiX] != 2
-                || board[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
-        return estEntoure;
-    }
     private static Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
@@ -121,15 +71,12 @@ public class MinMaxAlphaBeta {
                 board = MinMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
                 int boardScore = board.getScore();
-                //if (board.getScore() > bestBoard.getScore()) {
                 if (boardScore > bestScore) {
                     if(profondeur == 0){
                         bestSavedBoard = savedBoard;
                     }
-                    //bestScore = board.getScore();
                     bestScore = boardScore;
                     bestBoard = board;
-                    //alpha = board.getScore();
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
@@ -164,12 +111,9 @@ public class MinMaxAlphaBeta {
                 board = MaxMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
                 int boardScore = board.getScore();
-                //if (board.getScore() > bestBoard.getScore()) {
                 if (boardScore > bestScore) {
-                    //bestScore = board.getScore();
                     bestScore = boardScore;
                     bestBoard = board;
-                    //beta = board.getScore();
                     beta = boardScore;
                 }
                 // Ignore remaining moves
@@ -187,7 +131,6 @@ public class MinMaxAlphaBeta {
     private static Board executeMove(Board board) {
         return board;
     }
-
 
     private static ArrayList<Board> generateMoves(Board board, int player){
         try {

@@ -3,6 +3,7 @@ package Modele;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import Controleur.Strategy;
 
 public class Board {
     private Map<String, Integer> map = new HashMap<String, Integer>();
@@ -10,6 +11,7 @@ public class Board {
     private int[][] board = null;
     private final int BOARD_SIZE = 13;
     private Random rn = new Random();
+
 
     public Board() {
     }
@@ -193,9 +195,12 @@ public class Board {
     calcule et retourne le score du board.
      */
     public int getScore(){
+        Strategy strategieCalculScore = new Strategy();
+
+        //Méthode qui va permettre de calculer le score du board avec les stratégies.
+        //int score = strategieCalculScore.attackerStrategy(this);
 
         int score = rn.nextInt(10) + 1;
-
         return  score;
     }
 

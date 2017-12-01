@@ -48,10 +48,11 @@ class Client {
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
                     System.out.println("Move: " +move);
                     // todo algo
+                    /*
                     if(movesCounter == 0)
                         move = "A9 - A11";
                     else
-                        move = MinMaxAlphaBeta.buildStrategy(nouveauBoard, couleurJoueur);
+                        move = MinMaxAlphaBeta.buildStrategy(nouveauBoard, couleurJoueur);*/
 
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
@@ -93,19 +94,10 @@ class Client {
                     String move = null;
 
                     move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
-//<<<<<<< HEAD
                     if(movesCounter == 0)
                         move = "A9 - A11";
                     
                     nouveauBoard.modifyBoard(move, couleurJoueur);
-//=======
-//                    if(couleurJoueur == joueurRouge){
-//                        nouveauBoard.modifyBoard(move, joueurRouge);
-//                    }else if(couleurJoueur == joueurNoir){
-//                        nouveauBoard.modifyBoard(move, joueurNoir);
-//                    }
-//                    nouveauBoard.printBoard();
-//>>>>>>> 9cc3a55becc474926031fe8db2513115e2465232
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
