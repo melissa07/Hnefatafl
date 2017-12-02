@@ -11,6 +11,8 @@ public class Board {
     private int[][] board = null;
     private final int BOARD_SIZE = 13;
     private Random rn = new Random();
+    private int kingPositionX = -1;
+    private int kingPositionY = -1;
 
 
     public Board() {
@@ -26,6 +28,22 @@ public class Board {
 
     public void setBoard(int[][] board) {
         this.board = board;
+    }
+
+    public int getKingPositionX() {
+        return kingPositionX;
+    }
+
+    public void setKingPositionX(int kingPositionX) {
+        this.kingPositionX = kingPositionX;
+    }
+
+    public int getKingPositionY() {
+        return kingPositionY;
+    }
+
+    public void setKingPositionY(int kingPositionY) {
+        this.kingPositionY = kingPositionY;
     }
 
     public int getBOARD_SIZE() {

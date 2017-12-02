@@ -7,7 +7,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 // todo retirer cette classe et replacer les fonctions dans les bonnes classes (voir AttackerStrategy et DefenderStrategy
 // qui implementent l'interface IStrategy)
 public class Strategy {
-
+    // todo undo this and call attackerstrategy class instead
     public int attackerStrategy(Board boardGenere/*, int player*/) {
         return buildStrategy(boardGenere);
     }
@@ -25,13 +25,13 @@ public class Strategy {
         for (int i=0; i< board.length; i++) {
             for (int j=0; j< board.length; j++) {
                 if(board[j][i] == 5) {
-                    positionRoiX = i;
-                    positionRoiY = j;
+                    boardGenere.setKingPositionX(i);
+                    boardGenere.setKingPositionY(j);
                 }
             }
         }
         //Todo une fois les aglos fait, ces méthodes devraient nous permettre de calculer un score.
-        boolean estEntoure = verifierSiRoiEntoure(board, positionRoiX, positionRoiY); // 1ere strategie de calcul de board
+        boolean estEntoure = verifierSiRoiEntoure(boardGenere); // 1ere strategie de calcul de board
         boolean priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
         boolean estEnDanger = verifierSiPionEstEnDanger(boardGenere);
 
@@ -58,27 +58,30 @@ public class Strategy {
         return true;
     }
 
-    private static boolean verifierSiRoiEntoure(int[][] board, int positionRoiX, int positionRoiY) {
+    private static boolean verifierSiRoiEntoure(Board board) {
         boolean estEntoure = true;
-        if(positionRoiX+1 <= 12
-                && (board[positionRoiY][positionRoiX+1] != 2
-                || board[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
+        int positionRoiX = board.getKingPositionX();
+        int positionRoiY = board.getKingPositionY();
 
-        if(positionRoiX-1 >= 0
-                && (board[positionRoiY][positionRoiX-1] != 2
-                || board[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
+        if(board.getKingPositionX()+1 <= 12
+                && (board.getBoard()[positionRoiY][positionRoiX+1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
 
-        if(positionRoiY+1 <= 12
-                && (board[positionRoiY+1][positionRoiX] != 2
-                || board[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
+        if(board.getKingPositionX()-1 >= 0
+                && (board.getBoard()[positionRoiY][positionRoiX-1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
 
-        if(positionRoiY-1 >= 0
-                && (board[positionRoiY-1][positionRoiX] != 2
-                || board[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
+        if(board.getKingPositionY()+1 <= 12
+                && (board.getBoard()[positionRoiY+1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
+
+        if(board.getKingPositionY()-1 >= 0
+                && (board.getBoard()[positionRoiY-1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
         return estEntoure;
     }
 
     public void defenderStrategy() {
-
+        // todo not here. call defenderstrategy class instead
     }
 }
