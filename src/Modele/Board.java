@@ -195,6 +195,8 @@ public class Board {
     calcule et retourne le score du board.
      */
     public int getScore(){
+        // todo change this for appropriate strategy
+        // todo ex: Strategy attack = new AttackerStrategy();
         Strategy strategieCalculScore = new Strategy();
 
         //Méthode qui va permettre de calculer le score du board avec les stratégies.

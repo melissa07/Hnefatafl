@@ -23,6 +23,7 @@ class Client {
             input    = new BufferedInputStream(MyClient.getInputStream());
             output   = new BufferedOutputStream(MyClient.getOutputStream());
             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+            MinMaxAlphaBeta minmax = new MinMaxAlphaBeta();
 
             while(1 == 1) {
                 char cmd = 0;
@@ -45,7 +46,7 @@ class Client {
                     System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
                     String move = null;
                     couleurJoueur = joueurRouge;
-                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
+                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
                     System.out.println("Move: " +move);
                     // todo algo
                     /*
@@ -93,7 +94,7 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-                    move = MinMaxAlphaBeta.doMinMax(nouveauBoard, couleurJoueur);
+                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
                     if(movesCounter == 0)
                         move = "A9 - A11";
                     

@@ -4,18 +4,24 @@ import Modele.Board;
 import com.sun.xml.internal.bind.v2.TODO;
 
 //Cette classe permet de calculer le score d'un board parmi tous les boards générés.
+// todo retirer cette classe et replacer les fonctions dans les bonnes classes (voir AttackerStrategy et DefenderStrategy
+// qui implementent l'interface IStrategy)
 public class Strategy {
 
     public int attackerStrategy(Board boardGenere/*, int player*/) {
         return buildStrategy(boardGenere);
     }
 
+
+    // todo il faut aussi savoir de quel coin le roi est le plus proche. Compte dans le
+    // todo calcul du score
     //cette méthode retourne un int correspondant au score du board passé en paramètre.
     //Pourquoi on aurait besoin du player ?
     public static int buildStrategy(Board boardGenere/*, int player*/) {
         int[][] board = boardGenere.getBoard();
         int positionRoiX = -1;
         int positionRoiY = -1;
+        // this get the king position on the board
         for (int i=0; i< board.length; i++) {
             for (int j=0; j< board.length; j++) {
                 if(board[j][i] == 5) {
@@ -31,6 +37,7 @@ public class Strategy {
 
         return 0;
     }
+
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
     private static boolean verifierSiPionEstEnDanger(Board board){
         //Todo vérifier si DANS LE BOARD un pion (n'importe lequel) a des chances d'être mangé

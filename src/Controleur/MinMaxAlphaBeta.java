@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MinMaxAlphaBeta {
-    private static final int ROUGE = 4;
-    private static final int NOIR = 2;
-    private static final int KING = 5;
+    public final int ROUGE = 4;
+    public final int NOIR = 2;
+    public final int KING = 5;
     private static int score = 0;
     private static final int maxProfondeur = 2;
 
@@ -19,7 +19,7 @@ public class MinMaxAlphaBeta {
     private static FileWriter fw = null;
 
  // player may be "computer" or "opponent"
-    public static String doMinMax(Board actualBoard, int player){
+    public String doMinMax(Board actualBoard, int player){
         Board maxBoard = MaxMove(actualBoard, player, 0, 0, 0);
         System.out.println("***************************");
         maxBoard.printBoard();
@@ -27,7 +27,7 @@ public class MinMaxAlphaBeta {
         return fetchLastMadeMove(actualBoard, maxBoard);
     }
 
-    private static String fetchLastMadeMove(Board actualBoard, Board maxBoard) {
+    private String fetchLastMadeMove(Board actualBoard, Board maxBoard) {
         String moveDepart = null;
         String moveArrivee = null;
 
@@ -50,7 +50,7 @@ public class MinMaxAlphaBeta {
         return  move;
     }
 
-    private static Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
+    private Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -94,7 +94,7 @@ public class MinMaxAlphaBeta {
         }
     }
     
-    private static Board MinMove(Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta) {
+    private Board MinMove(Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta) {
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
@@ -124,15 +124,15 @@ public class MinMaxAlphaBeta {
         }
     }
 
-    private static boolean IsGameOver(Board board) {
+    private boolean IsGameOver(Board board) {
         return false;
     }
 
-    private static Board executeMove(Board board) {
+    private Board executeMove(Board board) {
         return board;
     }
 
-    private static ArrayList<Board> generateMoves(Board board, int player){
+    private ArrayList<Board> generateMoves(Board board, int player){
         try {
             fw = new FileWriter(FILENAME);
             bw = new BufferedWriter(fw);
@@ -227,7 +227,7 @@ public class MinMaxAlphaBeta {
     verifie que le mouvement est valide
     en verifiant qu'il n'y est pas de jeton entre le positionnement initial et le positionnement apres mouvement.
      */
-    private static boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
+    private boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
         if(rowInit == rowMove && columnInit == columnMove){ return  false; }
         if(board[rowMove][columnMove] == 1 && board[rowInit][columnInit] != KING){
             return false;
