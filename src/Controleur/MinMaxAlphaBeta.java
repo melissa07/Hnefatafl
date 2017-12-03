@@ -70,7 +70,13 @@ public class MinMaxAlphaBeta {
                 Board savedBoard = board;
                 board = MinMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
-                int boardScore = board.getScore();
+                int boardScore = 0;
+                if(couleurJoueur == ROUGE)
+                    boardScore = AttackerStrategy.getInstance().execute();
+                else if(couleurJoueur == NOIR)
+                    boardScore = DefenderStrategy.getInstance().execute();
+                // board.getScore() will be removed. Code above will be used
+//                int boardScore = board.getScore();
                 if (boardScore > bestScore) {
                     if(profondeur == 0){
                         bestSavedBoard = savedBoard;
@@ -110,7 +116,14 @@ public class MinMaxAlphaBeta {
             for (Board board : boards) {
                 board = MaxMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
-                int boardScore = board.getScore();
+                int boardScore = 0;
+                if(couleurJoueur == ROUGE)
+                    boardScore = AttackerStrategy.getInstance().execute();
+                else if(couleurJoueur == NOIR)
+                    boardScore = DefenderStrategy.getInstance().execute();
+
+                // board.getScore() will be removed. Code above will be used
+//                int boardScore = board.getScore();
                 if (boardScore > bestScore) {
                     bestScore = boardScore;
                     bestBoard = board;

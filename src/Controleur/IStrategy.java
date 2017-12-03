@@ -1,5 +1,6 @@
 package Controleur;
 
 public interface IStrategy {
-    public void execute();
+    public int execute();
+    public int countNbPawnsLeft();
 }

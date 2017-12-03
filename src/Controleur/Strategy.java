@@ -19,8 +19,6 @@ public class Strategy {
     //Pourquoi on aurait besoin du player ?
     public static int buildStrategy(Board boardGenere/*, int player*/) {
         int[][] board = boardGenere.getBoard();
-        int positionRoiX = -1;
-        int positionRoiY = -1;
         // this get the king position on the board
         for (int i=0; i< board.length; i++) {
             for (int j=0; j< board.length; j++) {

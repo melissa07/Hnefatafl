@@ -72,7 +72,7 @@ public class Board {
                 y++;
             }
         }
-        //les coin
+        //les coins
         board[0][0] = 1;
         board[0][12] = 1;
         board[12][0] = 1;
@@ -215,7 +215,7 @@ public class Board {
     public int getScore(){
         // todo change this for appropriate strategy
         // todo ex: Strategy attack = new AttackerStrategy();
-        Strategy strategieCalculScore = new Strategy();
+//        Strategy strategieCalculScore = new Strategy();
 
         //Méthode qui va permettre de calculer le score du board avec les stratégies.
         //int score = strategieCalculScore.attackerStrategy(this);
@@ -223,6 +223,8 @@ public class Board {
         int score = rn.nextInt(10) + 1;
         return  score;
     }
+
+
 
     public int[][] copyBoard(Board board) {
         int[][] tmpBoard = board.getBoard();
