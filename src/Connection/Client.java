@@ -42,6 +42,8 @@ class Client {
                     String[] boardValues;
                     boardValues = s.split(" ");
                     nouveauBoard = new Board(boardValues);
+                    nouveauBoard.setKingPositionY(6);
+                    nouveauBoard.setKingPositionX(6);
 
                     System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
                     String move = null;
@@ -74,6 +76,8 @@ class Client {
                     String[] boardValues;
                     boardValues = s.split(" ");
                     nouveauBoard = new Board(boardValues);
+                    nouveauBoard.setKingPositionX(6);
+                    nouveauBoard.setKingPositionY(6);
                 }
 
 
@@ -95,7 +99,8 @@ class Client {
                     String move = null;
 
                     move = minmax.doMinMax(nouveauBoard, couleurJoueur);
-                    if(movesCounter == 0)
+
+                    if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
                     
                     nouveauBoard.modifyBoard(move, couleurJoueur);

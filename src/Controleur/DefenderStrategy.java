@@ -1,5 +1,7 @@
 package Controleur;
 
+import Modele.Board;
+
 public class DefenderStrategy implements IStrategy {
 
     private static DefenderStrategy defenderSingleton = null;
@@ -12,15 +14,15 @@ public class DefenderStrategy implements IStrategy {
     }
 
     @Override
-    public int execute() {
+    public int execute(Board board) {
         int defenderScore = 0;
 
-        defenderScore += countNbPawnsLeft();
+        defenderScore += countNbPawnsLeft(board);
         return -1;
     }
 
     @Override
-    public int countNbPawnsLeft() {
+    public int countNbPawnsLeft(Board board) {
         return 0;
     }
 }

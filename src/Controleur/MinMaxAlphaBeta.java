@@ -12,7 +12,7 @@ public class MinMaxAlphaBeta {
     public final int NOIR = 2;
     public final int KING = 5;
     private static int score = 0;
-    private static final int maxProfondeur = 2;
+    private static final int maxProfondeur = 3;
 
     private static final String FILENAME = "boards.txt";
     private static BufferedWriter bw = null;
@@ -43,6 +43,9 @@ public class MinMaxAlphaBeta {
                 }
             }
         }
+        if(moveArrivee == null || moveDepart == null){
+            System.out.print("test");
+        }
         //String move = "3 "+ moveDepart+" - "+moveArrivee; // 3 pour dire qu'un move est effectue
         String move = moveDepart+" - "+moveArrivee;
         System.out.println("Le move est: " +move);
@@ -72,9 +75,9 @@ public class MinMaxAlphaBeta {
 
                 int boardScore = 0;
                 if(couleurJoueur == ROUGE)
-                    boardScore = AttackerStrategy.getInstance().execute();
+                    boardScore = DefenderStrategy.getInstance().execute(board);
                 else if(couleurJoueur == NOIR)
-                    boardScore = DefenderStrategy.getInstance().execute();
+                    boardScore = AttackerStrategy.getInstance().execute(board);
                 // board.getScore() will be removed. Code above will be used
 //                int boardScore = board.getScore();
                 if (boardScore > bestScore) {
@@ -109,18 +112,18 @@ public class MinMaxAlphaBeta {
             int bestScore = 0;
             ArrayList<Board> boards = new ArrayList<Board>();
             if(couleurJoueur == NOIR){
-                boards = generateMoves(actualBoard, ROUGE /*TODO changer selon le player*/);
+                boards = generateMoves(actualBoard, ROUGE);
             }else if(couleurJoueur == ROUGE){
-                boards = generateMoves(actualBoard, NOIR /*TODO changer selon le player*/);
+                boards = generateMoves(actualBoard, NOIR);
             }
             for (Board board : boards) {
                 board = MaxMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
                 int boardScore = 0;
                 if(couleurJoueur == ROUGE)
-                    boardScore = AttackerStrategy.getInstance().execute();
+                    boardScore = AttackerStrategy.getInstance().execute(board);
                 else if(couleurJoueur == NOIR)
-                    boardScore = DefenderStrategy.getInstance().execute();
+                    boardScore = DefenderStrategy.getInstance().execute(board);
 
                 // board.getScore() will be removed. Code above will be used
 //                int boardScore = board.getScore();
@@ -168,7 +171,15 @@ public class MinMaxAlphaBeta {
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[k][i] = ROUGE;
                                     tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, k, i);
-                                    boardArray.add(new Board(tmpBoard));
+                                    Board newBoard = new Board((tmpBoard));
+                                    if(j == board.getKingPositionX() && i == board.getKingPositionY()){
+                                        newBoard.setKingPositionX(k);
+                                        newBoard.setKingPositionY(i);
+                                    }else {
+                                        newBoard.setKingPositionX(board.getKingPositionX());
+                                        newBoard.setKingPositionY(board.getKingPositionY());
+                                    }
+                                    boardArray.add(newBoard);
                                 }
                             }
                         }
@@ -179,7 +190,15 @@ public class MinMaxAlphaBeta {
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[j][l] = ROUGE;
                                     tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, j, l);
-                                    boardArray.add(new Board(tmpBoard));
+                                    Board newBoard = new Board((tmpBoard));
+                                    if(j == board.getKingPositionX() && i == board.getKingPositionY()){
+                                        newBoard.setKingPositionX(j);
+                                        newBoard.setKingPositionY(l);
+                                    }else {
+                                        newBoard.setKingPositionX(board.getKingPositionX());
+                                        newBoard.setKingPositionY(board.getKingPositionY());
+                                    }
+                                    boardArray.add(newBoard);
                                 }
                             }
                         }
@@ -202,7 +221,15 @@ public class MinMaxAlphaBeta {
                                         tmpBoard[j][i] = 1;
                                     }
                                     tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, k, i);
-                                    boardArray.add(new Board(tmpBoard));
+                                    Board newBoard = new Board((tmpBoard));
+                                    if(j == board.getKingPositionX() && i == board.getKingPositionY()){
+                                        newBoard.setKingPositionX(k);
+                                        newBoard.setKingPositionY(i);
+                                    }else {
+                                        newBoard.setKingPositionX(board.getKingPositionX());
+                                        newBoard.setKingPositionY(board.getKingPositionY());
+                                    }
+                                    boardArray.add(newBoard);
                                 }
                             }
                         }
@@ -218,7 +245,15 @@ public class MinMaxAlphaBeta {
                                         tmpBoard[j][i] = 1;
                                     }
                                     tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, j, l);
-                                    boardArray.add(new Board(tmpBoard));
+                                    Board newBoard = new Board((tmpBoard));
+                                    if(j == board.getKingPositionX() && i == board.getKingPositionY()){
+                                        newBoard.setKingPositionX(j);
+                                        newBoard.setKingPositionY(l);
+                                    }else {
+                                        newBoard.setKingPositionX(board.getKingPositionX());
+                                        newBoard.setKingPositionY(board.getKingPositionY());
+                                    }
+                                    boardArray.add(newBoard);
                                 }
                             }
                         }
@@ -242,9 +277,9 @@ public class MinMaxAlphaBeta {
      */
     private boolean isMoveValid(int[][] board, int columnInit, int rowInit, int columnMove, int rowMove){
         if(rowInit == rowMove && columnInit == columnMove){ return  false; }
-        if(board[rowMove][columnMove] == 1 && board[rowInit][columnInit] != KING){
-            return false;
-    }
+        if(board[columnMove][rowMove] == 1 && board[columnInit][rowInit] != KING){return false;}
+
+
         //si le mouvement est a la vertical, verifie qu'il n'y a pas d'autre jeton entre le positionnement initial
         // et le positionnement apres mouvement.
         if (columnInit == columnMove && rowInit != rowMove) {
