@@ -16,9 +16,11 @@ public class DefenderStrategy implements IStrategy {
     @Override
     public int execute(Board board) {
         int defenderScore = 0;
+        defenderScore += 2 * countNbPawnsLeft(board);
+        defenderScore += findNearestKingExist(board);
 
         defenderScore += countNbPawnsLeft(board);
-        return -1;
+        return defenderScore;
     }
 
     @Override
@@ -37,6 +39,26 @@ public class DefenderStrategy implements IStrategy {
         return nbPawn;
     }
 
+    @Override
+    public int buildStrategy(Board boardGenere) {
+        return 0;
+    }
+
+    @Override
+    public boolean verifierSiPionEstEnDanger(Board board) {
+        return false;
+    }
+
+    @Override
+    public boolean verifierSiCasesPrioritairesOccupees(int[][] board) {
+        return false;
+    }
+
+    @Override
+    public boolean verifierSiRoiEntoure(Board board) {
+        return false;
+    }
+
     public int findNearestKingExist(Board board) {
         int[][] tabBoard = board.getBoard();
         int kingColonne = board.getKingPositionX();
@@ -48,7 +70,7 @@ public class DefenderStrategy implements IStrategy {
             score += 500;
         }
 
-        //verifie si se rend dans un coin en un mouvement horizontal
+        //verifie si le roi se rend dans un coin en un mouvement horizontal
         if(kingRange == 0 || kingRange == 12) {
             if (isRangeDroitLibre(tabBoard, kingColonne, kingRange)) {
                 score += 20;
@@ -61,7 +83,7 @@ public class DefenderStrategy implements IStrategy {
             }
         }
 
-        //verifie si se rend dans un coin en un mouvement vertical
+        //verifie si le roi se rend dans un coin en un mouvement vertical
         if(kingColonne == 0 || kingColonne == 12) {
             if (isColoneHautLibre(tabBoard, kingColonne, kingRange)) {
                 score += 20;
@@ -74,7 +96,7 @@ public class DefenderStrategy implements IStrategy {
             }
         }
 
-        //verifie si se rend dans un coin en deux mouvement vertical ensuite horizontal
+        //verifie si le roi se rend dans un coin en deux mouvement vertical ensuite horizontal
         if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isRangeDroitLibre(tabBoard, kingColonne, 0)){
             score += 5;
         }
@@ -94,7 +116,7 @@ public class DefenderStrategy implements IStrategy {
             score += 10;
         }
 
-        //verifie si se rend dans un coin en deux mouvement horizontal ensuite vertical
+        //verifie si le roi se rend dans un coin en deux mouvement horizontal ensuite vertical
         if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 0, kingRange)){
             score += 5;
         }
@@ -114,11 +136,11 @@ public class DefenderStrategy implements IStrategy {
             score += 10;
         }
 
-        //si est entourrer de rouge
+        //si le roi est entourrer de rouge
         if(verifierSiRoiEntoureDeRouge(board))
             score -= 5;
 
-        //si est entourrer de noire
+        //si le roi est entourrer de noire
         if(verifierSiRoiEntoureDeNoir(board))
             score -= 2;
 

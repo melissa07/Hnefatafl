@@ -75,9 +75,9 @@ public class MinMaxAlphaBeta {
 
                 int boardScore = 0;
                 if(couleurJoueur == ROUGE)
-                    boardScore = DefenderStrategy.getInstance().execute(board);
-                else if(couleurJoueur == NOIR)
                     boardScore = AttackerStrategy.getInstance().execute(board);
+                else if(couleurJoueur == NOIR)
+                    boardScore = DefenderStrategy.getInstance().execute(board);
                 // board.getScore() will be removed. Code above will be used
 //                int boardScore = board.getScore();
                 if (boardScore > bestScore) {
@@ -121,9 +121,9 @@ public class MinMaxAlphaBeta {
 
                 int boardScore = 0;
                 if(couleurJoueur == ROUGE)
-                    boardScore = AttackerStrategy.getInstance().execute(board);
-                else if(couleurJoueur == NOIR)
                     boardScore = DefenderStrategy.getInstance().execute(board);
+                else if(couleurJoueur == NOIR)
+                    boardScore = AttackerStrategy.getInstance().execute(board);
 
                 // board.getScore() will be removed. Code above will be used
 //                int boardScore = board.getScore();
