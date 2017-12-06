@@ -18,6 +18,7 @@ public class AttackerStrategy implements IStrategy {
         int attackerScore = 0;
         attackerScore += 2 * countNbPawnsLeft(board);
         attackerScore += findNearestKingExist(board);
+        attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
 
         return attackerScore;
     }
@@ -52,7 +53,7 @@ public class AttackerStrategy implements IStrategy {
         }
         //Todo une fois les algos fait, ces méthodes devraient nous permettre de calculer un score.
         boolean estEntoure = verifierSiRoiEntoure(boardGenere); // 1ere strategie de calcul de board
-        boolean priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
+//        int priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
         boolean estEnDanger = verifierSiPionEstEnDanger(boardGenere);
 
         return 0;
@@ -66,18 +67,25 @@ public class AttackerStrategy implements IStrategy {
     }
 
     @Override
-    public boolean verifierSiCasesPrioritairesOccupees(int[][] board) {
+    public int verifierSiCasesPrioritairesOccupees(int[][] board) {
         int counter = 0;
+        int prioritairesScore = 0;
         while(counter < 4) {
             for (int i = 2 ; i < board.length; i--) {
-                for (int j = 0; j < 3; j++) {
-                    if(board[j][i] == 1)
-                        return false; // todo And also check if king could reach position in 2 moves or less
+                for (int j = 0; j < 2; j++) {
+                    if(board[j][i] == 1) // 1 representent les bordures X
+                         continue; // todo And also check if king could reach position in 2 moves or less
+                    else {
+                        if(board[j][i] == 4)
+                            prioritairesScore += 50;
+                        else
+                            prioritairesScore -= 50;
+                    }
                 }
             }
         }
         // todo compter le nombre de cases importantes non protegees afin d'y attribuer un score
-        return true;
+        return prioritairesScore;
     }
 
     public int entourerLeRoi(Board board){
