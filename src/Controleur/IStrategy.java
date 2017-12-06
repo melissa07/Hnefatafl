@@ -10,7 +10,7 @@ public interface IStrategy {
 
     boolean verifierSiPionEstEnDanger(Board board);
 
-    boolean verifierSiCasesPrioritairesOccupees(int[][] board);
+    int verifierSiCasesPrioritairesOccupees(int[][] board);
 
     boolean verifierSiRoiEntoure(Board board);
 

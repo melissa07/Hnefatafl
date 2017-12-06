@@ -16,10 +16,10 @@ public class DefenderStrategy implements IStrategy {
     @Override
     public int execute(Board board) {
         int defenderScore = 0;
+
         defenderScore += 2 * countNbPawnsLeft(board);
         defenderScore += findNearestKingExist(board);
 
-        defenderScore += countNbPawnsLeft(board);
         return defenderScore;
     }
 
@@ -50,8 +50,8 @@ public class DefenderStrategy implements IStrategy {
     }
 
     @Override
-    public boolean verifierSiCasesPrioritairesOccupees(int[][] board) {
-        return false;
+    public int verifierSiCasesPrioritairesOccupees(int[][] board) {
+        return 0;
     }
 
     public int findNearestKingExist(Board board) {
