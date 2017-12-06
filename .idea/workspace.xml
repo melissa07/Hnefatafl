@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f3658d-c83c-4acf-ab5e-9a5443fe7550" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" afterPath="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controleur/IStrategy.java" afterPath="$PROJECT_DIR$/src/Controleur/IStrategy.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,11 +61,14 @@
       <file leaf-file-name="AttackerStrategy.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controleur/AttackerStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="363">
+              <caret line="168" column="44" lean-forward="true" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
               <folding>
                 <element signature="method#getInstance#0;class#AttackerStrategy#0" expanded="false" />
                 <element signature="method#countNbPawnsLeft#0;class#AttackerStrategy#0" expanded="false" />
+                <element signature="e#8053#8090#0" expanded="false" />
+                <element signature="e#10817#10859#0" expanded="false" />
+                <element signature="e#13585#13627#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -76,12 +77,10 @@
       <file leaf-file-name="DefenderStrategy.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controleur/DefenderStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="38" column="49" lean-forward="false" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+            <state relative-caret-position="816">
+              <caret line="56" column="49" lean-forward="false" selection-start-line="56" selection-start-column="49" selection-end-line="56" selection-end-column="49" />
               <folding>
                 <element signature="method#execute#0;class#DefenderStrategy#0" expanded="false" />
-                <element signature="method#countNbPawnsLeft#0;class#DefenderStrategy#0" expanded="false" />
-                <element signature="method#findNearestKingExist#0;class#DefenderStrategy#0" expanded="false" />
                 <element signature="method#verifierSiRoiEntoure#0;class#DefenderStrategy#0" expanded="false" />
                 <element signature="method#isColoneHautLibre#0;class#DefenderStrategy#0" expanded="false" />
                 <element signature="method#isColoneBasLibre#0;class#DefenderStrategy#0" expanded="false" />
@@ -647,16 +646,16 @@
       <workItem from="1511980919612" duration="3416000" />
       <workItem from="1512070069652" duration="952000" />
       <workItem from="1512076747680" duration="5964000" />
-      <workItem from="1512519610753" duration="12350000" />
+      <workItem from="1512519610753" duration="16264000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24083000" />
+    <option name="totallyTimeSpent" value="27997000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -924,12 +923,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controleur/DefenderStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="38" column="49" lean-forward="false" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+        <state relative-caret-position="816">
+          <caret line="56" column="49" lean-forward="false" selection-start-line="56" selection-start-column="49" selection-end-line="56" selection-end-column="49" />
           <folding>
             <element signature="method#execute#0;class#DefenderStrategy#0" expanded="false" />
-            <element signature="method#countNbPawnsLeft#0;class#DefenderStrategy#0" expanded="false" />
-            <element signature="method#findNearestKingExist#0;class#DefenderStrategy#0" expanded="false" />
             <element signature="method#verifierSiRoiEntoure#0;class#DefenderStrategy#0" expanded="false" />
             <element signature="method#isColoneHautLibre#0;class#DefenderStrategy#0" expanded="false" />
             <element signature="method#isColoneBasLibre#0;class#DefenderStrategy#0" expanded="false" />
@@ -949,11 +946,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controleur/AttackerStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="363">
+          <caret line="168" column="44" lean-forward="true" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
           <folding>
             <element signature="method#getInstance#0;class#AttackerStrategy#0" expanded="false" />
             <element signature="method#countNbPawnsLeft#0;class#AttackerStrategy#0" expanded="false" />
+            <element signature="e#8053#8090#0" expanded="false" />
+            <element signature="e#10817#10859#0" expanded="false" />
+            <element signature="e#13585#13627#0" expanded="false" />
           </folding>
         </state>
       </provider>

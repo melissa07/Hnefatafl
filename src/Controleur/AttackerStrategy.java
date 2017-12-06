@@ -142,62 +142,222 @@ public class AttackerStrategy implements IStrategy {
         int positionX;
         int positionY;
         int score = 0;
+        boolean trouve = false;
 
         //double for pour parcourir le tableau
-        for (int i = 0 ; i < 13; i++) {
-            for (int j = 0; j < 13; j++) {
+        for (int x = 0 ; x < 13; x++) {
+            for (int y = 0; y < 13; y++) {
+
                 //le if sert à savoir s'il y a un noir à cette position
-                if(boardGenere[j][i] == 2){
-                    positionX = j;
-                    positionY = i;
+                if(boardGenere[y][x] == 2){
+                    positionX = x;
+                    positionY = y;
+
+//region X+1 recherche sur même ligne
                     //le if sert à savoir s'il y a un rouge à droite du noir
-                    if(positionX+1 <= 12 && board.getBoard()[j][i+1] != 4) {
+                    if(positionX+1 <= 12 && board.getBoard()[y][x+1] == 4) {
                         //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
                         score += 10;
                         //le for sert à chercher un rouge sur la même ligne
-                        for(int k = i; k >= 0; k--){
+                        for(int k = positionX; k >= 0; k--){
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if(boardGenere[y][k] == 2){
+                                break;
+                            }
                             //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
-                            if(boardGenere[j][k] == 4){
+                            if(boardGenere[y][k] == 4){
                                 score += 20;
+                                trouve = true;
                             }
                         }
                     }
+//region recherche sur colonne ajdacente
+                    //If permettant de savoir si on a trouvé un rouge sur la même ligne, sinon le for qui suit
+                    //permet de regarder la colonne avant le pion noir
+                    if(trouve == false) {
+                        //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                        for (int k = positionX - 1; k >= 12; k++) {
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if (boardGenere[k][x] == 2) {
+                                break;
+                            }
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if (boardGenere[k][x] == 4) {
+                                score += 20;
+                                trouve = true;
+                            }
+                        }
+                    }
+                    if(trouve == false){
+                        for(int k = positionX-1; k <= 0; k--){
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if(boardGenere[k][x] == 2){
+                                break;
+                            }
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if(boardGenere[k][x] == 4){
+                                score += 20;
+                                trouve = true;
+                            }
+                        }
+                    }
+//endregion
+//endregion
+
+//region X-1 recherche sur même ligne
+
                     //le if sert à savoir s'il y a un rouge à gauche du noir
-                    if(positionX-1 >= 0 && board.getBoard()[j][i-1] != 4) {
+                    if(positionX-1 >= 0 && board.getBoard()[y][x-1] == 4) {
                         //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
                         score += 10;
                         //le for sert à chercher un rouge sur la même ligne
-                        for(int k = i; k <= 12; k++){
+                        for(int k = positionX; k <= 12; k++){
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if(boardGenere[y][k] == 2){
+                                break;
+                            }
                             //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
-                            if(boardGenere[j][k] == 4){
+                            if(boardGenere[y][k] == 4){
                                 score += 20;
+                                trouve = true;
+                            }
+                        }
+
+                        //If permettant de savoir si on a trouvé un rouge sur la même ligne
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionX + 1; k >= 12; k++) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[k][x] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[k][x] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
+                            }
+                        }
+
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionX + 1; k <= 0; k--) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[k][x] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[k][x] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
                             }
                         }
                     }
+//endregion
+
+//region Y-1 recherche sur la même colonne
                     //le if sert à savoir s'il y a un rouge en haut du noir
-                    if(positionY+1 <= 12 && board.getBoard()[j+1][i] != 4) {
+                    if(positionY+1 <= 12 && board.getBoard()[y+1][x] == 4) {
                         //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
                         score += 10;
                         //le for sert à chercher un rouge sur la même ligne
-                        for(int k = i; k >= 0; k--){
+                        for(int k = positionY; k >= 0; k--){
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if(boardGenere[k][x] == 2){
+                                break;
+                            }
                             //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
-                            if(boardGenere[k][i] == 4){
+                            if(boardGenere[k][x] == 4){
                                 score += 20;
+                                trouve = true;
+                            }
+                        }
+
+                        //If permettant de savoir si on a trouvé un rouge sur la même ligne
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionY + 1; k >= 12; k++) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[y][k] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[y][k] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
+                            }
+                        }
+
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionY + 1; k <= 0 ; k--) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[y][k] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[y][k] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
                             }
                         }
                     }
+//endregion
+
+//region Y+1 recherche sur la même colonne
                     //le if sert à savoir s'il y a un rouge en bas du noir
-                    if(positionY-1 >= 0 && board.getBoard()[j-1][i] != 4) {
+                    if(positionY-1 >= 0 && board.getBoard()[y-1][x] == 4) {
                         //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
                         score += 10;
                         //le for sert à chercher un rouge sur la même ligne
-                        for(int k = i; k >= 12; k--){
+                        for(int k = positionY; k >= 12; k--){
+                            //Si un pion noir est sur le chemin, on arrête le for
+                            if(boardGenere[k][x] == 2){
+                                break;
+                            }
                             //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
-                            if(boardGenere[k][i] == 4){
+                            if(boardGenere[k][x] == 4){
                                 score += 20;
+                                trouve = true;
+                            }
+                        }
+
+                        //If permettant de savoir si on a trouvé un rouge sur la même ligne, sinon le for qui suit
+                        //permet de regarder la colonne avant le pion noir
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionY + 1; k >= 12; k++) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[y][k] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[y][k] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
+                            }
+                        }
+
+                        if(trouve == false) {
+                            //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
+                            for (int k = positionY + 1; k <= 0 ; k--) {
+                                //Si un pion noir est sur le chemin, on arrête le for
+                                if (boardGenere[y][k] == 2) {
+                                    break;
+                                }
+                                //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                                if (boardGenere[y][k] == 4) {
+                                    score += 20;
+                                    trouve = true;
+                                }
                             }
                         }
                     }
+                    //endregion
                 }
             }
         }
