@@ -80,6 +80,35 @@ public class AttackerStrategy implements IStrategy {
         return true;
     }
 
+    public int entourerLeRoi(Board board){
+        int score = 0;
+        int ctr = 0;
+        int positionRoiX = board.getKingPositionX();
+        int positionRoiY = board.getKingPositionY();
+
+        if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] != 4) {
+            ctr++;
+            score += 5 * ctr;
+        }
+
+        if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] != 4) {
+            ctr++;
+            score += 5 * ctr;
+        }
+
+        if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] != 4) {
+            ctr++;
+            score += 5 * ctr;
+        }
+
+        if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] != 4) {
+            ctr++;
+            score += 5 * ctr;
+        }
+
+        return score;
+    }
+
     @Override
     public boolean verifierSiRoiEntoure(Board board) {
         boolean estEntoure = true;

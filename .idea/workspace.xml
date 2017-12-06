@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a3f3658d-c83c-4acf-ab5e-9a5443fe7550" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controleur/IStrategy.java" afterPath="$PROJECT_DIR$/src/Controleur/IStrategy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" afterPath="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,28 +77,14 @@
       <file leaf-file-name="AttackerStrategy.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controleur/AttackerStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="83" column="39" lean-forward="false" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="39" />
+            <state relative-caret-position="477">
+              <caret line="108" column="21" lean-forward="true" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
               <folding>
                 <element signature="method#countNbPawnsLeft#0;class#AttackerStrategy#0" expanded="false" />
                 <element signature="method#buildStrategy#0;class#AttackerStrategy#0" expanded="false" />
                 <element signature="method#verifierSiPionEstEnDanger#0;class#AttackerStrategy#0" expanded="false" />
                 <element signature="method#verifierSiCasesPrioritairesOccupees#0;class#AttackerStrategy#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DefenderStrategy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controleur/DefenderStrategy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="164" column="69" lean-forward="false" selection-start-line="164" selection-start-column="69" selection-end-line="164" selection-end-column="69" />
-              <folding>
-                <element signature="method#isColoneHautLibre#0;class#DefenderStrategy#0" expanded="false" />
-                <element signature="method#isColoneBasLibre#0;class#DefenderStrategy#0" expanded="false" />
-                <element signature="method#isRangeGaucheLibre#0;class#DefenderStrategy#0" expanded="false" />
-                <element signature="method#isRangeDroitLibre#0;class#DefenderStrategy#0" expanded="false" />
+                <element signature="method#findNearestKingExist#0;class#AttackerStrategy#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -121,9 +107,9 @@
         <option value="$PROJECT_DIR$/src/Controleur/Strategy.java" />
         <option value="$PROJECT_DIR$/src/Controleur/MinMaxAlphaBeta.java" />
         <option value="$PROJECT_DIR$/src/Modele/Board.java" />
-        <option value="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" />
         <option value="$PROJECT_DIR$/src/Controleur/DefenderStrategy.java" />
         <option value="$PROJECT_DIR$/src/Controleur/IStrategy.java" />
+        <option value="$PROJECT_DIR$/src/Controleur/AttackerStrategy.java" />
       </list>
     </option>
   </component>
@@ -644,12 +630,12 @@
       <workItem from="1511980919612" duration="3416000" />
       <workItem from="1512070069652" duration="952000" />
       <workItem from="1512076747680" duration="5964000" />
-      <workItem from="1512519610753" duration="6341000" />
+      <workItem from="1512519610753" duration="7978000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18074000" />
+    <option name="totallyTimeSpent" value="19711000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -702,7 +688,7 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -869,20 +855,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controleur/MinMaxAlphaBeta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="347" column="1" lean-forward="true" selection-start-line="347" selection-start-column="1" selection-end-line="347" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5469#5470#0" expanded="true" />
-            <element signature="e#5497#5498#0" expanded="true" />
-            <element signature="e#5543#5544#0" expanded="true" />
-            <element signature="e#5571#5572#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Modele/Move.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -919,19 +891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controleur/DefenderStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="164" column="69" lean-forward="false" selection-start-line="164" selection-start-column="69" selection-end-line="164" selection-end-column="69" />
-          <folding>
-            <element signature="method#isColoneHautLibre#0;class#DefenderStrategy#0" expanded="false" />
-            <element signature="method#isColoneBasLibre#0;class#DefenderStrategy#0" expanded="false" />
-            <element signature="method#isRangeGaucheLibre#0;class#DefenderStrategy#0" expanded="false" />
-            <element signature="method#isRangeDroitLibre#0;class#DefenderStrategy#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controleur/IStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -940,15 +899,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controleur/MinMaxAlphaBeta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="347" column="1" lean-forward="true" selection-start-line="347" selection-start-column="1" selection-end-line="347" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5469#5470#0" expanded="true" />
+            <element signature="e#5497#5498#0" expanded="true" />
+            <element signature="e#5543#5544#0" expanded="true" />
+            <element signature="e#5571#5572#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controleur/DefenderStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="method#isColoneBasLibre#0;class#DefenderStrategy#0" expanded="false" />
+            <element signature="method#isRangeGaucheLibre#0;class#DefenderStrategy#0" expanded="false" />
+            <element signature="method#isRangeDroitLibre#0;class#DefenderStrategy#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controleur/AttackerStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="83" column="39" lean-forward="false" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="39" />
+        <state relative-caret-position="477">
+          <caret line="108" column="21" lean-forward="true" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
           <folding>
             <element signature="method#countNbPawnsLeft#0;class#AttackerStrategy#0" expanded="false" />
             <element signature="method#buildStrategy#0;class#AttackerStrategy#0" expanded="false" />
             <element signature="method#verifierSiPionEstEnDanger#0;class#AttackerStrategy#0" expanded="false" />
             <element signature="method#verifierSiCasesPrioritairesOccupees#0;class#AttackerStrategy#0" expanded="false" />
+            <element signature="method#findNearestKingExist#0;class#AttackerStrategy#0" expanded="false" />
           </folding>
         </state>
       </provider>
