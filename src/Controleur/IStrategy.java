@@ -2,6 +2,17 @@ package Controleur;
 import Modele.Board;
 
 public interface IStrategy {
-    public int execute(Board board);
-    public int countNbPawnsLeft(Board board);
+    int execute(Board boardGenere);
+
+    int countNbPawnsLeft(Board boardGenere);
+
+    int buildStrategy(Board boardGenere/*, int player*/);
+
+    boolean verifierSiPionEstEnDanger(Board board);
+
+    boolean verifierSiCasesPrioritairesOccupees(int[][] board);
+
+    boolean verifierSiRoiEntoure(Board board);
+
+    int findNearestKingExist(Board boardGenere);
 }

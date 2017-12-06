@@ -38,6 +38,72 @@ public class AttackerStrategy implements IStrategy {
         return nbPawn;
     }
 
+    public int buildStrategy(Board boardGenere) {
+
+        int[][] board = boardGenere.getBoard();
+        // this get the king position on the board
+        for (int i=0; i< board.length; i++) {
+            for (int j=0; j< board.length; j++) {
+                if(board[j][i] == 5) {
+                    boardGenere.setKingPositionX(i);
+                    boardGenere.setKingPositionY(j);
+                }
+            }
+        }
+        //Todo une fois les algos fait, ces méthodes devraient nous permettre de calculer un score.
+        boolean estEntoure = verifierSiRoiEntoure(boardGenere); // 1ere strategie de calcul de board
+        boolean priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
+        boolean estEnDanger = verifierSiPionEstEnDanger(boardGenere);
+
+        return 0;
+    }
+
+    //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
+    @Override
+    public boolean verifierSiPionEstEnDanger(Board board) {
+        //Todo vérifier si DANS LE BOARD un pion (n'importe lequel) a des chances d'être mangé
+        return false;
+    }
+
+    @Override
+    public boolean verifierSiCasesPrioritairesOccupees(int[][] board) {
+        int counter = 0;
+        while(counter < 4) {
+            for (int i = 2 ; i < board.length; i--) {
+                for (int j = 0; j < 3; j++) {
+                    if(board[j][i] == 1)
+                        return false; // todo And also check if king could reach position in 2 moves or less
+                }
+            }
+        }
+        // todo compter le nombre de cases importantes non protegees afin d'y attribuer un score
+        return true;
+    }
+
+    @Override
+    public boolean verifierSiRoiEntoure(Board board) {
+        boolean estEntoure = true;
+        int positionRoiX = board.getKingPositionX();
+        int positionRoiY = board.getKingPositionY();
+
+        if(board.getKingPositionX()+1 <= 12
+                && (board.getBoard()[positionRoiY][positionRoiX+1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
+
+        if(board.getKingPositionX()-1 >= 0
+                && (board.getBoard()[positionRoiY][positionRoiX-1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
+
+        if(board.getKingPositionY()+1 <= 12
+                && (board.getBoard()[positionRoiY+1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
+
+        if(board.getKingPositionY()-1 >= 0
+                && (board.getBoard()[positionRoiY-1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
+        return estEntoure;
+    }
+
     public int findNearestKingExist(Board board) {
         int[][] tabBoard = board.getBoard();
         int kingColonne = board.getKingPositionX();
@@ -139,7 +205,6 @@ public class AttackerStrategy implements IStrategy {
         return score;
     }
 
-
     private boolean isColoneHautLibre(int[][] tabBoard, int colonne, int range){
         boolean isLibre = true;
 
@@ -151,6 +216,7 @@ public class AttackerStrategy implements IStrategy {
 
         return isLibre;
     }
+
     private boolean isColoneBasLibre(int[][] tabBoard, int colonne, int range){
         boolean isLibre = true;
 
