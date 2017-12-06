@@ -16,8 +16,11 @@ public class DefenderStrategy implements IStrategy {
     @Override
     public int execute(Board board) {
         int defenderScore = 0;
-        defenderScore += countNbPawnsLeft(board);
-        return -1;
+
+        defenderScore += 2 * countNbPawnsLeft(board);
+        defenderScore += findNearestKingExist(board);
+
+        return defenderScore;
     }
 
     @Override
@@ -36,6 +39,21 @@ public class DefenderStrategy implements IStrategy {
         return nbPawn;
     }
 
+    @Override
+    public int buildStrategy(Board boardGenere) {
+        return 0;
+    }
+
+    @Override
+    public boolean verifierSiPionEstEnDanger(Board board) {
+        return false;
+    }
+
+    @Override
+    public int verifierSiCasesPrioritairesOccupees(int[][] board) {
+        return 0;
+    }
+
     public int findNearestKingExist(Board board) {
         int[][] tabBoard = board.getBoard();
         int kingColonne = board.getKingPositionX();
@@ -47,7 +65,7 @@ public class DefenderStrategy implements IStrategy {
             score += 500;
         }
 
-        //verifie si se rend dans un coin en un mouvement horizontal
+        //verifie si le roi se rend dans un coin en un mouvement horizontal
         if(kingRange == 0 || kingRange == 12) {
             if (isRangeDroitLibre(tabBoard, kingColonne, kingRange)) {
                 score += 20;
@@ -60,7 +78,7 @@ public class DefenderStrategy implements IStrategy {
             }
         }
 
-        //verifie si se rend dans un coin en un mouvement vertical
+        //verifie si le roi se rend dans un coin en un mouvement vertical
         if(kingColonne == 0 || kingColonne == 12) {
             if (isColoneHautLibre(tabBoard, kingColonne, kingRange)) {
                 score += 20;
@@ -73,7 +91,7 @@ public class DefenderStrategy implements IStrategy {
             }
         }
 
-        //verifie si se rend dans un coin en deux mouvement vertical ensuite horizontal
+        //verifie si le roi se rend dans un coin en deux mouvement vertical ensuite horizontal
         if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isRangeDroitLibre(tabBoard, kingColonne, 0)){
             score += 5;
         }
@@ -93,7 +111,7 @@ public class DefenderStrategy implements IStrategy {
             score += 10;
         }
 
-        //verifie si se rend dans un coin en deux mouvement horizontal ensuite vertical
+        //verifie si le roi se rend dans un coin en deux mouvement horizontal ensuite vertical
         if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 0, kingRange)){
             score += 5;
         }
@@ -112,6 +130,7 @@ public class DefenderStrategy implements IStrategy {
         if (isRangeDroitLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 12, kingRange) && isColoneBasLibre(tabBoard, 12, kingRange)){
             score += 10;
         }
+
 
         //si est entourrer de rouge
         if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 4)
@@ -139,26 +158,7 @@ public class DefenderStrategy implements IStrategy {
 
     @Override
     public boolean verifierSiRoiEntoure(Board board) {
-        boolean estEntoure = true;
-        int positionRoiX = board.getKingPositionX();
-        int positionRoiY = board.getKingPositionY();
-
-        if(board.getKingPositionX()+1 <= 12
-                && (board.getBoard()[positionRoiY][positionRoiX+1] != 2
-                || board.getBoard()[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
-
-        if(board.getKingPositionX()-1 >= 0
-                && (board.getBoard()[positionRoiY][positionRoiX-1] != 2
-                || board.getBoard()[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
-
-        if(board.getKingPositionY()+1 <= 12
-                && (board.getBoard()[positionRoiY+1][positionRoiX] != 2
-                || board.getBoard()[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
-
-        if(board.getKingPositionY()-1 >= 0
-                && (board.getBoard()[positionRoiY-1][positionRoiX] != 2
-                || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
-        return estEntoure;
+        return false;
     }
 
     private boolean isColoneHautLibre(int[][] tabBoard, int colonne, int range){
