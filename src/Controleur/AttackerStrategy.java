@@ -19,6 +19,8 @@ public class AttackerStrategy implements IStrategy {
         attackerScore += 2 * countNbPawnsLeft(board);
         attackerScore += findNearestKingExist(board);
         attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
+        attackerScore += entourerLeRoi(board);
+        attackerScore += mangerPion(board);
 
         return attackerScore;
     }
@@ -37,26 +39,6 @@ public class AttackerStrategy implements IStrategy {
         }
 
         return nbPawn;
-    }
-
-    public int buildStrategy(Board boardGenere) {
-
-        int[][] board = boardGenere.getBoard();
-        // this get the king position on the board
-        for (int i=0; i< board.length; i++) {
-            for (int j=0; j< board.length; j++) {
-                if(board[j][i] == 5) {
-                    boardGenere.setKingPositionX(i);
-                    boardGenere.setKingPositionY(j);
-                }
-            }
-        }
-        //Todo une fois les algos fait, ces méthodes devraient nous permettre de calculer un score.
-        boolean estEntoure = verifierSiRoiEntoure(boardGenere); // 1ere strategie de calcul de board
-//        int priorisees = verifierSiCasesPrioritairesOccupees(board); // 2nde strategie de calcul de board
-        boolean estEnDanger = verifierSiPionEstEnDanger(boardGenere);
-
-        return 0;
     }
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
@@ -87,7 +69,7 @@ public class AttackerStrategy implements IStrategy {
         // todo compter le nombre de cases importantes non protegees afin d'y attribuer un score
         return prioritairesScore;
     }
-
+    //Le ctr fait en sorte que plus il y a de pions autour du roi, plus le score est élevé.
     public int entourerLeRoi(Board board){
         int score = 0;
         int ctr = 0;
@@ -141,6 +123,7 @@ public class AttackerStrategy implements IStrategy {
         return estEntoure;
     }
 
+    //useful ?
     public int findNearestKingExist(Board board){
         int kingColonne = board.getKingPositionX();
         int kingRange = board.getKingPositionY();
@@ -152,5 +135,73 @@ public class AttackerStrategy implements IStrategy {
         }
 
         return 0;
+    }
+
+    public int mangerPion(Board board){
+        int[][] boardGenere = board.getBoard();
+        int positionX;
+        int positionY;
+        int score = 0;
+
+        //double for pour parcourir le tableau
+        for (int i = 0 ; i < 13; i++) {
+            for (int j = 0; j < 13; j++) {
+                //le if sert à savoir s'il y a un noir à cette position
+                if(boardGenere[j][i] == 2){
+                    positionX = j;
+                    positionY = i;
+                    //le if sert à savoir s'il y a un rouge à droite du noir
+                    if(positionX+1 <= 12 && board.getBoard()[j][i+1] != 4) {
+                        //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
+                        score += 10;
+                        //le for sert à chercher un rouge sur la même ligne
+                        for(int k = i; k >= 0; k--){
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if(boardGenere[j][k] == 4){
+                                score += 20;
+                            }
+                        }
+                    }
+                    //le if sert à savoir s'il y a un rouge à gauche du noir
+                    if(positionX-1 >= 0 && board.getBoard()[j][i-1] != 4) {
+                        //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
+                        score += 10;
+                        //le for sert à chercher un rouge sur la même ligne
+                        for(int k = i; k <= 12; k++){
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if(boardGenere[j][k] == 4){
+                                score += 20;
+                            }
+                        }
+                    }
+                    //le if sert à savoir s'il y a un rouge en haut du noir
+                    if(positionY+1 <= 12 && board.getBoard()[j+1][i] != 4) {
+                        //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
+                        score += 10;
+                        //le for sert à chercher un rouge sur la même ligne
+                        for(int k = i; k >= 0; k--){
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if(boardGenere[k][i] == 4){
+                                score += 20;
+                            }
+                        }
+                    }
+                    //le if sert à savoir s'il y a un rouge en bas du noir
+                    if(positionY-1 >= 0 && board.getBoard()[j-1][i] != 4) {
+                        //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
+                        score += 10;
+                        //le for sert à chercher un rouge sur la même ligne
+                        for(int k = i; k >= 12; k--){
+                            //Si sur la même ligne y'a un rouge, +20 parce que possiblité de le manger confirme
+                            if(boardGenere[k][i] == 4){
+                                score += 20;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return score;
     }
 }

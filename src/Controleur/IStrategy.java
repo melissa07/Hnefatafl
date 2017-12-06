@@ -6,8 +6,6 @@ public interface IStrategy {
 
     int countNbPawnsLeft(Board boardGenere);
 
-    int buildStrategy(Board boardGenere/*, int player*/);
-
     boolean verifierSiPionEstEnDanger(Board board);
 
     int verifierSiCasesPrioritairesOccupees(int[][] board);
