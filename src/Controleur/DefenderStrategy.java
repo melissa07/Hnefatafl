@@ -16,7 +16,6 @@ public class DefenderStrategy implements IStrategy {
     @Override
     public int execute(Board board) {
         int defenderScore = 0;
-
         defenderScore += countNbPawnsLeft(board);
         return -1;
     }
