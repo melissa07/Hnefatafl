@@ -115,44 +115,50 @@ public class DefenderStrategy implements IStrategy {
         }
 
         //si est entourrer de rouge
-        if(verifierSiRoiEntoureDeRouge(board))
+        if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 4)
+            score -= 5;
+        if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 4)
+            score -= 5;
+        if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 4)
+            score -= 5;
+        if(kingColonne < 12 && tabBoard[kingColonne][kingRange + 1] == 4)
             score -= 5;
 
         //si est entourrer de noire
-        if(verifierSiRoiEntoureDeNoir(board))
+        if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 2)
+            score -= 2;
+        if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 2)
+            score -= 2;
+        if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 2)
+            score -= 2;
+        if(kingColonne < 12 && tabBoard[kingColonne][kingRange + 1] == 2)
             score -= 2;
 
 
         return score;
     }
 
-    public boolean verifierSiRoiEntoureDeRouge(Board board) {
+    @Override
+    public boolean verifierSiRoiEntoure(Board board) {
         boolean estEntoure = true;
         int positionRoiX = board.getKingPositionX();
         int positionRoiY = board.getKingPositionY();
 
-        if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] != 4) { estEntoure = false;}
+        if(board.getKingPositionX()+1 <= 12
+                && (board.getBoard()[positionRoiY][positionRoiX+1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
 
-        if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] != 4) { estEntoure = false; }
+        if(board.getKingPositionX()-1 >= 0
+                && (board.getBoard()[positionRoiY][positionRoiX-1] != 2
+                || board.getBoard()[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
 
-        if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] != 4) { estEntoure = false; }
+        if(board.getKingPositionY()+1 <= 12
+                && (board.getBoard()[positionRoiY+1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
 
-        if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] != 4) { estEntoure = false; }
-        return estEntoure;
-    }
-
-    public boolean verifierSiRoiEntoureDeNoir(Board board) {
-        boolean estEntoure = true;
-        int positionRoiX = board.getKingPositionX();
-        int positionRoiY = board.getKingPositionY();
-
-        if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] != 2) { estEntoure = false;}
-
-        if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] != 2) { estEntoure = false; }
-
-        if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] != 2) { estEntoure = false; }
-
-        if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] != 2) { estEntoure = false; }
+        if(board.getKingPositionY()-1 >= 0
+                && (board.getBoard()[positionRoiY-1][positionRoiX] != 2
+                || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
         return estEntoure;
     }
 
