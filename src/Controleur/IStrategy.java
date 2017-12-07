@@ -6,7 +6,7 @@ public interface IStrategy {
 
     int countNbPawnsLeft(Board boardGenere);
 
-    boolean verifierSiPionEstEnDanger(Board board);
+    int verifierSiPionEstEnDanger(Board board);
 
     int verifierSiCasesPrioritairesOccupees(int[][] board);
 

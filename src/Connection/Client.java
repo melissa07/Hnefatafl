@@ -49,11 +49,13 @@ class Client {
                     String move = null;
                     couleurJoueur = joueurRouge;
                     System.out.println("Entering minmax algorithm ...");
-                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
+
                     System.out.println("Move: " +move);
 
                     if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
+                    else
+                        move = minmax.doMinMax(nouveauBoard, couleurJoueur);
 
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
@@ -96,10 +98,12 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
+//                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
 
                     if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
+                    else
+                        move = minmax.doMinMax(nouveauBoard, couleurJoueur);
                     
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     System.out.println("Move: " +move);
