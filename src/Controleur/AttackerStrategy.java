@@ -45,6 +45,68 @@ public class AttackerStrategy implements IStrategy {
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
     @Override
     public boolean verifierSiPionEstEnDanger(Board board) {
+        int[][] valueBoard = board.getBoard();
+        int score = 0;
+        int positionPremierNoirX;
+        int positionPremierNoirY;
+        int positionRougeX;
+        int positionRougeY;
+
+        for (int i = 0; i <= board.getBOARD_SIZE(); i++) {
+            for (int j = 0; j <= board.getBOARD_SIZE(); j++) {
+                positionPremierNoirX = -1;
+                positionPremierNoirY = -1;
+                positionRougeX = -1;
+                positionRougeY = -1;
+                // todo check when I hit a wall
+                // TROUVE UN NOIR ET UN ROUGE ADJACENTS
+                if((valueBoard[j][i] == 4 && valueBoard[j][i+1] == 2) && i+1 <= 12) {
+                    positionPremierNoirX = i+1;
+                    positionPremierNoirY = j;
+                    positionRougeX = i;
+                    positionRougeY = j;
+                    score -=10;
+                }
+                else if((valueBoard[j][i] == 2 && valueBoard[j+1][i] == 4) && j+1 <= 12) {
+                    positionPremierNoirX = i;
+                    positionPremierNoirY = j;
+                    positionRougeX = i;
+                    positionRougeY = j+1;
+
+                    score -=10;
+                }
+                else if((valueBoard[j][i] == 2 && valueBoard[j][i+1] == 4) && i+1 <= 12) {
+                    positionPremierNoirX = i;
+                    positionPremierNoirY = j;
+                    positionRougeX = i+1;
+                    positionRougeY = j;
+                    score -=10;
+                }
+                else if((valueBoard[j][i] == 4 && valueBoard[j+1][i] == 2) && j+1 <= 12) {
+                    positionPremierNoirX = i;
+                    positionPremierNoirY = j+1;
+                    positionRougeX = i;
+                    positionRougeY = j;
+                    score -=10;
+                }
+                // FIN : TROUVE UN NOIR ET UN ROUGE ADJACENTS
+
+                // CHERCHER UN SECOND NOIR QUI POURRAIT MANGER UN PION ROUGE
+                if(positionPremierNoirX != -1 && positionPremierNoirX != -1) {
+                    if(positionPremierNoirX < positionRougeX) {
+                        for (int start = positionRougeX+1 ; start < board.getBOARD_SIZE(); start++ ) {
+                            
+                        }
+                    }
+                    if(positionPremierNoirX > positionRougeX) {}
+                    if(positionPremierNoirY < positionRougeY) {}
+                    if(positionPremierNoirY > positionRougeY) {}
+                }
+                // FIN: // CHERCHER UN SECOND NOIR QUI POURRAIT MANGER UN PION ROUGE
+
+
+            }
+        }
         //Todo vérifier si DANS LE BOARD un pion (n'importe lequel) a des chances d'être mangé
         return false;
     }
