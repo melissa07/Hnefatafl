@@ -34,7 +34,7 @@ public class MinMaxAlphaBeta {
         for (int i = 0; i < actualBoard.getBOARD_SIZE(); i++) {
             for (int j = 0; j < actualBoard.getBOARD_SIZE(); j++) {
                 if(actualBoard.getBoard()[i][j] != maxBoard.getBoard()[i][j]) {
-                    if(maxBoard.getBoard()[i][j] == 0 || (i == 6 && j ==6)) {
+                    if(maxBoard.getBoard()[i][j] == 0 || ((i == 6 && j ==6) && (maxBoard.getBoard()[i][j] == 1))) {
                         moveDepart = String.valueOf((char)(i+65)).toUpperCase()+String.valueOf(13-j);
                     }
                     else {

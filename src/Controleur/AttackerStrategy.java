@@ -219,7 +219,7 @@ public class AttackerStrategy implements IStrategy {
                     //permet de regarder la colonne avant le pion noir
                     if(trouve == false) {
                         //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                        for (int k = positionX - 1; k >= 12; k++) {
+                        for (int k = positionX; k <= 12; k++) {
                             //Si un pion noir est sur le chemin, on arrête le for
                             if (boardGenere[k][x] == 2) {
                                 break;
@@ -232,7 +232,7 @@ public class AttackerStrategy implements IStrategy {
                         }
                     }
                     if(trouve == false){
-                        for(int k = positionX-1; k <= 0; k--){
+                        for(int k = positionX-1; k >= 0; k--){
                             //Si un pion noir est sur le chemin, on arrête le for
                             if(boardGenere[k][x] == 2){
                                 break;
@@ -269,7 +269,7 @@ public class AttackerStrategy implements IStrategy {
                         //If permettant de savoir si on a trouvé un rouge sur la même ligne
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionX + 1; k >= 12; k++) {
+                            for (int k = positionX + 1; k <= 12; k++) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[k][x] == 2) {
                                     break;
@@ -284,7 +284,7 @@ public class AttackerStrategy implements IStrategy {
 
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionX + 1; k <= 0; k--) {
+                            for (int k = positionX + 1; k >= 0; k--) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[k][x] == 2) {
                                     break;
@@ -320,7 +320,7 @@ public class AttackerStrategy implements IStrategy {
                         //If permettant de savoir si on a trouvé un rouge sur la même ligne
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionY + 1; k >= 12; k++) {
+                            for (int k = positionY + 1; k <= 12; k++) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[y][k] == 2) {
                                     break;
@@ -335,7 +335,7 @@ public class AttackerStrategy implements IStrategy {
 
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionY + 1; k <= 0 ; k--) {
+                            for (int k = positionY + 1; k >= 0 ; k--) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[y][k] == 2) {
                                     break;
@@ -356,7 +356,7 @@ public class AttackerStrategy implements IStrategy {
                         //plus 10 parce qu'on a un pion collé dessus, donc possibilité de le manger
                         score += 10;
                         //le for sert à chercher un rouge sur la même ligne
-                        for(int k = positionY; k >= 12; k--){
+                        for(int k = positionY; k <= 12; k--){
                             //Si un pion noir est sur le chemin, on arrête le for
                             if(boardGenere[k][x] == 2){
                                 break;
@@ -372,7 +372,7 @@ public class AttackerStrategy implements IStrategy {
                         //permet de regarder la colonne avant le pion noir
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionY + 1; k >= 12; k++) {
+                            for (int k = positionY + 1; k <= 12; k++) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[y][k] == 2) {
                                     break;
@@ -387,7 +387,7 @@ public class AttackerStrategy implements IStrategy {
 
                         if(trouve == false) {
                             //le for sert à chercher un rouge sur la colonne avant le pion noir. (vers le haut)
-                            for (int k = positionY + 1; k <= 0 ; k--) {
+                            for (int k = positionY + 1; k >= 0 ; k--) {
                                 //Si un pion noir est sur le chemin, on arrête le for
                                 if (boardGenere[y][k] == 2) {
                                     break;
