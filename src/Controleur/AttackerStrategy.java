@@ -90,34 +90,151 @@ public class AttackerStrategy implements IStrategy {
         return prioritairesScore;
     }
 
-
-
     //Le ctr fait en sorte que plus il y a de pions autour du roi, plus le score est élevé.
     public int entourerLeRoi(Board board){
         int score = 0;
-        int ctr = 0;
+        float ctr = 0;
         int positionRoiX = board.getKingPositionX();
         int positionRoiY = board.getKingPositionY();
 
-        if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] != 4) {
-            ctr++;
-            score += 5 * ctr;
+//region position du roi en X sur les bords
+        if(board.getKingPositionX() == 0 || board.getKingPositionX() == 12) {
+            //Si en haut ou en bas du roi c'est un X de sortie
+            if(board.getBoard()[positionRoiY+1][positionRoiX] == 1 || board.getBoard()[positionRoiY-1][positionRoiX] == 1){
+                //si en haut ou en bas du roi c'est un pion rouge (si X en haut alors rouge en bas et vice versa)
+                if(board.getBoard()[positionRoiY+1][positionRoiX] == 4 || board.getBoard()[positionRoiY-1][positionRoiX] == 4){
+                    //si le roi est sur le bord à droite
+                    if(board.getKingPositionX() == 12){
+                        //si à la gauche du roi c'est un rouge
+                        if(board.getBoard()[positionRoiY][positionRoiX-1] == 4){
+                            score += 500; //VICTOIRE roi entouré par bord, pion haut ou bas et pion gauche
+                        }
+                    }
+                    //si le roi est sur le bord gauche
+                    if(board.getKingPositionX() == 0){
+                        //si à la droite du roi c'est un pion rouge
+                        if(board.getBoard()[positionRoiY][positionRoiX+1] == 4){
+                            score += 500; //VICTOIRE roi entouré par bord, pion haut ou bas et pion droite
+                        }
+                    }
+                }
+            }
+            //si le roi est sur le bord à droite
+            if (board.getKingPositionX() == 12) {
+                //si à gauche du roi y'a un rouge OU un X de sortie
+                if (board.getBoard()[positionRoiY][positionRoiX - 1] == 4) {
+                    ctr = ctr + 1 + (1/3);
+                    score += 5 * ctr;
+                }
+            }
+            //si le roi est sur le bord à gauche
+            if (board.getKingPositionX() == 0) {
+                //si à droite du roi y'a un rouge
+                if (board.getBoard()[positionRoiY][positionRoiX + 1] == 4) {
+                    ctr = ctr + 1 + (1/3);
+                    score += 5 * ctr;
+                }
+            }
+            //si en haut du roi y'a un rouge
+            if (board.getBoard()[positionRoiY + 1][positionRoiX] == 4) {
+                ctr = ctr + 1 + (1/3);
+                score += 5 * ctr;
+            }
+            //si en bas du roi y'au un rouge
+            if (board.getBoard()[positionRoiY - 1][positionRoiX] == 4) {
+                ctr = ctr + 1 + (1/3);
+                score += 5 * ctr;
+            }
         }
+//endregion
 
-        if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] != 4) {
-            ctr++;
-            score += 5 * ctr;
-        }
+//region position du roi en Y sur les bords
+        if(board.getKingPositionY() == 0 || board.getKingPositionY() == 12){
+            //si à la droite ou à la gauche du roi c'est un X de sortie
+            if(board.getBoard()[positionRoiY][positionRoiX+1] == 1 || board.getBoard()[positionRoiY][positionRoiX-1] == 1){
+                //si à la droite ou à la gauche du roi c'est un pion rouge (si X à droite alors rouge à gauche et vice versa)
+                if(board.getBoard()[positionRoiY][positionRoiX+1] == 4 || board.getBoard()[positionRoiY][positionRoiX-1] == 4){
+                    //si le roi est sur le bord en haut
+                    if(board.getKingPositionY() == 12){
+                        //si en bas du roi c'est un rouge
+                        if(board.getBoard()[positionRoiY-1][positionRoiX] == 4){
+                            score += 500; //VICTOIRE
+                        }
+                    }
+                    //si le roi est sur le bord en bas
+                    if(board.getKingPositionX() == 0){
+                        //si en haut  du roi c'est un pion rouge
+                        if(board.getBoard()[positionRoiY+1][positionRoiX] == 4){
+                            score += 500; //VICTOIRE
+                        }
+                    }
+                }
+            }
+            //si le roi est sur le bord à droite
+            if(board.getKingPositionY() == 12) {
+                //si à gauche du roi y'a un rouge
+                if(board.getBoard()[positionRoiY-1][positionRoiX] == 4) {
+                    ctr = ctr + 1 + (1/3);
+                    score += 5 * ctr;
+                }
+            }
+            //si le roi est sur le bord à gauche
+            if(board.getKingPositionY() == 0) {
+                //si à droite du roi y'a un rouge
+                if(board.getBoard()[positionRoiY+1][positionRoiX] == 4) {
+                    ctr = ctr + 1 + (1/3);
+                    score += 5 * ctr;
+                }
+            }
+            //si en haut du roi y'a un rouge
+            if(board.getBoard()[positionRoiY][positionRoiX+1] == 4){
+                ctr = ctr + 1 + (1/3);
+                score += 5 * ctr;
+            }
+            //si en bas du roi y'au un rouge
+            if(board.getBoard()[positionRoiY][positionRoiX-1] == 4){
+                ctr = ctr + 1 + (1/3);
+                score += 5 * ctr;
+            }
 
-        if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] != 4) {
-            ctr++;
-            score += 5 * ctr;
+            if(ctr == 3){
+                score += 500; //VICTOIRE
+            }
         }
+//endregion
 
-        if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] != 4) {
-            ctr++;
-            score += 5 * ctr;
+//region position roi à côté du centre
+        //todo vérifier si le roi est sur le côté du centre et s'il peut être entouré
+//endregion
+
+//region position du roi n'importe où ailleurs dans le board
+        else{
+            if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] == 4) {
+                ctr++;
+                score += 5 * ctr;
+            }
+
+            if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] == 4) {
+                ctr++;
+                score += 5 * ctr;
+            }
+
+            if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] == 4) {
+                ctr++;
+                score += 5 * ctr;
+            }
+
+            if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] == 4) {
+                ctr++;
+                score += 5 * ctr;
+            }
+            //If permettant de savoir si, dans le board, le roi serait entouré de quatre pions. Si oui, boost le score
+            if(ctr == 4){
+                score += 500; //VICTOIRE
+            }
         }
+//endregion
+
 
         return score;
     }
@@ -145,7 +262,6 @@ public class AttackerStrategy implements IStrategy {
                 || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
         return estEntoure;
     }
-
 
     public int findNearestKingExist(Board board){
         int kingColonne = board.getKingPositionX();
