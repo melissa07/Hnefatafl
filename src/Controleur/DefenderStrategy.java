@@ -152,8 +152,8 @@ public class DefenderStrategy implements IStrategy {
     }
 
     @Override
-    public boolean verifierSiRoiEntoure(Board board) {
-        return false;
+    public int verifierSiRoiEntoure(Board board) {
+        return 0;
     }
 
     private boolean isColoneHautLibre(int[][] tabBoard, int colonne, int range){

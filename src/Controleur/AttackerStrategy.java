@@ -19,7 +19,7 @@ public class AttackerStrategy implements IStrategy {
      * Sortie la plus proche du roi: -1500
      * Cases prioritaires occupees: 1000
      * Pion en danger: 100
-     * Roi entoure: ?
+     * Roi entoure: 1500
      * Roi echape: 10000
      * Manger un pion: ?
      */
@@ -29,6 +29,7 @@ public class AttackerStrategy implements IStrategy {
         attackerScore -= findNearestKingExist(board); // On soustrait la valeur
         attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
         attackerScore += verifierSiPionEstEnDanger(board);
+        attackerScore += verifierSiRoiEntoure(board);
         attackerScore += entourerLeRoi(board);
         attackerScore += hasKingEscaped(board);
 //        attackerScore += mangerPion(board);
@@ -179,10 +180,10 @@ public class AttackerStrategy implements IStrategy {
                    hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 500; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -300;
+                    return -500;
             }
         }
         else if(positionSecondNoirX < positionRougeX) {
@@ -193,10 +194,10 @@ public class AttackerStrategy implements IStrategy {
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 500; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -300;
+                    return -500;
             }
         }
         return 0;
@@ -212,10 +213,10 @@ public class AttackerStrategy implements IStrategy {
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 500; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -300;
+                    return -500;
             }
         }
         else if(positionSecondNoirY < positionRougeY) {
@@ -226,10 +227,10 @@ public class AttackerStrategy implements IStrategy {
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 500; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -300;
+                    return -500;
             }
         }
 
@@ -427,27 +428,27 @@ public class AttackerStrategy implements IStrategy {
     }
 
     @Override
-    public boolean verifierSiRoiEntoure(Board board) {
-        boolean estEntoure = true;
+    public int verifierSiRoiEntoure(Board board) {
+        int score = 0;
         int positionRoiX = board.getKingPositionX();
         int positionRoiY = board.getKingPositionY();
 
         if(board.getKingPositionX()+1 <= 12
-                && (board.getBoard()[positionRoiY][positionRoiX+1] != 2
-                || board.getBoard()[positionRoiY][positionRoiX+1] != 4)) { estEntoure = false;}
+                && (board.getBoard()[positionRoiY][positionRoiX+1] == 2
+                || board.getBoard()[positionRoiY][positionRoiX+1] == 4)) { score += 1500 ;}
 
         if(board.getKingPositionX()-1 >= 0
-                && (board.getBoard()[positionRoiY][positionRoiX-1] != 2
-                || board.getBoard()[positionRoiY][positionRoiX-1] != 4)) { estEntoure = false; }
+                && (board.getBoard()[positionRoiY][positionRoiX-1] == 2
+                || board.getBoard()[positionRoiY][positionRoiX-1] == 4)) { score += 1500 ; }
 
         if(board.getKingPositionY()+1 <= 12
-                && (board.getBoard()[positionRoiY+1][positionRoiX] != 2
-                || board.getBoard()[positionRoiY+1][positionRoiX] != 4)) { estEntoure = false; }
+                && (board.getBoard()[positionRoiY+1][positionRoiX] == 2
+                || board.getBoard()[positionRoiY+1][positionRoiX] == 4)) { score += 1500 ; }
 
         if(board.getKingPositionY()-1 >= 0
-                && (board.getBoard()[positionRoiY-1][positionRoiX] != 2
-                || board.getBoard()[positionRoiY-1][positionRoiX] != 4)) { estEntoure = false; }
-        return estEntoure;
+                && (board.getBoard()[positionRoiY-1][positionRoiX] == 2
+                || board.getBoard()[positionRoiY-1][positionRoiX] == 4)) { score += 1500 ; }
+        return score;
     }
 
     public int findNearestKingExist(Board board) {

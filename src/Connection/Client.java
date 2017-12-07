@@ -104,8 +104,6 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
-//                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
-
                     if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
                     else
@@ -121,10 +119,11 @@ class Client {
                 if(cmd == '4'){
                     System.out.println("Coup invalide, entrez un nouveau coup : ");
                     String move = null;
-                    move = console.readLine();
+
+                    move = minmax.doMinMax(nouveauBoard, couleurJoueur);
+                    nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
                     output.flush();
-                    // todo Send another valid move
 
                 }
             }
