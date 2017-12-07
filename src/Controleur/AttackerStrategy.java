@@ -4,7 +4,7 @@ import Modele.Board;
 
 public class AttackerStrategy implements IStrategy {
     private static AttackerStrategy attackerSingleton = null;
-    private int score;
+//    private int score;
 
     public static AttackerStrategy getInstance() {
         if(attackerSingleton == null) {
@@ -95,11 +95,34 @@ public class AttackerStrategy implements IStrategy {
                 if(positionPremierNoirX != -1 && positionPremierNoirX != -1) {
                     if(positionPremierNoirX < positionRougeX) {
                         for (int start = positionRougeX+1 ; start < board.getBOARD_SIZE(); start++ ) {
-                            
+                            int rangee = 0; //todo il faut incrementer la rangee
+                            while(rangee <= 12) {
+                                if(valueBoard[rangee][start] == 2) { // Si l'on trouve un noir sur la colonne adjacente
+                                    int positionSecondNoirX = start;
+                                    int positionSecondNoirY = rangee;
+
+                                    score += verifierSiPionRougeEntoureenX(valueBoard, positionRougeX,positionSecondNoirX, positionPremierNoirY);
+                                }
+                            }
                         }
                     }
-                    if(positionPremierNoirX > positionRougeX) {}
-                    if(positionPremierNoirY < positionRougeY) {}
+                    if(positionPremierNoirX > positionRougeX) {
+                        for (int start = positionRougeX-1 ; start <= 0; start-- ) {
+                            int rangee = 0;
+                            while(rangee <= 12) {
+                                if(valueBoard[rangee][start] == 2) { // Si l'on trouve un noir sur la colonne adjacente
+                                    int positionSecondNoirX = start;
+                                    int positionSecondNoirY = rangee;
+
+                                    score += verifierSiPionRougeEntoureenX(valueBoard, positionRougeX,positionSecondNoirX, positionPremierNoirY);
+                                }
+                                rangee++;
+                            }
+                        }
+                    }
+                    if(positionPremierNoirY < positionRougeY) {
+                        
+                    }
                     if(positionPremierNoirY > positionRougeY) {}
                 }
                 // FIN: // CHERCHER UN SECOND NOIR QUI POURRAIT MANGER UN PION ROUGE
@@ -109,6 +132,32 @@ public class AttackerStrategy implements IStrategy {
         }
         //Todo vérifier si DANS LE BOARD un pion (n'importe lequel) a des chances d'être mangé
         return false;
+    }
+
+    private int verifierSiPionRougeEntoureenX(int[][]valueBoard, int positionRougeX, int positionSecondNoirX, int positionSecondNoirY) {
+        if(positionSecondNoirX > positionRougeX) {
+            int curseurX = positionSecondNoirX;
+            while(curseurX >= positionRougeX+1) {
+                curseurX --;
+                if(valueBoard[positionSecondNoirY][curseurX] == 0) // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                    continue;
+                if(curseurX == positionRougeX+1){
+                    return -100; // Un pion peut se faire manger ici puisque deux pions l'entourent
+                }
+            }
+        }
+        if(positionSecondNoirX < positionRougeX) {
+            int curseurX = positionSecondNoirX;
+            while(curseurX <= positionRougeX-1) {
+                curseurX ++;
+                if(valueBoard[positionSecondNoirY][curseurX] == 0) // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                    continue;
+                if(curseurX == positionRougeX-1){
+                    return -100; // Un pion peut se faire manger ici puisque deux pions l'entourent
+                }
+            }
+        }
+        return 0;
     }
 
     @Override
