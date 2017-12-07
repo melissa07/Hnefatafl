@@ -29,17 +29,17 @@ public class AttackerStrategy implements IStrategy {
     @Override
     public int countNbPawnsLeft(Board board) {
         int[][] tabBoard = board.getBoard();
-        int nbPawn = 0;
+        int nbPawns = 0;
 
         for(int i=0;i < tabBoard.length; i++){
             for(int j=0;j < tabBoard[i].length; j++){
-                if(tabBoard[j][i] == 2 || tabBoard[j][i] == 5){
-                    nbPawn++;
+                if(tabBoard[j][i] == 4 ){
+                    nbPawns++;
                 }
             }
         }
 
-        return nbPawn;
+        return nbPawns;
     }
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
