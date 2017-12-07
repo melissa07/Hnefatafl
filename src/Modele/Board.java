@@ -122,6 +122,10 @@ public class Board {
         }
         System.out.println("Rangee depart: " + rangeeDepart + " et colonne depart: " + colonneDepart);
 
+        if(rangeeDepart == 6 && colonneDepart == 6){
+            System.out.print("test");
+        }
+
 
         int remainingLength = move.replaceAll("\\s+", "").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+", "").length() + 1);
         int colonneFin = map.get(move.substring(move.indexOf('-') + 2, move.length()).substring(0, 1));
