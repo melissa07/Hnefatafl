@@ -34,6 +34,17 @@ public class Board {
         return kingPositionX;
     }
 
+    public void findKingInBoard(Board board) {
+        for (int i = 0; i < board.getBOARD_SIZE(); i++) {
+            for (int j = 0; j < board.getBOARD_SIZE(); j++) {
+                if(board.getBoard()[j][i] == 5) {
+                    setKingPositionX(i);
+                    setKingPositionY(j);
+                }
+            }
+        }
+    }
+
     public void setKingPositionX(int kingPositionX) {
         this.kingPositionX = kingPositionX;
     }

@@ -17,7 +17,7 @@ public class AttackerStrategy implements IStrategy {
     public int execute(Board board) {
         int attackerScore = 0;
         attackerScore += 2 * countNbPawnsLeft(board);
-        attackerScore += findNearestKingExist(board);
+        attackerScore -= findNearestKingExist(board); // On soustrait la valeur
         attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
         attackerScore += entourerLeRoi(board);
         attackerScore += hasKingEscaped(board);
@@ -44,7 +44,7 @@ public class AttackerStrategy implements IStrategy {
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
     @Override
-    public boolean verifierSiPionEstEnDanger(Board board) {
+    public boolean verifierSiPionEstEnDanger(Board board) { // todo pas encore appellee
         int[][] valueBoard = board.getBoard();
         int score = 0;
         int positionPremierNoirX;
@@ -375,7 +375,7 @@ public class AttackerStrategy implements IStrategy {
         return estEntoure;
     }
 
-    public int findNearestKingExist(Board board){
+    public int findNearestKingExist(Board board) {
         int kingColonne = board.getKingPositionX();
         int kingRange = board.getKingPositionY();
 
@@ -383,16 +383,14 @@ public class AttackerStrategy implements IStrategy {
         int topLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][0]);
         int bottLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][12]);
         int topRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][0]);
-        int bottRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][12]);
+        int bottRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][12]);
 
-        int shortestDistance = Math.min(
+        return  Math.min(
                 Math.min(topLeft, topRight),
                 Math.min(bottLeft, bottRight)
         );
 
-//        System.out.println("Distance entre le roi et la sortie: " +Math.negateExact(shortestDistance*100));
-
-        return Math.negateExact(shortestDistance*100);
+//        return Math.negateExact(shortestDistance*100);
     }
 
     public int hasKingEscaped(Board board) {
@@ -400,7 +398,6 @@ public class AttackerStrategy implements IStrategy {
         int kingRange = board.getKingPositionY();
         int score = 0;
 
-//        Math.abs(board.getBoard()[3][4]+ board.getBoard()[1][5]);
         //si le Roi est sur un coin.
         if((kingColonne == 0 && kingRange ==0) || (kingColonne == 12 && kingRange == 0) || (kingColonne == 0 && kingRange == 12) || (kingColonne == 12 & kingRange == 12)){
             score -= 10000; // worst case ever

@@ -51,7 +51,6 @@ class Client {
                     System.out.println("Entering minmax algorithm ...");
                     move = minmax.doMinMax(nouveauBoard, couleurJoueur);
                     System.out.println("Move: " +move);
-                    // todo algo
 
                     if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";

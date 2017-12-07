@@ -21,6 +21,8 @@ public class MinMaxAlphaBeta {
  // player may be "computer" or "opponent"
     public String doMinMax(Board actualBoard, int player){
         Board maxBoard = MaxMove(actualBoard, player, 0, 0, 0);
+        maxBoard.findKingInBoard(maxBoard); // reset les coordonnees du roi
+//        System.out.println("Position roi en X: " +maxBoard.getKingPositionX()+ ", position en Y: " +maxBoard.getKingPositionY());
         System.out.println("***************************");
         maxBoard.printBoard();
 
