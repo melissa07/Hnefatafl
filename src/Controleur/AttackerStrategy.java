@@ -20,6 +20,7 @@ public class AttackerStrategy implements IStrategy {
         attackerScore += findNearestKingExist(board);
         attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
         attackerScore += entourerLeRoi(board);
+        attackerScore += hasKingEscaped(board);
         attackerScore += mangerPion(board);
 
         return attackerScore;
@@ -52,23 +53,45 @@ public class AttackerStrategy implements IStrategy {
     public int verifierSiCasesPrioritairesOccupees(int[][] board) {
         int counter = 0;
         int prioritairesScore = 0;
-        while(counter < 4) {
-            for (int i = 2 ; i < board.length; i--) {
-                for (int j = 0; j < 2; j++) {
-                    if(board[j][i] == 1) // 1 representent les bordures X
-                         continue; // todo And also check if king could reach position in 2 moves or less
-                    else {
-                        if(board[j][i] == 4)
-                            prioritairesScore += 50;
-                        else
-                            prioritairesScore -= 50;
-                    }
-                }
-            }
+        int j;
+
+        // Coin superieur gauche
+        j=0;
+        for (int i = 2; i >= 0; i--) {
+            if(board[j][i] == 4)
+                prioritairesScore += 50;
+            j++;
         }
-        // todo compter le nombre de cases importantes non protegees afin d'y attribuer un score
+
+        // Coin superieur droit
+        j=0;
+        for (int i = 10; i <= 12; i++) {
+            if(board[j][i] == 4)
+                prioritairesScore += 50;
+            j++;
+        }
+
+        // Coin inferieur gauche
+        j=10;
+        for (int i = 2; i >= 0; i--) {
+            if(board[j][i] == 4)
+                prioritairesScore += 50;
+            j++;
+        }
+
+        // Coin inferieur droit
+        j=10;
+        for (int i = 10; i <= 12; i++) {
+            if(board[j][i] == 4)
+                prioritairesScore += 50;
+            j++;
+        }
+
         return prioritairesScore;
     }
+
+
+
     //Le ctr fait en sorte que plus il y a de pions autour du roi, plus le score est élevé.
     public int entourerLeRoi(Board board){
         int score = 0;
@@ -123,18 +146,38 @@ public class AttackerStrategy implements IStrategy {
         return estEntoure;
     }
 
-    //useful ?
+
     public int findNearestKingExist(Board board){
+        int kingColonne = board.getKingPositionX();
+        int kingRange = board.getKingPositionY();
+
+
+        int topLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][0]);
+        int bottLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][12]);
+        int topRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][0]);
+        int bottRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][12]);
+
+        int shortestDistance = Math.min(
+                Math.min(topLeft, topRight),
+                Math.min(bottLeft, bottRight)
+        );
+
+//        System.out.println("Distance entre le roi et la sortie: " +Math.negateExact(shortestDistance*100));
+
+        return Math.negateExact(shortestDistance*100);
+    }
+
+    public int hasKingEscaped(Board board) {
         int kingColonne = board.getKingPositionX();
         int kingRange = board.getKingPositionY();
         int score = 0;
 
+//        Math.abs(board.getBoard()[3][4]+ board.getBoard()[1][5]);
         //si le Roi est sur un coin.
         if((kingColonne == 0 && kingRange ==0) || (kingColonne == 12 && kingRange == 0) || (kingColonne == 0 && kingRange == 12) || (kingColonne == 12 & kingRange == 12)){
-            score -= 500;
+            score -= 10000; // worst case ever
         }
-
-        return 0;
+        return score;
     }
 
     public int mangerPion(Board board){

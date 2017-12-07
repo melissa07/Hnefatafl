@@ -40,11 +40,6 @@ public class DefenderStrategy implements IStrategy {
     }
 
     @Override
-    public int buildStrategy(Board boardGenere) {
-        return 0;
-    }
-
-    @Override
     public boolean verifierSiPionEstEnDanger(Board board) {
         return false;
     }

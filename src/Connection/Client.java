@@ -45,17 +45,16 @@ class Client {
                     nouveauBoard.setKingPositionY(6);
                     nouveauBoard.setKingPositionX(6);
 
-                    System.out.println("Nouvelle partie! Vous jouer rouge, entrez votre premier coup : ");
+                    System.out.println("Nouvelle partie! Vous jouez rouge, entrez votre premier coup : ");
                     String move = null;
                     couleurJoueur = joueurRouge;
+                    System.out.println("Entering minmax algorithm ...");
                     move = minmax.doMinMax(nouveauBoard, couleurJoueur);
                     System.out.println("Move: " +move);
                     // todo algo
-                    /*
-                    if(movesCounter == 0)
+
+                    if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
-                    else
-                        move = MinMaxAlphaBeta.buildStrategy(nouveauBoard, couleurJoueur);*/
 
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     output.write(move.getBytes(),0,move.length());
