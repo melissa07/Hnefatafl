@@ -35,13 +35,16 @@ class Client {
                     byte[] aBuffer = new byte[1024];
 
                     int size = input.available();
-                    //System.out.println("size " + size);
                     input.read(aBuffer,0,size);
                     String s = new String(aBuffer).trim();
                     System.out.println(s);
                     String[] boardValues;
                     boardValues = s.split(" ");
                     nouveauBoard = new Board(boardValues);
+
+                    nouveauBoard.setCouleurJoueur(4);
+                    nouveauBoard.setCouleurAdverse(2);
+
                     nouveauBoard.setKingPositionY(6);
                     nouveauBoard.setKingPositionX(6);
 
@@ -78,6 +81,9 @@ class Client {
                     nouveauBoard = new Board(boardValues);
                     nouveauBoard.setKingPositionX(6);
                     nouveauBoard.setKingPositionY(6);
+
+                    nouveauBoard.setCouleurJoueur(2);
+                    nouveauBoard.setCouleurAdverse(4);
                 }
 
 

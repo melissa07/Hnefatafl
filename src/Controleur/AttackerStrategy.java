@@ -14,9 +14,18 @@ public class AttackerStrategy implements IStrategy {
     }
 
     @Override
+    /** PRIORITE DES STRATEGIES + POINTS
+     * Nombre de pions : 100
+     * Sortie la plus proche du roi: -1500
+     * Cases prioritaires occupees: 1000
+     * Pion en danger: 100
+     * Roi entoure: ?
+     * Roi echape: 10000
+     * Manger un pion: ?
+     */
     public int execute(Board board) {
         int attackerScore = 0;
-        attackerScore += 2 * countNbPawnsLeft(board);
+        attackerScore += countNbPawnsLeft(board);
         attackerScore -= findNearestKingExist(board); // On soustrait la valeur
         attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
         attackerScore += verifierSiPionEstEnDanger(board);
@@ -35,17 +44,16 @@ public class AttackerStrategy implements IStrategy {
         for(int i=0;i < tabBoard.length; i++){
             for(int j=0;j < tabBoard[i].length; j++){
                 if(tabBoard[j][i] == 4 ){
-                    nbPawns++;
+                    nbPawns += 100;
                 }
             }
         }
-
         return nbPawns;
     }
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
     @Override
-    public int verifierSiPionEstEnDanger(Board board) { // todo pas encore appellee
+    public int verifierSiPionEstEnDanger(Board board) {
         int[][] valueBoard = board.getBoard();
         int score = 0;
         int positionPremierNoirX;
@@ -66,7 +74,7 @@ public class AttackerStrategy implements IStrategy {
                     positionPremierNoirY = j;
                     positionRougeX = i;
                     positionRougeY = j;
-                    score -=10;
+//                    score -=100;
                 }
                 else if((j+1 <= 12) && (valueBoard[j][i] == 2 && valueBoard[j+1][i] == 4)) {
                     positionPremierNoirX = i;
@@ -74,21 +82,21 @@ public class AttackerStrategy implements IStrategy {
                     positionRougeX = i;
                     positionRougeY = j+1;
 
-                    score -=10;
+//                    score -=100;
                 }
                 else if((i+1) <= 12 && (valueBoard[j][i] == 2 && valueBoard[j][i+1] == 4)) {
                     positionPremierNoirX = i;
                     positionPremierNoirY = j;
                     positionRougeX = i+1;
                     positionRougeY = j;
-                    score -=10;
+//                    score -=100;
                 }
                 else if((j+1) <= 12 && (valueBoard[j][i] == 4 && valueBoard[j+1][i] == 2)) {
                     positionPremierNoirX = i;
                     positionPremierNoirY = j+1;
                     positionRougeX = i;
                     positionRougeY = j;
-                    score -=10;
+//                    score -=100;
                 }
                 // FIN : TROUVE UN NOIR ET UN ROUGE ADJACENTS
 
@@ -167,28 +175,28 @@ public class AttackerStrategy implements IStrategy {
             int curseurX = positionSecondNoirX;
             while(curseurX >= positionRougeX+1) {
                 curseurX --;
-                if(valueBoard[positionSecondNoirY][curseurX] != 0) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                if(valueBoard[positionSecondNoirY][curseurX] != 0 && valueBoard[positionSecondNoirY][curseurX] != 1 ) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
                    hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 100; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -100;
+                    return -300;
             }
         }
         else if(positionSecondNoirX < positionRougeX) {
             int curseurX = positionSecondNoirX;
             while(curseurX <= positionRougeX-1) {
                 curseurX ++;
-                if(valueBoard[positionSecondNoirY][curseurX] != 0) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                if(valueBoard[positionSecondNoirY][curseurX] != 0 && valueBoard[positionSecondNoirY][curseurX] != 1) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 100; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -100;
+                    return -300;
             }
         }
         return 0;
@@ -200,28 +208,28 @@ public class AttackerStrategy implements IStrategy {
             int curseurY = positionSecondNoirY;
             while(curseurY >= positionRougeY+1) {
                 curseurY --;
-                if(valueBoard[curseurY][positionSecondNoirX] != 0) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                if(valueBoard[curseurY][positionSecondNoirX] != 0 && valueBoard[curseurY][positionSecondNoirX] != 1 ) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 100; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -100;
+                    return -300;
             }
         }
         else if(positionSecondNoirY < positionRougeY) {
             int curseurY = positionSecondNoirY;
             while(curseurY <= positionRougeY-1) {
                 curseurY ++;
-                if(valueBoard[curseurY][positionSecondNoirX] != 0) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
+                if(valueBoard[curseurY][positionSecondNoirX] != 0 && valueBoard[curseurY][positionSecondNoirX] != 1) { // Sil ne trouve pas de pion qui bloque le chemin continuer la loop
                     hasObstacle = true;
                 }
                 if(hasObstacle) {
-                    return 100; // Score positif car il y a un obstacle et le pion ne peut se faire manger
+                    return 300; // Score positif car il y a un obstacle et le pion ne peut se faire manger
                 }
                 else
-                    return -100;
+                    return -300;
             }
         }
 
@@ -238,7 +246,7 @@ public class AttackerStrategy implements IStrategy {
         j=0;
         for (int i = 2; i >= 0; i--) {
             if(board[j][i] == 4)
-                prioritairesScore += 500;
+                prioritairesScore += 1000;
             j++;
         }
 
@@ -246,7 +254,7 @@ public class AttackerStrategy implements IStrategy {
         j=0;
         for (int i = 10; i <= 12; i++) {
             if(board[j][i] == 4)
-                prioritairesScore += 500;
+                prioritairesScore += 1000;
             j++;
         }
 
@@ -254,7 +262,7 @@ public class AttackerStrategy implements IStrategy {
         j=10;
         for (int i = 2; i >= 0; i--) {
             if(board[j][i] == 4)
-                prioritairesScore += 500;
+                prioritairesScore += 1000;
             j++;
         }
 
@@ -262,7 +270,7 @@ public class AttackerStrategy implements IStrategy {
         j=10;
         for (int i = 10; i <= 12; i++) {
             if(board[j][i] == 4)
-                prioritairesScore += 500;
+                prioritairesScore += 1000;
             j++;
         }
 

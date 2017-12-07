@@ -13,6 +13,8 @@ public class Board {
     private Random rn = new Random();
     private int kingPositionX = -1;
     private int kingPositionY = -1;
+    private int couleurAdverse;
+    private int couleurJoueur;
 
 
     public Board() {
@@ -20,6 +22,7 @@ public class Board {
 
     public Board(String[] chaineBoard) {
         initBoard(chaineBoard);
+        printBoard();
     }
 
     public Board(int[][] board) {
@@ -57,6 +60,22 @@ public class Board {
         this.kingPositionY = kingPositionY;
     }
 
+    public int getCouleurAdverse() {
+        return couleurAdverse;
+    }
+
+    public void setCouleurAdverse(int couleurAdverse) {
+        this.couleurAdverse = couleurAdverse;
+    }
+
+    public int getCouleurJoueur() {
+        return couleurJoueur;
+    }
+
+    public void setCouleurJoueur(int couleurJoueur) {
+        this.couleurJoueur = couleurJoueur;
+    }
+
     public int getBOARD_SIZE() {
         return BOARD_SIZE;
     }
@@ -89,7 +108,6 @@ public class Board {
         board[12][0] = 1;
         board[12][12] = 1;
 
-        printBoard();
 
     }
 
@@ -106,21 +124,12 @@ public class Board {
         }
         System.out.println("       A  B  C  D  E  F  G  H  I  J  K  L  M");
         System.out.println("_____________________________________________");
-
     }
 
     public void modifyBoard(String move, int couleurJoueur) {
         initMap();
-        //System.out.println("Nouveau move:" +move);
         int[][] moveDepart = null;
         int[][] moveFinal = null;
-        int couleurAdverse = 0;
-
-        if (couleurJoueur == 4) {
-            couleurAdverse = 2;
-        } else {
-            couleurAdverse = 4;
-        }
 
         move = move.trim();
         int rangeeDepart = 0;
@@ -131,17 +140,13 @@ public class Board {
         } else if (moveTmp.length() == 4) {
             rangeeDepart = map2.get(Integer.parseInt(moveTmp.substring(1, 3)));
         }
-        System.out.println("Rangee depart: " + rangeeDepart + " et colonne depart: " + colonneDepart);
-
-        if(rangeeDepart == 6 && colonneDepart == 6){
-            System.out.print("test");
-        }
-
+//        System.out.println("Rangee depart: " + rangeeDepart + " et colonne depart: " + colonneDepart);
 
         int remainingLength = move.replaceAll("\\s+", "").length() - (move.substring(0, move.indexOf('-')).replaceAll("\\s+", "").length() + 1);
+
         int colonneFin = map.get(move.substring(move.indexOf('-') + 2, move.length()).substring(0, 1));
         int rangeeFin = map2.get(Integer.parseInt(move.substring(move.indexOf('-') + 2, move.length()).substring(1, remainingLength)));
-        System.out.println("Rangee d'arrivee: " + rangeeFin + " et colonne d'arrivee: " + colonneFin);
+//        System.out.println("Rangee d'arrivee: " + rangeeFin + " et colonne d'arrivee: " + colonneFin);
 
         int valeurCaseDepart = board[colonneDepart][rangeeDepart];
         this.board[colonneDepart][rangeeDepart] = 0;
@@ -149,16 +154,15 @@ public class Board {
             this.board[colonneDepart][rangeeDepart] = 1;
         }
         this.board[colonneFin][rangeeFin] = valeurCaseDepart;
-        board = mangerJeton(couleurJoueur, couleurAdverse, colonneFin, rangeeFin);
-        //printBoard();
 
+        board = mangerJeton(couleurJoueur, couleurAdverse, colonneFin, rangeeFin);
     }
 
-    public int[][] mangerJeton(int couleurJoueur, int couleurAdverse, int colonneFin, int rangeeFin) {
+    public int[][]  mangerJeton(int couleurJoueur, int couleurAdverse, int colonneFin, int rangeeFin) {
         int king = 5;
         //change la couleur du king pour rouge si c est le joueur rouge qui a fait un movement pour manger
         // afin qu un joueur rouge ne puisse pas manger un noir a laide du king.
-        if(couleurJoueur == 4){
+        if(couleurJoueur == 4){ // todo C'est le contraire ? si couleurJoueur == 2
             king = 4;
         }
         if (colonneFin < 11) {
@@ -223,20 +227,6 @@ public class Board {
         this.map2.put(2,11);
         this.map2.put(1,12);
     }
-
-    /*
-    calcule et retourne le score du board.
-     */
-    public int getScore(){
-         AttackerStrategy attackerStrategy = AttackerStrategy.getInstance();
-
-        //Méthode qui va permettre de calculer le score du board avec les stratégies.
-        //int score = strategieCalculScore.attackerStrategy(this);
-
-        int score = rn.nextInt(10) + 1;
-        return  score;
-    }
-
 
 
     public int[][] copyBoard(Board board) {
