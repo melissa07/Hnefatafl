@@ -58,7 +58,7 @@ public class AttackerStrategy implements IStrategy {
                 positionPremierNoirY = -1;
                 positionRougeX = -1;
                 positionRougeY = -1;
-                // todo check when I hit a wall
+
                 // TROUVE UN NOIR ET UN ROUGE ADJACENTS
                 if((valueBoard[j][i] == 4 && valueBoard[j][i+1] == 2) && i+1 <= 12) {
                     positionPremierNoirX = i+1;
@@ -95,7 +95,7 @@ public class AttackerStrategy implements IStrategy {
                 if(positionPremierNoirX != -1 && positionPremierNoirX != -1) {
                     if(positionPremierNoirX < positionRougeX) {
                         for (int start = positionRougeX+1 ; start < board.getBOARD_SIZE(); start++ ) {
-                            int rangee = 0; //todo il faut incrementer la rangee
+                            int rangee = 0;
                             while(rangee <= 12) {
                                 if(valueBoard[rangee][start] == 2) { // Si l'on trouve un noir sur la colonne adjacente
                                     int positionSecondNoirX = start;
@@ -103,6 +103,7 @@ public class AttackerStrategy implements IStrategy {
 
                                     score += verifierSiPionRougeEntoureenX(valueBoard, positionRougeX,positionSecondNoirX, positionPremierNoirY);
                                 }
+                                rangee++;
                             }
                         }
                     }
@@ -121,7 +122,7 @@ public class AttackerStrategy implements IStrategy {
                         }
                     }
                     if(positionPremierNoirY < positionRougeY) {
-                        
+
                     }
                     if(positionPremierNoirY > positionRougeY) {}
                 }
