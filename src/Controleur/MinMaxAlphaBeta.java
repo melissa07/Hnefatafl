@@ -57,7 +57,6 @@ public class MinMaxAlphaBeta {
 
     private Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
-            //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
@@ -83,14 +82,14 @@ public class MinMaxAlphaBeta {
 
                 if (boardScore > bestScore) {
                     if(profondeur == 0){
-                        bestSavedBoard = savedBoard;
+                        bestSavedBoard = savedBoard; // ???
                     }
                     bestScore = boardScore;
                     bestBoard = board;
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta <= alpha) {
+                if (beta > alpha) { // not sure about >
                     if (profondeur == 0) {
                         return bestSavedBoard;
                     }
@@ -132,7 +131,7 @@ public class MinMaxAlphaBeta {
                     beta = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta <= alpha)
+                if (beta <= alpha) // not sure about <=
                     return bestBoard;
             }
             return bestBoard;

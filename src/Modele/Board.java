@@ -15,6 +15,7 @@ public class Board {
     private int kingPositionY = -1;
     private int couleurAdverse;
     private int couleurJoueur;
+    private int joueurCourant;
 
 
     public Board() {
@@ -74,6 +75,14 @@ public class Board {
 
     public void setCouleurJoueur(int couleurJoueur) {
         this.couleurJoueur = couleurJoueur;
+    }
+
+    public int getJoueurCourant() {
+        return joueurCourant;
+    }
+
+    public void setJoueurCourant(int joueurCourant) {
+        this.joueurCourant = joueurCourant;
     }
 
     public int getBOARD_SIZE() {
@@ -169,7 +178,7 @@ public class Board {
         int king = 5;
         //change la couleur du king pour rouge si c est le joueur rouge qui a fait un movement pour manger
         // afin qu un joueur rouge ne puisse pas manger un noir a laide du king.
-        if(couleurJoueur == 4){ // todo C'est le contraire ? si couleurJoueur == 2
+        if(couleurJoueur == 4) {
             king = 4;
         }
         if (colonneFin < 11) {
