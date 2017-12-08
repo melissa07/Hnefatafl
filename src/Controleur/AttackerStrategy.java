@@ -15,41 +15,64 @@ public class AttackerStrategy implements IStrategy {
 
     @Override
     /** STRATEGIES + POINTS
-     * Nombre de pions : 100
+     * Roi echape: -100000
+     * Cases prioritaires (qui protegent coins) occupees: 100
+     * Roi entoure: 100000 en cas de victoire 50 en cas de proximite dun pion rouge proche du roi
+     * Nombre de pions : 75
+     *
+     *
      * Sortie la plus proche du roi: -1500
-     * Cases prioritaires occupees: 1000
-     * Pion en danger: 100
-     * Roi entoure: 1500
-     * Roi echape: 10000
+     *
+     * Pion en danger: 700
      * Manger un pion: ?
      */
     public int execute(Board board) {
         int attackerScore = 0;
-        attackerScore += countNbPawnsLeft(board);
-        attackerScore += findNearestKingExist(board);
-        attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard());
-        attackerScore += verifierSiPionEstEnDanger(board);
-        attackerScore += verifierSiRoiEntoure(board);
-        attackerScore += entourerLeRoi(board);
-        attackerScore += hasKingEscaped(board);
-        attackerScore += mangerPion(board);
+        attackerScore += countNbPawnsLeft(board); // done
+        attackerScore += 100*(13- countNbPawnsAdverseLeft(board));
+//        attackerScore += findNearestKingExist(board);
+        attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard()); // done
+//        attackerScore += verifierSiPionEstEnDanger(board);
+//        attackerScore += verifierSiRoiEntoure(board);
+        attackerScore += entourerLeRoi(board); // done
+        attackerScore += hasKingEscaped(board); // done
+//        attackerScore += mangerPion(board);
 
         return attackerScore;
     }
 
     @Override
+    public int countNbPawnsAdverseLeft(Board board) {
+        int nbPawnsNoir = 0;
+        int[][] tabBoard = board.getBoard();
+
+        for(int i=0;i < tabBoard.length; i++){
+            for(int j=0;j < tabBoard[i].length; j++){
+                if(tabBoard[j][i] == 2 || tabBoard[j][i] == 5 ){
+                    nbPawnsNoir += 1;
+                }
+            }
+        }
+        return nbPawnsNoir;
+    }
+
+    @Override
     public int countNbPawnsLeft(Board board) {
         int[][] tabBoard = board.getBoard();
-        int nbPawns = 0;
+        int nbPawnsTotal = 0;
+        int nbPawnsRouge = 0;
+
 
         for(int i=0;i < tabBoard.length; i++){
             for(int j=0;j < tabBoard[i].length; j++){
                 if(tabBoard[j][i] == 4 ){
-                    nbPawns += 100;
+                    nbPawnsRouge += 1;
                 }
             }
         }
-        return nbPawns;
+
+
+        return 75*nbPawnsRouge;
     }
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
@@ -247,7 +270,7 @@ public class AttackerStrategy implements IStrategy {
         j=0;
         for (int i = 2; i >= 0; i--) {
             if(board[j][i] == 4)
-                prioritairesScore += 1000;
+                prioritairesScore += 100;
             j++;
         }
 
@@ -255,7 +278,7 @@ public class AttackerStrategy implements IStrategy {
         j=0;
         for (int i = 10; i <= 12; i++) {
             if(board[j][i] == 4)
-                prioritairesScore += 1000;
+                prioritairesScore += 100;
             j++;
         }
 
@@ -263,7 +286,7 @@ public class AttackerStrategy implements IStrategy {
         j=10;
         for (int i = 2; i >= 0; i--) {
             if(board[j][i] == 4)
-                prioritairesScore += 1000;
+                prioritairesScore += 100;
             j++;
         }
 
@@ -271,7 +294,7 @@ public class AttackerStrategy implements IStrategy {
         j=10;
         for (int i = 10; i <= 12; i++) {
             if(board[j][i] == 4)
-                prioritairesScore += 1000;
+                prioritairesScore += 100;
             j++;
         }
 
@@ -295,14 +318,14 @@ public class AttackerStrategy implements IStrategy {
                     if(board.getKingPositionX() == 12){
                         //si à la gauche du roi c'est un rouge
                         if(board.getBoard()[positionRoiY][positionRoiX-1] == 4){
-                            score += 500; //VICTOIRE roi entouré par bord, pion haut ou bas et pion gauche
+                            score += 100000; //VICTOIRE roi entouré par bord, pion haut ou bas et pion gauche
                         }
                     }
                     //si le roi est sur le bord gauche
                     if(board.getKingPositionX() == 0){
                         //si à la droite du roi c'est un pion rouge
                         if(board.getBoard()[positionRoiY][positionRoiX+1] == 4){
-                            score += 500; //VICTOIRE roi entouré par bord, pion haut ou bas et pion droite
+                            score += 100000; //VICTOIRE roi entouré par bord, pion haut ou bas et pion droite
                         }
                     }
                 }
@@ -312,7 +335,7 @@ public class AttackerStrategy implements IStrategy {
                 //si à gauche du roi y'a un rouge OU un X de sortie
                 if (board.getBoard()[positionRoiY][positionRoiX - 1] == 4) {
                     ctr = ctr + 1 + (1/3);
-                    score += 5 * ctr;
+                    score += 50 * ctr;
                 }
             }
             //si le roi est sur le bord à gauche
@@ -320,24 +343,24 @@ public class AttackerStrategy implements IStrategy {
                 //si à droite du roi y'a un rouge
                 if (board.getBoard()[positionRoiY][positionRoiX + 1] == 4) {
                     ctr = ctr + 1 + (1/3);
-                    score += 5 * ctr;
+                    score += 50 * ctr;
                 }
             }
             //si en haut du roi y'a un rouge
             if (board.getBoard()[positionRoiY + 1][positionRoiX] == 4) {
                 ctr = ctr + 1 + (1/3);
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
             //si en bas du roi y'au un rouge
             if (board.getBoard()[positionRoiY - 1][positionRoiX] == 4) {
                 ctr = ctr + 1 + (1/3);
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
         }
 //endregion
 
 //region position du roi en Y sur les bords
-        if(board.getKingPositionY() == 0 || board.getKingPositionY() == 12){
+        if(board.getKingPositionY() == 0 || board.getKingPositionY() == 12) {
             //si à la droite ou à la gauche du roi c'est un X de sortie
             if(board.getBoard()[positionRoiY][positionRoiX+1] == 1 || board.getBoard()[positionRoiY][positionRoiX-1] == 1){
                 //si à la droite ou à la gauche du roi c'est un pion rouge (si X à droite alors rouge à gauche et vice versa)
@@ -346,14 +369,14 @@ public class AttackerStrategy implements IStrategy {
                     if(board.getKingPositionY() == 12){
                         //si en bas du roi c'est un rouge
                         if(board.getBoard()[positionRoiY-1][positionRoiX] == 4){
-                            score += 500; //VICTOIRE
+                            score += 100000; //VICTOIRE
                         }
                     }
                     //si le roi est sur le bord en bas
                     if(board.getKingPositionX() == 0){
                         //si en haut  du roi c'est un pion rouge
                         if(board.getBoard()[positionRoiY+1][positionRoiX] == 4){
-                            score += 500; //VICTOIRE
+                            score += 100000; //VICTOIRE
                         }
                     }
                 }
@@ -363,7 +386,7 @@ public class AttackerStrategy implements IStrategy {
                 //si à gauche du roi y'a un rouge
                 if(board.getBoard()[positionRoiY-1][positionRoiX] == 4) {
                     ctr = ctr + 1 + (1/3);
-                    score += 5 * ctr;
+                    score += 50 * ctr;
                 }
             }
             //si le roi est sur le bord à gauche
@@ -371,22 +394,22 @@ public class AttackerStrategy implements IStrategy {
                 //si à droite du roi y'a un rouge
                 if(board.getBoard()[positionRoiY+1][positionRoiX] == 4) {
                     ctr = ctr + 1 + (1/3);
-                    score += 5 * ctr;
+                    score += 50 * ctr;
                 }
             }
             //si en haut du roi y'a un rouge
             if(board.getBoard()[positionRoiY][positionRoiX+1] == 4){
                 ctr = ctr + 1 + (1/3);
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
             //si en bas du roi y'au un rouge
             if(board.getBoard()[positionRoiY][positionRoiX-1] == 4){
                 ctr = ctr + 1 + (1/3);
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
 
             if(ctr == 3){
-                score += 500; //VICTOIRE
+                score += 100000; //VICTOIRE
             }
         }
 //endregion
@@ -399,31 +422,29 @@ public class AttackerStrategy implements IStrategy {
         else{
             if(board.getKingPositionX()+1 <= 12 && board.getBoard()[positionRoiY][positionRoiX+1] == 4) {
                 ctr++;
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
 
             if(board.getKingPositionX()-1 >= 0 && board.getBoard()[positionRoiY][positionRoiX-1] == 4) {
                 ctr++;
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
 
             if(board.getKingPositionY()+1 <= 12 && board.getBoard()[positionRoiY+1][positionRoiX] == 4) {
                 ctr++;
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
 
             if(board.getKingPositionY()-1 >= 0 && board.getBoard()[positionRoiY-1][positionRoiX] == 4) {
                 ctr++;
-                score += 5 * ctr;
+                score += 50 * ctr;
             }
             //If permettant de savoir si, dans le board, le roi serait entouré de quatre pions. Si oui, boost le score
             if(ctr == 4){
-                score += 500; //VICTOIRE
+                score += 100000; //VICTOIRE
             }
         }
 //endregion
-
-
         return score;
     }
 
@@ -476,7 +497,7 @@ public class AttackerStrategy implements IStrategy {
 
         //si le Roi est sur un coin.
         if((kingColonne == 0 && kingRange ==0) || (kingColonne == 12 && kingRange == 0) || (kingColonne == 0 && kingRange == 12) || (kingColonne == 12 & kingRange == 12)){
-            score -= 10000; // worst case ever
+            score -= 100000; // worst case ever
         }
         return score;
     }

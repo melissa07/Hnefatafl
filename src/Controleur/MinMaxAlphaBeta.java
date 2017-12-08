@@ -89,7 +89,7 @@ public class MinMaxAlphaBeta {
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta > alpha) { // not sure about >
+                if (beta >= alpha) { // not sure about >
                     if (profondeur == 0) {
                         return bestSavedBoard;
                     }
@@ -131,7 +131,7 @@ public class MinMaxAlphaBeta {
                     beta = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta <= alpha) // not sure about <=
+                if (beta < alpha) // not sure about <=
                     return bestBoard;
             }
             return bestBoard;
