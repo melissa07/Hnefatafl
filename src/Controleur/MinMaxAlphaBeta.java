@@ -89,7 +89,7 @@ public class MinMaxAlphaBeta {
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta > alpha) { // not sure about >
+                if (beta <= alpha && beta != 0) { // not sure about >
                     if (profondeur == 0) {
                         return bestSavedBoard;
                     }
@@ -125,7 +125,7 @@ public class MinMaxAlphaBeta {
                 else if(couleurJoueur == NOIR)
                     boardScore = AttackerStrategy.getInstance().execute(board);
 
-                if (boardScore > bestScore) {
+                if (boardScore < bestScore) {
                     bestScore = boardScore;
                     bestBoard = board;
                     beta = boardScore;
