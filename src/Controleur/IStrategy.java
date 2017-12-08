@@ -10,7 +10,7 @@ public interface IStrategy {
 
     int verifierSiCasesPrioritairesOccupees(int[][] board);
 
-    boolean verifierSiRoiEntoure(Board board);
+    int verifierSiRoiEntoure(Board board);
 
     int findNearestKingExist(Board boardGenere);
 }
