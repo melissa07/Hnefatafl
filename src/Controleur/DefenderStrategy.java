@@ -14,12 +14,13 @@ public class DefenderStrategy implements IStrategy {
     }
 
     @Override
-    public int execute(Board board) {
-        int defenderScore = 0;
+    public float execute(Board board) {
+        float defenderScore = 0;
 
-        defenderScore += 75 * countNbPawnsLeft(board);
-        defenderScore += 100 * (24 - countNbPawnsAdverseLeft(board));
-        defenderScore += findNearestKingExist(board);
+        defenderScore += countNbPawnsLeft(board);
+        defenderScore -= countNbPawnsAdverseLeft(board);
+        //defenderScore += findNearestKingExist(board);
+        defenderScore -= 0.5f*findNearestKingExistv2(board);
 
 
         return defenderScore;
@@ -176,6 +177,24 @@ public class DefenderStrategy implements IStrategy {
 
 
         return score;
+    }
+
+    public int findNearestKingExistv2(Board board) {
+        int kingColonne = board.getKingPositionX();
+        int kingRange = board.getKingPositionY();
+
+
+        int topLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][0]);
+        int bottLeft = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[0][12]);
+        int topRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][0]);
+        int bottRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][12]);
+
+        int shortestDistance =  Math.min(
+                                Math.min(topLeft, topRight),
+                                Math.min(bottLeft, bottRight));
+
+//        return Math.negateExact(shortestDistance*100);
+        return shortestDistance;
     }
 
     @Override

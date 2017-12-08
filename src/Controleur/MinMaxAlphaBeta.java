@@ -55,13 +55,12 @@ public class MinMaxAlphaBeta {
         return  move;
     }
 
-    private Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta){
+    private Board MaxMove (Board actualBoard, int couleurJoueur, int profondeur, float alpha, float beta){
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
             Board bestSavedBoard = actualBoard;
-            int bestScore = 0;
 
             ArrayList<Board> boards = new ArrayList<Board>();
             if(couleurJoueur == NOIR) {
@@ -70,69 +69,72 @@ public class MinMaxAlphaBeta {
                 boards = generateMoves(actualBoard, ROUGE);
             }
 
+            float maxScore = 0;
             for (Board board : boards) {
                 Board savedBoard = board;
                 board = MinMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
-                int boardScore = 0;
+                float boardScore = 0;
                 if(couleurJoueur == ROUGE)
                     boardScore = AttackerStrategy.getInstance().execute(board);
                 else if(couleurJoueur == NOIR)
                     boardScore = DefenderStrategy.getInstance().execute(board);
 
-                if (boardScore > bestScore) {
+                if (maxScore == 0 ||boardScore > maxScore) {
                     if(profondeur == 0){
                         bestSavedBoard = savedBoard; // ???
                     }
-                    bestScore = boardScore;
+                    maxScore = boardScore;
                     bestBoard = board;
-                    alpha = boardScore;
+                    alpha = Math.max(alpha, boardScore);
                 }
                 // Ignore remaining moves
-                if (beta >= alpha) { // not sure about >
+                if (beta <= alpha && beta != 0) {
                     if (profondeur == 0) {
                         return bestSavedBoard;
                     }
-                    return bestBoard;
+                    break;
                 }
             }
+
             if(profondeur == 0){
                 return bestSavedBoard;
             }
             return bestBoard;
         }
     }
-    
-    private Board MinMove(Board actualBoard, int couleurJoueur, int profondeur, int alpha, int beta) {
+
+    private Board MinMove(Board actualBoard, int couleurJoueur, int profondeur, float alpha, float beta) {
         if (IsGameOver(actualBoard) || profondeur == maxProfondeur) {
             //je sais pas encore quoi return
             return actualBoard;
         } else {
             Board bestBoard = actualBoard;
-            int bestScore = 0;
+
             ArrayList<Board> boards = new ArrayList<Board>();
             if(couleurJoueur == NOIR){
                 boards = generateMoves(actualBoard, ROUGE);
             }else if(couleurJoueur == ROUGE){
                 boards = generateMoves(actualBoard, NOIR);
             }
+            float minScore = 0 ;
             for (Board board : boards) {
                 board = MaxMove(executeMove(board), couleurJoueur, profondeur + 1, alpha, beta);
 
-                int boardScore = 0;
+                float boardScore = 0;
                 if(couleurJoueur == ROUGE)
                     boardScore = DefenderStrategy.getInstance().execute(board);
                 else if(couleurJoueur == NOIR)
                     boardScore = AttackerStrategy.getInstance().execute(board);
 
-                if (boardScore > bestScore) {
-                    bestScore = boardScore;
+                if (minScore == 0 || boardScore < minScore) {
+                    minScore = boardScore;
                     bestBoard = board;
-                    beta = boardScore;
+                    beta = Math.min(beta, boardScore);
                 }
                 // Ignore remaining moves
-                if (beta < alpha) // not sure about <=
-                    return bestBoard;
+                if (beta <= alpha)
+                    break;
             }
             return bestBoard;
         }
