@@ -44,6 +44,7 @@ class Client {
 
                     nouveauBoard.setCouleurJoueur(4);
                     nouveauBoard.setCouleurAdverse(2);
+                    nouveauBoard.setJoueurCourant(4);
 
                     nouveauBoard.setKingPositionY(6);
                     nouveauBoard.setKingPositionX(6);
@@ -84,12 +85,19 @@ class Client {
 
                     nouveauBoard.setCouleurJoueur(2);
                     nouveauBoard.setCouleurAdverse(4);
+                    nouveauBoard.setJoueurCourant(4); // le 4(rouge) commence
                 }
 
 
                 // Le serveur demande le prochain coup
                 // Le message contient aussi le dernier coup joué.
                 if(cmd == '3'){
+                    // change le joueur courant
+                    if(nouveauBoard.getJoueurCourant() == 4)
+                        nouveauBoard.setJoueurCourant(2);
+                    else
+                        nouveauBoard.setJoueurCourant(4);
+
                     byte[] aBuffer = new byte[16];
 
                     int size = input.available();
@@ -104,11 +112,16 @@ class Client {
                     System.out.println("Entrez votre coup : ");
                     String move = null;
 
+                    if(nouveauBoard.getJoueurCourant() == 4)
+                        nouveauBoard.setJoueurCourant(2);
+                    else
+                        nouveauBoard.setJoueurCourant(4);
+
                     if(movesCounter == 0 && couleurJoueur == joueurRouge)
                         move = "A9 - A11";
                     else
                         move = minmax.doMinMax(nouveauBoard, couleurJoueur);
-                    
+
                     nouveauBoard.modifyBoard(move, couleurJoueur);
                     System.out.println("Move: " +move);
                     output.write(move.getBytes(),0,move.length());
