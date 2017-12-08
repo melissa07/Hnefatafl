@@ -96,6 +96,7 @@ class Client {
                     input.read(aBuffer,0,size);
 
                     String s = new String(aBuffer);
+                    //coup de l'adversaire
                     if(couleurJoueur == joueurRouge){
                         nouveauBoard.modifyBoard(s, joueurNoir);
                     }else if(couleurJoueur == joueurNoir){

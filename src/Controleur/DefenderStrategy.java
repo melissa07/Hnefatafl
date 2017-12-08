@@ -17,8 +17,10 @@ public class DefenderStrategy implements IStrategy {
     public int execute(Board board) {
         int defenderScore = 0;
 
-        defenderScore += 2 * countNbPawnsLeft(board);
+        defenderScore += 5 * countNbPawnsLeft(board);
+        defenderScore += 2 * (24 - countNbPawnsAdverseLeft(board));
         defenderScore += findNearestKingExist(board);
+
 
         return defenderScore;
     }
@@ -31,6 +33,21 @@ public class DefenderStrategy implements IStrategy {
         for(int i=0;i < tabBoard.length; i++){
             for(int j=0;j < tabBoard[i].length; j++){
                 if(tabBoard[j][i] == 2 || tabBoard[j][i] == 5){
+                    nbPawn++;
+                }
+            }
+        }
+
+        return nbPawn;
+    }
+
+    public int countNbPawnsAdverseLeft(Board board) {
+        int[][] tabBoard = board.getBoard();
+        int nbPawn = 0;
+
+        for(int i=0;i < tabBoard.length; i++){
+            for(int j=0;j < tabBoard[i].length; j++){
+                if(tabBoard[j][i] == 4){
                     nbPawn++;
                 }
             }
@@ -127,6 +144,11 @@ public class DefenderStrategy implements IStrategy {
         }
 
 
+        //si le king a bouge
+        if(kingColonne != 6 && kingRange != 6)
+            score += 20;
+
+
         //si est entourrer de rouge
         if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 4)
             score -= 5;
@@ -134,18 +156,18 @@ public class DefenderStrategy implements IStrategy {
             score -= 5;
         if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 4)
             score -= 5;
-        if(kingColonne < 12 && tabBoard[kingColonne][kingRange + 1] == 4)
+        if(kingRange < 12 && tabBoard[kingColonne][kingRange + 1] == 4)
             score -= 5;
 
-        //si est entourrer de noire
-        if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 2)
-            score -= 2;
-        if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 2)
-            score -= 2;
-        if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 2)
-            score -= 2;
-        if(kingColonne < 12 && tabBoard[kingColonne][kingRange + 1] == 2)
-            score -= 2;
+        //si est entourrer de rien
+        if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 0)
+            score += 5;
+        if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 0)
+            score += 5;
+        if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 0)
+            score += 5;
+        if(kingRange < 12 && tabBoard[kingColonne][kingRange + 1] == 0)
+            score += 5;
 
 
         return score;

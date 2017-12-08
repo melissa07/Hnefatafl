@@ -130,6 +130,13 @@ public class Board {
         initMap();
         int[][] moveDepart = null;
         int[][] moveFinal = null;
+        int couleurAdversaire;
+
+        if(couleurJoueur == 2){
+            couleurAdversaire = 4;
+        }else{
+            couleurAdversaire = 2;
+        }
 
         move = move.trim();
         int rangeeDepart = 0;
@@ -155,7 +162,7 @@ public class Board {
         }
         this.board[colonneFin][rangeeFin] = valeurCaseDepart;
 
-        board = mangerJeton(couleurJoueur, couleurAdverse, colonneFin, rangeeFin);
+        board = mangerJeton(couleurJoueur, couleurAdversaire, colonneFin, rangeeFin);
     }
 
     public int[][]  mangerJeton(int couleurJoueur, int couleurAdverse, int colonneFin, int rangeeFin) {

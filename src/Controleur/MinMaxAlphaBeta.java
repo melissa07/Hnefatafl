@@ -90,7 +90,7 @@ public class MinMaxAlphaBeta {
                     alpha = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta > alpha) {
+                if (beta <= alpha) {
                     if (profondeur == 0) {
                         return bestSavedBoard;
                     }
@@ -132,7 +132,7 @@ public class MinMaxAlphaBeta {
                     beta = boardScore;
                 }
                 // Ignore remaining moves
-                if (beta < alpha)
+                if (beta <= alpha)
                     return bestBoard;
             }
             return bestBoard;
@@ -163,13 +163,14 @@ public class MinMaxAlphaBeta {
             for(int i = 0; i < actualBoard.length;i++){ // todo techniquement tu veux pas commencer a 0 ? vu que la case 0 contient un 1 - Christelle
                 for (int j = 0; j < actualBoard[i].length;j++){
                     if (actualBoard[j][i] == ROUGE){
+                        //tout les move horizontal
                         for(int k = 0; k < 13; k++){
                             if (k != j){
                                 if(isMoveValid(actualBoard, j, i, k, i)){ //colonneinitiale, rangeeinitiale, colonne arrivee, rangeeArrive
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[k][i] = ROUGE;
-//                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, k, i);
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, k, i);
                                     Board newBoard = new Board((tmpBoard));
                                     if(j == board.getKingPositionX() && i == board.getKingPositionY()){
                                         newBoard.setKingPositionX(k);
@@ -179,16 +180,23 @@ public class MinMaxAlphaBeta {
                                         newBoard.setKingPositionY(board.getKingPositionY());
                                     }
                                     boardArray.add(newBoard);
+                                }else{
+                                    if(k < j){
+                                        k = j + 1;
+                                    }else{
+                                        k = 13;
+                                    }
                                 }
                             }
                         }
+                        //tout les move vertical
                         for(int l = 0; l < 13; l++){
                             if (l != i){
                                 if(isMoveValid(actualBoard, j, i, j, l)){
                                     tmpBoard = board.copyBoard(board);
                                     tmpBoard[j][i] = 0;
                                     tmpBoard[j][l] = ROUGE;
-//                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, j, l);
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(ROUGE, NOIR, j, l);
                                     Board newBoard = new Board((tmpBoard));
                                     if(j == board.getKingPositionX() && i == board.getKingPositionY()){
                                         newBoard.setKingPositionX(j);
@@ -198,6 +206,12 @@ public class MinMaxAlphaBeta {
                                         newBoard.setKingPositionY(board.getKingPositionY());
                                     }
                                     boardArray.add(newBoard);
+                                }else{
+                                    if(l < i){
+                                        l = i + 1;
+                                    }else{
+                                        l = 13;
+                                    }
                                 }
                             }
                         }
@@ -219,7 +233,7 @@ public class MinMaxAlphaBeta {
                                     if(j == 6 && i == 6){
                                         tmpBoard[j][i] = 1;
                                     }
-//                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, k, i);
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, k, i);
                                     Board newBoard = new Board((tmpBoard));
                                     if(j == board.getKingPositionX() && i == board.getKingPositionY()){
                                         newBoard.setKingPositionX(k);
@@ -229,6 +243,12 @@ public class MinMaxAlphaBeta {
                                         newBoard.setKingPositionY(board.getKingPositionY());
                                     }
                                     boardArray.add(newBoard);
+                                }else{
+                                    if(k < j){
+                                        k = j + 1;
+                                    }else{
+                                        k = 13;
+                                    }
                                 }
                             }
                         }
@@ -243,7 +263,7 @@ public class MinMaxAlphaBeta {
                                     if(j == 6 && i == 6){
                                         tmpBoard[j][i] = 1;
                                     }
-//                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, j, l);
+                                    tmpBoard = new Board(tmpBoard).mangerJeton(NOIR, ROUGE, j, l);
                                     Board newBoard = new Board((tmpBoard));
                                     if(j == board.getKingPositionX() && i == board.getKingPositionY()){
                                         newBoard.setKingPositionX(j);
@@ -253,6 +273,12 @@ public class MinMaxAlphaBeta {
                                         newBoard.setKingPositionY(board.getKingPositionY());
                                     }
                                     boardArray.add(newBoard);
+                                }else{
+                                    if(l < i){
+                                        l = i + 1;
+                                    }else{
+                                        l = 13;
+                                    }
                                 }
                             }
                         }
