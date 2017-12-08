@@ -17,8 +17,8 @@ public class DefenderStrategy implements IStrategy {
     public int execute(Board board) {
         int defenderScore = 0;
 
-        defenderScore += 5 * countNbPawnsLeft(board);
-        defenderScore += 2 * (24 - countNbPawnsAdverseLeft(board));
+        defenderScore += 75 * countNbPawnsLeft(board);
+        defenderScore += 100 * (24 - countNbPawnsAdverseLeft(board));
         defenderScore += findNearestKingExist(board);
 
 
@@ -41,6 +41,7 @@ public class DefenderStrategy implements IStrategy {
         return nbPawn;
     }
 
+    @Override
     public int countNbPawnsAdverseLeft(Board board) {
         int[][] tabBoard = board.getBoard();
         int nbPawn = 0;
@@ -255,100 +256,104 @@ public class DefenderStrategy implements IStrategy {
 
         //si le Roi est sur un coin.
         if((kingColonne == 0 && kingRange ==0) || (kingColonne == 12 && kingRange == 0) || (kingColonne == 0 && kingRange == 12) || (kingColonne == 12 & kingRange == 12)){
-            score += 500;
+            score += 100000; //VICTOIRE
         }
 
         //verifie si le roi se rend dans un coin en un mouvement horizontal
         if(kingRange == 0 || kingRange == 12) {
             if (isRangeDroitLibre(tabBoard, kingColonne, kingRange)) {
-                score += 20;
+                score += 10000;
             }
             if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange)) {
-                score += 20;
+                score += 10000;
             }
             if (isRangeDroitLibre(tabBoard, kingColonne, kingRange) && isRangeGaucheLibre(tabBoard, kingColonne, kingRange)) {
-                score += 60;
+                score += 30000;
             }
         }
 
         //verifie si le roi se rend dans un coin en un mouvement vertical
         if(kingColonne == 0 || kingColonne == 12) {
             if (isColoneHautLibre(tabBoard, kingColonne, kingRange)) {
-                score += 20;
+                score += 10000;
             }
             if (isColoneBasLibre(tabBoard, kingColonne, kingRange)) {
-                score += 20;
+                score += 10000;
             }
             if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isColoneBasLibre(tabBoard, kingColonne, kingRange)) {
-                score += 60;
+                score += 30000;
             }
         }
 
         //verifie si le roi se rend dans un coin en deux mouvement vertical ensuite horizontal
         if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isRangeDroitLibre(tabBoard, kingColonne, 0)){
-            score += 5;
+            score += 1000;
         }
         if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isRangeGaucheLibre(tabBoard, kingColonne, 0)){
-            score += 5;
+            score += 1000;
         }
         if (isColoneBasLibre(tabBoard, kingColonne, kingRange) && isRangeDroitLibre(tabBoard, kingColonne, 12)){
-            score += 5;
+            score += 1000;
         }
         if (isColoneBasLibre(tabBoard, kingColonne, kingRange) && isRangeGaucheLibre(tabBoard, kingColonne, 12)){
-            score += 5;
+            score += 1000;
         }
         if (isColoneHautLibre(tabBoard, kingColonne, kingRange) && isRangeGaucheLibre(tabBoard, kingColonne, 0) && isRangeDroitLibre(tabBoard, kingColonne, 0)){
-            score += 10;
+            score += 2000;
         }
         if (isColoneBasLibre(tabBoard, kingColonne, kingRange) && isRangeGaucheLibre(tabBoard, kingColonne, 12) && isRangeDroitLibre(tabBoard, kingColonne, 12)){
-            score += 10;
+            score += 2000;
         }
 
         //verifie si le roi se rend dans un coin en deux mouvement horizontal ensuite vertical
         if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 0, kingRange)){
-            score += 5;
+            score += 1000;
         }
         if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange) && isColoneBasLibre(tabBoard, 0, kingRange)){
-            score += 5;
+            score += 1000;
         }
         if (isRangeDroitLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 12, kingRange)){
-            score += 5;
+            score += 1000;
         }
         if (isRangeDroitLibre(tabBoard, kingColonne, kingRange) && isColoneBasLibre(tabBoard, 12, kingRange)){
-            score += 5;
+            score += 1000;
         }
         if (isRangeGaucheLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 0, kingRange) && isColoneBasLibre(tabBoard, 0, kingRange)){
-            score += 10;
+            score += 2000;
         }
         if (isRangeDroitLibre(tabBoard, kingColonne, kingRange) && isColoneHautLibre(tabBoard, 12, kingRange) && isColoneBasLibre(tabBoard, 12, kingRange)){
-            score += 10;
+            score += 2000;
         }
 
 
         //si le king a bouge
         if(kingColonne != 6 && kingRange != 6)
-            score += 20;
+            score += 100;
 
+        int counter = 0;
 
         //si est entourrer de rouge
         if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 4)
-            score -= 5;
+            counter++;
         if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 4)
-            score -= 5;
+            counter++;
         if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 4)
-            score -= 5;
+            counter++;
         if(kingRange < 12 && tabBoard[kingColonne][kingRange + 1] == 4)
-            score -= 5;
+            counter++;
+
+        if(counter >= 2) { score -= 75; }
+        else if(counter >= 3) { score -=1000; }
 
         //si est entourrer de rien
         if(kingColonne > 0 && tabBoard[kingColonne - 1][kingRange] == 0)
-            score += 5;
+            score += 100;
         if(kingColonne < 12 && tabBoard[kingColonne + 1][kingRange] == 0)
-            score += 5;
+            score += 100;
         if(kingRange > 0 && tabBoard[kingColonne][kingRange - 1] == 0)
-            score += 5;
+            score += 100;
         if(kingRange < 12 && tabBoard[kingColonne][kingRange + 1] == 0)
-            score += 5;
+            score += 100;
 
 
         return score;

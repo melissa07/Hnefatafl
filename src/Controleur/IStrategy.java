@@ -13,4 +13,6 @@ public interface IStrategy {
     int verifierSiRoiEntoure(Board board);
 
     int findNearestKingExist(Board boardGenere);
+
+    int countNbPawnsAdverseLeft(Board board);
 }
