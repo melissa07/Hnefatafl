@@ -26,17 +26,19 @@ public class AttackerStrategy implements IStrategy {
      * Pion en danger: 700
      * Manger un pion: ?
      */
-    public int execute(Board board) {
-        int attackerScore = 0;
+    public float execute(Board board) {
+        float attackerScore = 0;
         attackerScore += countNbPawnsLeft(board); // done
-        attackerScore += 100*(13- countNbPawnsAdverseLeft(board));
-//        attackerScore += findNearestKingExist(board);
-        attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard()); // done
-//        attackerScore += verifierSiPionEstEnDanger(board);
-//        attackerScore += verifierSiRoiEntoure(board);
-        attackerScore += entourerLeRoi(board); // done
-        attackerScore += hasKingEscaped(board); // done
-//        attackerScore += mangerPion(board);
+        attackerScore -= countNbPawnsAdverseLeft(board);
+        attackerScore += 0.5f*findNearestKingExist(board);
+        //attackerScore += findNearestKingExist(board);
+        //attackerScore += verifierSiCasesPrioritairesOccupees(board.getBoard()); // done
+        //attackerScore += verifierSiPionEstEnDanger(board);
+        //attackerScore += verifierSiRoiEntoure(board);
+        //attackerScore += entourerLeRoi(board); // done
+        //attackerScore += hasKingEscaped(board); // done
+        //attackerScore += mangerPion(board);
+        //attackerScore += mangerPionV2(board);
 
         return attackerScore;
     }
@@ -59,7 +61,6 @@ public class AttackerStrategy implements IStrategy {
     @Override
     public int countNbPawnsLeft(Board board) {
         int[][] tabBoard = board.getBoard();
-        int nbPawnsTotal = 0;
         int nbPawnsRouge = 0;
 
 
@@ -70,9 +71,7 @@ public class AttackerStrategy implements IStrategy {
                 }
             }
         }
-
-
-        return 75*nbPawnsRouge;
+        return nbPawnsRouge;
     }
 
     //Méthode qui permet de savoir si un pion serait en danger s'il bougeait à la position précisée dans le board
@@ -98,29 +97,28 @@ public class AttackerStrategy implements IStrategy {
                     positionPremierNoirY = j;
                     positionRougeX = i;
                     positionRougeY = j;
-//                    score -=100;
+                    score -=100;
                 }
                 else if((j+1 <= 12) && (valueBoard[j][i] == 2 && valueBoard[j+1][i] == 4)) {
                     positionPremierNoirX = i;
                     positionPremierNoirY = j;
                     positionRougeX = i;
                     positionRougeY = j+1;
-
-//                    score -=100;
+                    score -=100;
                 }
                 else if((i+1) <= 12 && (valueBoard[j][i] == 2 && valueBoard[j][i+1] == 4)) {
                     positionPremierNoirX = i;
                     positionPremierNoirY = j;
                     positionRougeX = i+1;
                     positionRougeY = j;
-//                    score -=100;
+                    score -=100;
                 }
                 else if((j+1) <= 12 && (valueBoard[j][i] == 4 && valueBoard[j+1][i] == 2)) {
                     positionPremierNoirX = i;
                     positionPremierNoirY = j+1;
                     positionRougeX = i;
                     positionRougeY = j;
-//                    score -=100;
+                    score -=100;
                 }
                 // FIN : TROUVE UN NOIR ET UN ROUGE ADJACENTS
 
@@ -482,12 +480,12 @@ public class AttackerStrategy implements IStrategy {
         int topRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][0]);
         int bottRight = Math.abs(board.getBoard()[kingRange][kingColonne]+ board.getBoard()[12][12]);
 
-        return  Math.min(
+        int shortestDistance =  Math.min(
                 Math.min(topLeft, topRight),
-                Math.min(bottLeft, bottRight)
-        )*1000;
+                Math.min(bottLeft, bottRight));
 
 //        return Math.negateExact(shortestDistance*100);
+        return shortestDistance;
     }
 
     public int hasKingEscaped(Board board) {
@@ -749,6 +747,75 @@ public class AttackerStrategy implements IStrategy {
                     }
                     //endregion
 
+                }
+            }
+        }
+        return score;
+    }
+
+
+
+
+    public int mangerPionV2(Board board){
+        int[][] boardGenere = board.getBoard();
+        int positionX;
+        int positionY;
+        int score = 0;
+        boolean trouve = false;
+
+        //double for pour parcourir le tableau
+        for (int x = 0 ; x < 13; x++) {
+            for (int y = 0; y < 13; y++) {
+
+                //le if sert à savoir s'il y a un noir à cette position
+                if (boardGenere[y][x] == 2) {
+                    positionX = x;
+                    positionY = y;
+
+                    if(positionX >= 1) {
+                        if (positionX + 1 <= 12 && board.getBoard()[y][x + 1] == 4) {
+                            score += 50;
+                            if (positionX + 2 >= 2) {
+                                if (board.getBoard()[y][x - 1] == 4) {
+                                    score += 100;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(positionX <= 11) {
+                        if (positionX - 1 >= 0 && board.getBoard()[y][x - 1] == 4) {
+                            score += 50;
+                            if (positionX - 2 <= 10) {
+                                if (boardGenere[y][x + 1] == 4) {
+                                    score += 100;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(positionY >= 1) {
+                        if (positionY + 1 <= 12 && board.getBoard()[y + 1][x] == 4) {
+                            score += 50;
+                            if (positionY + 2 >= 2) {
+                                if (boardGenere[y - 1][x] == 4) {
+                                    score += 100;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if(positionY <= 11) {
+                        if (positionY - 1 >= 0 && board.getBoard()[y - 1][x] == 4) {
+                            score += 50;
+                            if (positionY - 2 <= 10) {
+                                if (boardGenere[y + 1][x] == 4) {
+                                    score += 100;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

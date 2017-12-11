@@ -2,7 +2,7 @@ package Controleur;
 import Modele.Board;
 
 public interface IStrategy {
-    int execute(Board boardGenere);
+    float execute(Board boardGenere);
 
     int countNbPawnsLeft(Board boardGenere);
 
